@@ -36,5 +36,3 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 		
 		ans
 	]
-
-	diceSample[1, 1, {1/4, 1/4, 1/4, 1/4}, {1/5, 1/5, 1/5, 2/5}, 7, 10]
