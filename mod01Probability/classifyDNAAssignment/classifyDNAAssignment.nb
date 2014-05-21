@@ -1,0 +1,209 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      7447,        200]
+NotebookOptionsPosition[      6567,        165]
+NotebookOutlinePosition[      6925,        181]
+CellTagsIndexPosition[      6882,        178]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Classifying DNA with EM", "Title",
+ CellChangeTimes->{{3.586188407484016*^9, 3.586188411768157*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Overview", "Section",
+ CellChangeTimes->{{3.586188418810301*^9, 3.586188419695395*^9}}],
+
+Cell["\<\
+The goal of this assignment is to perform Expectation Maximization on real \
+biological sequences. The file mixed.fa contains over 10,000 coding sequences \
+from either human or malaria genes. Your task is to figure out which are \
+which. This is possible because human and malaria have very different \
+nucleotide composition. Malaria is very AT-rich/CG-poor\
+\>", "Text",
+ CellChangeTimes->{{3.58618842314751*^9, 3.586188442767984*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Approach", "Section",
+ CellChangeTimes->{{3.5861884622503643`*^9, 3.586188463752448*^9}}],
+
+Cell[TextData[{
+ "This problem maps directly onto the dice problem, where the ACGT of the DNA \
+sequence correspond to the faces of a die, human sequence corresponds to one \
+die type, and malaria sequence corresponds to the other die type. In fact, \
+you can recycle almost all your code. The main thing you have to do is to \
+write a front end that reads the sequences in from the file, converts them \
+into the format the ",
+ StyleBox["diceEM",
+  FontFamily->"Courier"],
+ " expects, computes the posteriors, and outputs them to an answer file. \
+After you get the parameters from ",
+ StyleBox["diceEM",
+  FontFamily->"Courier"],
+ ", you will want to call dicePosteriors one last time, because in this case \
+it is the final posterior probabilities of human versus malaria that we are \
+interested in. In general, these posteriors will be either 1, 0, or something \
+very, very close to 0. Round your posteriors to the nearest 1.0 before \
+outputting them to the answer file, thereby forcing the system to choose the \
+more likely possibility."
+}], "Text",
+ CellChangeTimes->{{3.586188466536075*^9, 3.5861884873908653`*^9}, {
+  3.586188522223854*^9, 3.586188638407692*^9}, {3.586188669458057*^9, 
+  3.586188763127802*^9}, {3.5861889561514177`*^9, 3.586189056407939*^9}}],
+
+Cell["You will write the function:", "Text",
+ CellChangeTimes->{{3.586189116730093*^9, 3.586189123496498*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"classifyDNA", "[", 
+   RowBox[{"fastaFile_", ",", "outputFile_"}], "]"}], ":="}]], "Input",
+ CellChangeTimes->{{3.586189124575141*^9, 3.5861891245772943`*^9}}],
+
+Cell[TextData[{
+ "which reads in a file in \[OpenCurlyDoubleQuote]FASTA\
+\[CloseCurlyDoubleQuote] format -- that just means that each nucleotide \
+sequence is preceded by a line starting with \[OpenCurlyDoubleQuote]>\
+\[CloseCurlyDoubleQuote] and optionally containing some text to describe the \
+following sequence. ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " knows about fasta format so you can use the built-in function ",
+ StyleBox["Import",
+  FontFamily->"Courier"],
+ " specifying the file type to be \[OpenCurlyDoubleQuote]FASTA\
+\[CloseCurlyDoubleQuote]. By default, ",
+ StyleBox["Import",
+  FontFamily->"Courier"],
+ " will return a list of DNA sequences, each of which is a string. Functions \
+that may come in handy for converting these strings of letters to lists of \
+numbers include ",
+ StyleBox["Characters",
+  FontFamily->"Courier"],
+ " and ",
+ StyleBox["ReplaceAll",
+  FontFamily->"Courier"],
+ " (which is usually abbreviated by putting a /. between the original \
+expression and the replacement rules). Once you have a list of your posterior \
+probabilities rounded to the nearest 1.0, you can output them to a file by \
+using ",
+ StyleBox["Put",
+  FontFamily->"Courier"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.586189133904151*^9, 3.586189312159683*^9}, {
+  3.586189352271686*^9, 3.586189396415907*^9}, {3.586189473183897*^9, 
+  3.586189488831933*^9}, {3.586189560388343*^9, 3.586189598055738*^9}, {
+  3.586190807625552*^9, 3.586190821855006*^9}}],
+
+Cell["\<\
+In addition to some shell code, the distribution includes a file called \
+mixed.fa containing the sequences and a file called answers.txt containing \
+the true sources of the sequences. In the .m file, there is also a function \
+called scoreDNAClasses that calculates the fraction classified correctly. My \
+EM implementation classified > 98% of all the strings correctly. If you get a \
+% correct close to 0 then you\[CloseCurlyQuote]ve got your classes switched \
+-- human (class 1) should be the class whose prior probability parameter is \
+smaller. If you got a percent correct between 5% and 95%, you probably did \
+something wrong. \
+\>", "Text",
+ CellChangeTimes->{{3.586189634991805*^9, 3.586189690067412*^9}, {
+  3.586189740583143*^9, 3.586189958591482*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Instructions and grading", "Section",
+ CellChangeTimes->{{3.58619044789124*^9, 3.5861904534068213`*^9}}],
+
+Cell["\<\
+This is a really easy assignment, so we are not providing any unit tests, \
+just the answers.txt file. Please turn in your .m file and your output file.\
+\>", "Text",
+ CellChangeTimes->{{3.586190462592086*^9, 3.586190527175947*^9}}],
+
+Cell["\<\
+This assignment is only worth 5 points. The rubric is\
+\>", "Text",
+ CellChangeTimes->{{3.586190537143745*^9, 3.586190547056034*^9}}],
+
+Cell[TextData[{
+ "1 point for turning in code that takes input of the right form and produces \
+output of the right form that can be scored by using the provided function ",
+ StyleBox["scoreDNAClasses",
+  FontFamily->"Courier"],
+ ", producing a numeric result without errors or warnings. You must turn in \
+your assignment on time to receive this point."
+}], "Text",
+ CellChangeTimes->{{3.586190555365643*^9, 3.586190641871873*^9}, {
+  3.586190723688055*^9, 3.5861907388075037`*^9}}],
+
+Cell["\<\
+4 points for turning in code that is correct and produces the right \
+classification for at least 98% of the sequences in the file mixed.fa.\
+\>", "Text",
+ CellChangeTimes->{{3.586190645151739*^9, 3.586190678231179*^9}, {
+  3.5861907126239977`*^9, 3.5861907186718483`*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{740, 756},
+WindowMargins->{{428, Automatic}, {Automatic, 50}},
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 20, \
+2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 106, 1, 114, "Title"],
+Cell[CellGroupData[{
+Cell[710, 27, 93, 1, 100, "Section"],
+Cell[806, 30, 448, 7, 132, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1291, 42, 95, 1, 100, "Section"],
+Cell[1389, 45, 1272, 22, 324, "Text"],
+Cell[2664, 69, 110, 1, 37, "Text"],
+Cell[2777, 72, 194, 4, 36, "Input"],
+Cell[2974, 78, 1475, 34, 280, "Text"],
+Cell[4452, 114, 777, 12, 204, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5266, 131, 110, 1, 100, "Section"],
+Cell[5379, 134, 242, 4, 61, "Text"],
+Cell[5624, 140, 143, 3, 37, "Text"],
+Cell[5770, 145, 483, 9, 110, "Text"],
+Cell[6256, 156, 283, 5, 61, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

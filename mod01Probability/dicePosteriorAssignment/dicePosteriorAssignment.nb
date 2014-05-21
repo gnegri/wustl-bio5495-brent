@@ -1,0 +1,306 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     12457,        297]
+NotebookOptionsPosition[     11419,        258]
+NotebookOutlinePosition[     11756,        273]
+CellTagsIndexPosition[     11713,        270]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Programming exercise: Posterior probabilities\
+\>", "Section",
+ CellChangeTimes->{{3.584990522242609*^9, 3.584990533174054*^9}, {
+  3.585057066962536*^9, 3.585057079454668*^9}}],
+
+Cell[TextData[{
+ "This is a follow-up to the assignment ",
+ StyleBox["diceSample",
+  FontWeight->"Bold"],
+ ", which should be completed first. The setup is the same -- a bag \
+containing two types of dice with different probabilities of rolling each \
+number. Someone selects a die from the bag at random, rolls it a fixed number \
+of times, reports the outcomes, returns it to the bag, and repeats the \
+process. Here, you will write code that calculates the posterior probability \
+of each die type for each draw, given the number of times each face showed up \
+in the rolls for that draw, the probability distribution on faces given the \
+die type, and the prior probabilities of the two die types."
+}], "Text",
+ CellChangeTimes->{{3.584990554288546*^9, 3.584990675668972*^9}, {
+  3.584990706613673*^9, 3.584990827957404*^9}, {3.584990928240103*^9, 
+  3.5849912338312187`*^9}, {3.58499135379578*^9, 3.5849914177019157`*^9}, {
+  3.585057086798938*^9, 3.585057285133329*^9}, {3.5850573279090223`*^9, 
+  3.585057372165312*^9}, {3.5850574181094837`*^9, 3.5850574387199717`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Before starting to do anything in mathematica, sit down with a pen \
+and paper and write the formula for the posterior probability given the \
+number of times each face showed, the probability distribution on faces for \
+each die type, and the prior on die types. ",
+  FontWeight->"Bold"],
+ "Recall that there are only two possible die types so the posteriors of \
+these two types must sum to one. To get the posterior for Type 1, first \
+calculate the joint probability of Type 1 and the observed rolls by \
+multiplying the likelihood of the rolls given Type 1 by the prior probability \
+of Type 1. Now do the same for Type 2. The posterior for Type 1 is the joint \
+probability of Type 1 and the rolls divided by the joint probability of Type \
+1 and the rolls plus the joint probability of Type 2 and the rolls. When you \
+write out this ratio on paper, you will see that some of the factors are the \
+same in the numerator and denominator, so they cancel out. If you now divide \
+both the numerator and the denominator by the numerator, so you get something \
+of the form"
+}], "Text",
+ CellChangeTimes->{{3.585057445838188*^9, 3.5850575189893627`*^9}, {
+  3.585057549921026*^9, 3.585057905317073*^9}, {3.585058099590743*^9, 
+  3.5850581163975477`*^9}, {3.585770797174333*^9, 3.585770798963327*^9}}],
+
+Cell[BoxData[
+ RowBox[{"1", "/", 
+  RowBox[{"(", 
+   RowBox[{"1", "+", "x"}], ")"}]}]], "DisplayFormula",
+ CellChangeTimes->{{3.58505812599024*^9, 3.585058137110324*^9}}],
+
+Cell["\<\
+you will find that the x is particularly simple to calculate.\
+\>", "Text",
+ CellChangeTimes->{{3.585058176235311*^9, 3.5850581938692408`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Input and output", "Subsection",
+ CellChangeTimes->{{3.58505821613573*^9, 3.585058220583263*^9}}],
+
+Cell["\<\
+The first line of your function should be:\
+\>", "Text",
+ CellChangeTimes->{{3.584990554288546*^9, 3.584990675668972*^9}, {
+   3.584990706613673*^9, 3.584990827957404*^9}, {3.584990928240103*^9, 
+   3.5849912338312187`*^9}, {3.58499135379578*^9, 3.5849914177019157`*^9}, {
+   3.585057086798938*^9, 3.585057285133329*^9}, {3.5850573279090223`*^9, 
+   3.585057372165312*^9}, {3.5850574181094837`*^9, 3.585057436725141*^9}, {
+   3.585058225277076*^9, 3.5850582439805098`*^9}, {3.585058502079866*^9, 
+   3.585058510125984*^9}, 3.585058649814739*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dicePosterior", "[", 
+   RowBox[{
+   "binCounts_", ",", " ", "type1Prior_", ",", " ", "type2Prior_", ",", " ", 
+    "faceProbs1_", ",", " ", "faceProbs2_"}], "]"}], " ", ":="}]], "Input",
+ CellChangeTimes->{{3.585058661642289*^9, 3.5850586616457167`*^9}, {
+  3.585770947799818*^9, 3.585770949750482*^9}, {3.586084930070643*^9, 
+  3.5860849385603456`*^9}, {3.586084996373622*^9, 3.586084996428955*^9}}],
+
+Cell[TextData[{
+ StyleBox["binCounts",
+  FontFamily->"Courier New"],
+ " will be list of the number of times each face has shown up during this \
+draw, so that if the value were {5, 3, 5, 7} that would mean 5 ones, 3 twos, \
+5 threes, and 7 fours. The length of ",
+ StyleBox["binCounts",
+  FontFamily->"Courier"],
+ " must be the same as the lengths of ",
+ StyleBox["faceProbs1",
+  FontFamily->"Courier"],
+ " and ",
+ StyleBox["faceProbs2",
+  FontFamily->"Courier"],
+ ". The number of faces should be determined by the lengths and your code \
+should be general enough to handle any positive length. ",
+ StyleBox["type1Prior",
+  FontFamily->"Courier"],
+ " and ",
+ StyleBox["type2Prior",
+  FontFamily->"Courier"],
+ " are numbers between 0 and 1, inclusive. ",
+ StyleBox["faceProbs1",
+  FontFamily->"Courier"],
+ " and ",
+ StyleBox["faceProbs2",
+  FontFamily->"Courier"],
+ " are vectors representing the probability of producing each face on each \
+type of die. Thus, a possible call would look like:"
+}], "Text",
+ CellChangeTimes->{{3.584990554288546*^9, 3.584990675668972*^9}, {
+  3.584990706613673*^9, 3.584990827957404*^9}, {3.584990928240103*^9, 
+  3.5849912338312187`*^9}, {3.58499135379578*^9, 3.5849914177019157`*^9}, {
+  3.585057086798938*^9, 3.585057285133329*^9}, {3.5850573279090223`*^9, 
+  3.585057372165312*^9}, {3.5850574181094837`*^9, 3.585057436725141*^9}, {
+  3.585058225277076*^9, 3.5850582439805098`*^9}, {3.585058502079866*^9, 
+  3.585058510125984*^9}, {3.585058649814739*^9, 3.585058779701096*^9}, {
+  3.585058846463229*^9, 3.5850590053010178`*^9}, {3.58505905921691*^9, 
+  3.585059073573801*^9}, {3.586084958356358*^9, 3.586084978792642*^9}}],
+
+Cell[BoxData[
+ RowBox[{"dicePosterior", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"5", ",", " ", "3", ",", " ", "5", ",", " ", "7"}], "}"}], ",", 
+   " ", "0.4", ",", " ", "0.6", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"0.25", ",", " ", "0.25", ",", " ", "0.25", ",", " ", "0.25"}], 
+    "}"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"0.1", ",", " ", "0.1", ",", " ", "0.1", ",", " ", "0.7"}], 
+    "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.584990554288546*^9, 3.584990675668972*^9}, {
+   3.584990706613673*^9, 3.584990827957404*^9}, {3.584990928240103*^9, 
+   3.5849912338312187`*^9}, {3.58499135379578*^9, 3.5849914177019157`*^9}, {
+   3.585057086798938*^9, 3.585057285133329*^9}, {3.5850573279090223`*^9, 
+   3.585057372165312*^9}, {3.5850574181094837`*^9, 3.585057436725141*^9}, {
+   3.585058225277076*^9, 3.5850582439805098`*^9}, {3.585058502079866*^9, 
+   3.585058510125984*^9}, {3.585058649814739*^9, 3.585058779701096*^9}, {
+   3.585058846463229*^9, 3.5850590053010178`*^9}, {3.58505905921691*^9, 
+   3.5850591203470783`*^9}, 3.58852997558176*^9}],
+
+Cell["\<\
+The return value should be a single number representing the posterior \
+probability that Type 1 die was rolled to produce this set of outcomes. The \
+posterior probability of Type 2 is one minus that of Type 1. In principle you \
+could write code general enough to handle any number of die types, but that \
+is not how this assignment or the unit tests for it are structured.\
+\>", "Text",
+ CellChangeTimes->{{3.584990554288546*^9, 3.584990675668972*^9}, {
+   3.584990706613673*^9, 3.584990827957404*^9}, {3.584990928240103*^9, 
+   3.5849912338312187`*^9}, {3.58499135379578*^9, 3.5849914177019157`*^9}, {
+   3.585057086798938*^9, 3.585057285133329*^9}, {3.5850573279090223`*^9, 
+   3.585057372165312*^9}, {3.5850574181094837`*^9, 3.585057436725141*^9}, {
+   3.585058225277076*^9, 3.5850582439805098`*^9}, {3.585058502079866*^9, 
+   3.585058510125984*^9}, {3.585058649814739*^9, 3.585058779701096*^9}, {
+   3.585058846463229*^9, 3.5850590053010178`*^9}, {3.58505905921691*^9, 
+   3.585059111051182*^9}, {3.585059145118655*^9, 3.5850592899911613`*^9}, 
+   3.585771005051221*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Important tip 1", "Subsection",
+ CellChangeTimes->{{3.58505937491171*^9, 3.585059378732707*^9}, {
+  3.585771322147078*^9, 3.585771323057639*^9}}],
+
+Cell[TextData[{
+ "Once you\[CloseCurlyQuote]ve figured out the formula, writing this code is \
+pretty trivial, ",
+ StyleBox["except for one thing!",
+  FontWeight->"Bold"],
+ " You must consider the cases where a prior probability or a face \
+probability are zero, an observed count is zero, or both. Your code should \
+never divide by zero and should always return the correct value when any \
+combination of zeros is presented, as long as each probability distribution \
+sums to one. It\[CloseCurlyQuote]s easy to figure out what makes sense, you \
+just have to go through the cases and think about them."
+}], "Text",
+ CellChangeTimes->{{3.5850593887834253`*^9, 3.585059532405279*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Important tip 2", "Subsection",
+ CellChangeTimes->{{3.58505937491171*^9, 3.585059378732707*^9}, {
+  3.585771322147078*^9, 3.585771350144945*^9}}],
+
+Cell["\<\
+In your code, use exact arithmetic -- in other words, do not use N to change \
+fractions to fixed size decimals. If you do, numerical errors due to loss of \
+precision or underflow may cause your code to fail some of the tests.\
+\>", "Text",
+ CellChangeTimes->{{3.585771354009775*^9, 3.585771442937118*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Instructions and grading", "Subsection",
+ CellChangeTimes->{{3.585771468289455*^9, 3.585771475912866*^9}}],
+
+Cell["\<\
+Please turn in your .m file containing the code and sufficient documentation \
+to read and understand it.
+
+The rubric for this is:
+
+A. 1 point for turning in code that takes input of the right form and \
+produces output of the right form between 0 and 1. You must turn in your \
+assignment on time to get this point.
+
+B. 3 points for turning in code that is correct when the input contains no \
+zeros. You must turn in your assignment on time to get these points.
+
+C. 4 points for turning in code that passes all the tests distributed and is  \
+fully correct, including the handling of all combinations of zero inputs. \
+Just because your code passes all the provided unit tests does not guarantee \
+that it is correct -- you need to think about what\[CloseCurlyQuote]s right.
+
+D.  2 points for style (things such as capitalization and full, descriptive \
+names) and legibility, including indentation, line breaks, and comments. You \
+must satisfy A-C to get these points.\
+\>", "Text",
+ CellChangeTimes->{{3.58499210831761*^9, 3.584992269479895*^9}, {
+  3.584992305927824*^9, 3.584992605885792*^9}, {3.5849926396934137`*^9, 
+  3.584992779654065*^9}, {3.585059307737156*^9, 3.585059353317692*^9}, {
+  3.585059567260913*^9, 3.585059759166882*^9}, {3.5850598028309526`*^9, 
+  3.585059837293536*^9}, {3.585069359494947*^9, 3.58506940083663*^9}, {
+  3.585771078973572*^9, 3.5857710867632713`*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{772, 1148},
+WindowMargins->{{Automatic, -10}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (January 25, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 187, 4, 81, "Section"],
+Cell[769, 28, 1077, 17, 151, "Text"],
+Cell[1849, 47, 1329, 20, 231, "Text"],
+Cell[3181, 69, 170, 4, 25, "DisplayFormula"],
+Cell[3354, 75, 153, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[3532, 82, 103, 1, 45, "Subsection"],
+Cell[3638, 85, 555, 9, 31, "Text"],
+Cell[4196, 96, 436, 8, 55, "Input"],
+Cell[4635, 106, 1658, 38, 155, "Text"],
+Cell[6296, 146, 1066, 20, 55, "Input"],
+Cell[7365, 168, 1087, 16, 91, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8489, 189, 151, 2, 45, "Subsection"],
+Cell[8643, 193, 685, 12, 131, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9365, 210, 151, 2, 45, "Subsection"],
+Cell[9519, 214, 317, 5, 71, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9873, 224, 112, 1, 45, "Subsection"],
+Cell[9988, 227, 1403, 27, 371, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
