@@ -11,8 +11,30 @@
   
   The return value is a matrix (list of lists). Each row (list) has length rollsPerDraw and contains
   integers representing the die faces shown on the rolls of one die. 
-  *)
-diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
- Module[{(* You can define local variables here. Review the reference page on Module if you're not sure how.*)},
- 	(* fill in your code here, ending with the value to be returned..*)
- 	] 
+	  *)
+diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
+	Module[{totalDie, probType1, probType2, distDie, sides, dist1, dist2, picks, ans},
+		totalDie  = numType1+numType2;
+		probType1 = numType1/totalDie;
+		probType2 = numType2/totalDie;
+		distDie = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+		
+		sides = Length[type1];
+		dist1 = EmpiricalDistribution[type1->Range[sides]];
+		dist2 = EmpiricalDistribution[type2->Range[sides]];
+		
+		picks = RandomVariate[distDie, draws];
+		
+		ans = { };
+		
+		For[i = 1, i <= draws, i++,
+			If[picks[[i]]==1,
+				AppendTo[ans, RandomVariate[dist1, rollsPerDraw]],
+				AppendTo[ans, RandomVariate[dist2, rollsPerDraw]]
+			]
+		];
+		
+		ans
+	]
+
+	diceSample[1, 1, {1/4, 1/4, 1/4, 1/4}, {1/5, 1/5, 1/5, 2/5}, 7, 10]
