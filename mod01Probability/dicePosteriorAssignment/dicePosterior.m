@@ -7,14 +7,15 @@ dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
 	Module[{},
 		totalRolls = Total[binCounts];
 		percentRolls = binCounts/totalRolls;
-		sides = Length[binCounts];
+		sides = Range[Length[binCounts]];
 		
-		die1Data = EmpiricalData[faceProbs1->Range[sides]];
-		die2Data = EmpiricalData[faceProbs2->Range[sides]];
+		die1Data = EmpiricalDistribution[faceProbs1->sides];
+		die2Data = EmpiricalDistribution[faceProbs2->sides];
 		
 		pBgT1 = Probability[z == percentRolls, z \[Distributed] die1Data];
 		pBgT2 = Probability[x == percentRolls, x \[Distributed] die2Data];
 		
-		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior)
-
+		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior);
+		
+		pT1gB
   	]
