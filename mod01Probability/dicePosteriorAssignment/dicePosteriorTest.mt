@@ -49,7 +49,7 @@ Test[
 	TestID->"ProbabilityTest-20130809-F0L4S1"
 ]
 
-(* Testing the handling of a zero in both the probabilities and the counts.*)
+(* Testing the handling of a zero in one of the probabilities and the counts.*)
 Test[
 	N[dicePosterior[{0, 1, 1, 4}, 1/3, 2/3, {0, 1/8, 1/8, 6/8}, {1/4, 1/4, 1/4, 1/4}],2]
 	,

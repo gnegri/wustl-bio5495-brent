@@ -4,18 +4,33 @@
   appears in that draw and the relative numbers of Type 1 and Type 2 dice in the bag as well as the face probabilities
   for Type 1 and Type 2 dice. The single number returned is the posterior probability of Type 1.*)
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
-	Module[{},
+	Module[{totalRolls, percentRolls, sides, actualRolls, die1Data, die2Data, pBgT1, pBgT2, pT1gB},
 		totalRolls = Total[binCounts];
 		percentRolls = binCounts/totalRolls;
-		sides = Range[Length[binCounts]];
+		sides = Length[binCounts];
 		
-		die1Data = EmpiricalDistribution[faceProbs1->sides];
-		die2Data = EmpiricalDistribution[faceProbs2->sides];
+		actualRolls = { };
+		For[i=1, i<=sides, i++,
+			For[j=1, j<=binCounts[[i]], j++,
+				AppendTo[actualRolls, i];
+			];
+		];
 		
-		pBgT1 = Probability[z == percentRolls, z \[Distributed] die1Data];
-		pBgT2 = Probability[x == percentRolls, x \[Distributed] die2Data];
+		(* this is wrong
+		die1Data = EmpiricalDistribution[faceProbs1->Range[sides]];
+		die2Data = EmpiricalDistribution[faceProbs2->Range[sides]];
 		
-		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior);
 		
-		pT1gB
+		pBgT1 = Probability[z == actualRolls, z \[Distributed] die1Data];
+		pBgT2 = Probability[x == actualRolls, x \[Distributed] die2Data];
+		*)
+		
+		pBgT1 = 1;
+		pBgT2 = 1;
+		For[k=1, k<=totalRolls, k++,
+			pBgT1 *= faceProbs1[[actualRolls[[k]]]];
+			pBgT2 *= faceProbs2[[actualRolls[[k]]]];
+		];
+		
+		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior)
   	]
