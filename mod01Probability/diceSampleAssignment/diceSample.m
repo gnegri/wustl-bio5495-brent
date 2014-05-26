@@ -19,9 +19,9 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 		probType2 = numType2/totalDie;
 		distDie = EmpiricalDistribution[{probType1, probType2}->{1,2}];
 		
-		sides = Length[type1];
-		dist1 = EmpiricalDistribution[type1->Range[sides]];
-		dist2 = EmpiricalDistribution[type2->Range[sides]];
+		sides = Range[Length[type1]];
+		dist1 = EmpiricalDistribution[type1->sides];
+		dist2 = EmpiricalDistribution[type2->sides];
 		
 		picks = RandomVariate[distDie, draws];
 		
