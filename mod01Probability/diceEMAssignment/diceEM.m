@@ -24,3 +24,50 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 	]
 
 (* Make sure to include your diceSample and dicePosterior functions here.*)
+diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
+	Module[{totalDie, probType1, probType2, distDie, sides, dist1, dist2, picks, ans},
+		totalDie  = numType1+numType2;
+		probType1 = numType1/totalDie;
+		probType2 = numType2/totalDie;
+		distDie = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+		
+		sides = Range[Length[type1]];
+		dist1 = EmpiricalDistribution[type1->sides];
+		dist2 = EmpiricalDistribution[type2->sides];
+		
+		picks = RandomVariate[distDie, draws];
+		
+		ans = { };
+		
+		For[i = 1, i <= draws, i++,
+			If[picks[[i]]==1,
+				AppendTo[ans, RandomVariate[dist1, rollsPerDraw]],
+				AppendTo[ans, RandomVariate[dist2, rollsPerDraw]]
+			]
+		];
+		
+		ans
+	]
+	
+dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
+	Module[{totalRolls, percentRolls, sides, actualRolls, pBgT1, pBgT2, pT1gB},
+		totalRolls = Total[binCounts];
+		percentRolls = binCounts/totalRolls;
+		sides = Length[binCounts];
+		
+		actualRolls = { };
+		For[i=1, i<=sides, i++,
+			For[j=1, j<=binCounts[[i]], j++,
+				AppendTo[actualRolls, i];
+			];
+		];
+		
+		pBgT1 = 1;
+		pBgT2 = 1;
+		For[k=1, k<=totalRolls, k++,
+			pBgT1 *= faceProbs1[[actualRolls[[k]]]];
+			pBgT2 *= faceProbs2[[actualRolls[[k]]]];
+		];
+		
+		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior)
+  	]
