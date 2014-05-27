@@ -4,7 +4,7 @@
   appears in that draw and the relative numbers of Type 1 and Type 2 dice in the bag as well as the face probabilities
   for Type 1 and Type 2 dice. The single number returned is the posterior probability of Type 1.*)
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
-	Module[{totalRolls, percentRolls, sides, actualRolls, die1Data, die2Data, pBgT1, pBgT2, pT1gB},
+	Module[{totalRolls, percentRolls, sides, actualRolls, pBgT1, pBgT2, pT1gB},
 		totalRolls = Total[binCounts];
 		percentRolls = binCounts/totalRolls;
 		sides = Length[binCounts];
@@ -15,15 +15,6 @@ dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
 				AppendTo[actualRolls, i];
 			];
 		];
-		
-		(* this is wrong
-		die1Data = EmpiricalDistribution[faceProbs1->Range[sides]];
-		die2Data = EmpiricalDistribution[faceProbs2->Range[sides]];
-		
-		
-		pBgT1 = Probability[z == actualRolls, z \[Distributed] die1Data];
-		pBgT2 = Probability[x == actualRolls, x \[Distributed] die2Data];
-		*)
 		
 		pBgT1 = 1;
 		pBgT2 = 1;
