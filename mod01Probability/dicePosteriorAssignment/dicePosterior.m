@@ -4,24 +4,11 @@
   appears in that draw and the relative numbers of Type 1 and Type 2 dice in the bag as well as the face probabilities
   for Type 1 and Type 2 dice. The single number returned is the posterior probability of Type 1.*)
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
-	Module[{totalRolls, percentRolls, sides, actualRolls, pBgT1, pBgT2, pT1gB},
-		totalRolls = Total[binCounts];
-		percentRolls = binCounts/totalRolls;
+	Module[{sides, pBgT1, pBgT2, pT1gB},
 		sides = Length[binCounts];
-		
-		actualRolls = { };
-		For[i=1, i<=sides, i++,
-			For[j=1, j<=binCounts[[i]], j++,
-				AppendTo[actualRolls, i];
-			];
-		];
-		
-		pBgT1 = 1;
-		pBgT2 = 1;
-		For[k=1, k<=totalRolls, k++,
-			pBgT1 *= faceProbs1[[actualRolls[[k]]]];
-			pBgT2 *= faceProbs2[[actualRolls[[k]]]];
-		];
+
+		pBgT1 = Product[faceProbs1[[k]]^binCounts[[k]],{k,sides}];
+		pBgT2 = Product[faceProbs2[[k]]^binCounts[[k]],{k,sides}];
 		
 		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior)
   	]
