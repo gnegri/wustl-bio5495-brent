@@ -203,3 +203,18 @@ Test[
 	,
 	TestID->"ProbabilityTest-20130729-M6H3S7"
 ]
+
+diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
+	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
+		totalDie  = numType1+numType2;
+		probType1 = numType1/totalDie;
+		probType2 = numType2/totalDie;
+		distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+		
+		sides = Range[Length[type1]];
+		dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
+		
+		picks = RandomVariate[distDice, draws];
+		
+		Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
+	]
