@@ -24,5 +24,5 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 		
 		picks = RandomVariate[distDice, draws];
 		
-		Table[ RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
+		Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
 	]
