@@ -13,7 +13,7 @@
   integers representing the die faces shown on the rolls of one die. 
 	  *)
 diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
-	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks, ans},
+	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
 		totalDie  = numType1+numType2;
 		probType1 = numType1/totalDie;
 		probType2 = numType2/totalDie;
@@ -24,23 +24,5 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 		
 		picks = RandomVariate[distDice, draws];
 		
-		
-		
-		ans = Table[
-			(*If[picks[[i]]==1,*)
-				RandomVariate[dist[picks[[i]]],rollsPerDraw], (*;
-				AppendTo[ans, RandomVariate[dist1, rollsPerDraw]],
-				AppendTo[ans, RandomVariate[dist2, rollsPerDraw]]
-			],*)
-			{i,1,draws}
-		];
-		(*
-		For[i = 1, i <= draws, i++,
-			If[picks[[i]]==1,
-				AppendTo[ans, RandomVariate[dist1, rollsPerDraw]],
-				AppendTo[ans, RandomVariate[dist2, rollsPerDraw]]
-			]
-		];
-		*)
-		ans
+		Table[ RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
 	]
