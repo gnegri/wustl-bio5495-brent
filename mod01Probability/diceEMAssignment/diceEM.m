@@ -4,15 +4,11 @@
 		    newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
 		(* Initialize the local variables here.*)
 		numFaces = Max[sample];
-		
-		listOfNumbers = 
 		sampleSize = Dimensions[sample][[1]];
+		oldFaceProbs1 = Normalize[RandomInteger[{1,10}, numFaces], Total];
+		oldFaceProbs2 = Normalize[RandomInteger[{1,10}, numFaces], Total];
 		binCounts = Table[BinCounts[sample[[i]],{1,numFaces+1,1}],{i,1,sampleSize}];
-		oldType1Prob = .4;
-		oldType2Prob = .6;
-		oldFaceProbs1 = binCounts[[1]]/oldType1Prob;
-		oldFaceProbs2 = binCounts[[1]]/oldType2Prob;
-		oldType1Prob = dicePosterior[binCounts[[1]],oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2];
+		oldType1Prob = dicePosterior[binCounts[[1]],.45,.55,oldFaceProbs1,oldFaceProbs2];
 		oldType2Prob = 1-oldType1Prob;
 		(* Loop here until either maxIterations has been reached or the sum of the absolute values of the changes from one 
 		   iteration to the next in all estimated parameters is less than accuracy.
@@ -35,8 +31,8 @@
 					oldType2Prob = newType2Prob;
 					oldFaceProbs1 = newFaceProbs1;
 					oldFaceProbs2 = newFaceProbs2;
-				]
-			]
+				];
+			];
 		];
 		(*At the end, return the estimated parameters with the less likely die first.*)
 		If[newType1Prob <= newType2Prob,
@@ -54,8 +50,8 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 		newType2Prob = 1 - newType1Prob;
 		(* Now use the posteriors to calculate EXPECTED counts for each die and each face in the sample.*)
 		totalRolls = Total[binCounts];
-		newFaceProbs1 = oldFaceProbs1*totalRolls;
-		newFaceProbs2 = oldFaceProbs2*totalRolls;
+		newFaceProbs1 = 1*1; 
+		newFaceProbs2 = 1*1;
 		(* Finally, use these counts to compute maximum likelihood estimates for the parameters and return these estimates
 		   in a list.*)
 		   
@@ -67,7 +63,7 @@ dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
 	Module[{sides, pBgT1, pBgT2, pT1gB},
 		sides = Length[binCounts];
 
-		pBgT1 = Product[faceProbs1[[k]]^binCounts[[k]],{k,sides}];
+		pBgT1 = Product[faceProbs1[[j]]^binCounts[[j]],{j,sides}];
 		pBgT2 = Product[faceProbs2[[k]]^binCounts[[k]],{k,sides}];
 		
 		pT1gB = (pBgT1*type1Prior)/(pBgT1*type1Prior+pBgT2*type2Prior)
