@@ -4,6 +4,8 @@
 		    newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
 		(* Initialize the local variables here.*)
 		numFaces = Max[sample];
+		
+		listOfNumbers = 
 		sampleSize = Dimensions[sample][[1]];
 		binCounts = Table[BinCounts[sample[[i]],{1,numFaces+1,1}],{i,1,sampleSize}];
 		oldType1Prob = .4;
@@ -44,7 +46,7 @@
 	]
 
 updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFaceProbs2_] :=
-	Module[{posteriorType1, posteriorType2, type1Count, type2Count, faceCounts1, faceCounts2,
+	Module[{posteriorType1, posteriorType2, type1Count, type2Count, faceCounts1, faceCounts2, totalRolls,
 		newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
 		(*Create list of posterior probabilities of a Type1 die having been rolled on each draw by calling your dicePosteriors,
 		  which you should paste in to this file. *)
@@ -52,8 +54,8 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 		newType2Prob = 1 - newType1Prob;
 		(* Now use the posteriors to calculate EXPECTED counts for each die and each face in the sample.*)
 		totalRolls = Total[binCounts];
-		newFaceProbs1 = binCounts/(newType1Prob*totalRolls);
-		newFaceProbs2 = binCounts/(newType2Prob*totalRolls);
+		newFaceProbs1 = oldFaceProbs1*totalRolls;
+		newFaceProbs2 = oldFaceProbs2*totalRolls;
 		(* Finally, use these counts to compute maximum likelihood estimates for the parameters and return these estimates
 		   in a list.*)
 		   
