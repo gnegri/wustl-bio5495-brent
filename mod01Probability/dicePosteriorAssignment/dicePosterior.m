@@ -4,7 +4,7 @@
   for Type 1 and Type 2 dice. The single number returned is the posterior probability of Type 1.*)
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
 	Module[{sides, pBgT1, pBgT2}, 
- 	expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
+
  	sides = Length[binCounts];
  	
  	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
@@ -12,4 +12,5 @@ dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
 	
 	(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
 ]
-(* works in a .nb file but gives indeterminate in tests *)
+
+expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
