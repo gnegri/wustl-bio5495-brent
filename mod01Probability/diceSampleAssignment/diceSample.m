@@ -10,19 +10,18 @@
   is rolled before it is returned to the bag.
   
   The return value is a matrix (list of lists). Each row (list) has length rollsPerDraw and contains
-  integers representing the die faces shown on the rolls of one die. 
-	  *)
+  integers representing the die faces shown on the rolls of one die. *)
 diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
 	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
-		totalDie  = numType1+numType2;
-		probType1 = numType1/totalDie;
-		probType2 = numType2/totalDie;
-		distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
-		
-		sides = Range[Length[type1]];
-		dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-		
-		picks = RandomVariate[distDice, draws];
-		
-		Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
-	]
+	totalDie  = numType1+numType2;
+	probType1 = numType1/totalDie;
+	probType2 = numType2/totalDie;
+	distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+	
+	sides = Range[Length[type1]];
+	dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
+	
+	picks = RandomVariate[distDice, draws];
+	
+	Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
+]
