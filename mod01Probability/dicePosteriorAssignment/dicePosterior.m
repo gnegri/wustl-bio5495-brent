@@ -12,5 +12,5 @@ dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
 	
 	(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
 ]
-
+(* if in dicePosterior only works in a .nb? *)
 expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
