@@ -22,10 +22,7 @@
 			While[True,
 				old = {oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2};
 				new = updateProbs[binCounts,oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2];
-				newType1Prob  = new[[1]];
-				newType2Prob  = new[[2]];
-				newFaceProbs1 = new[[3]];
-				newFaceProbs2 = new[[4]];
+				{newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2} = new;
 				iter++;
 				If[iter>maxIterations || Abs[old-new] < accuracy,
 					Throw[
@@ -34,10 +31,7 @@
 		   					return = {newType2Prob, newType1Prob, newFaceProbs2, newFaceProbs1}
 						]
 					],
-					oldType1Prob = newType1Prob;
-					oldType2Prob = newType2Prob;
-					oldFaceProbs1 = newFaceProbs1;
-					oldFaceProbs2 = newFaceProbs2;
+					{oldType1Prob, oldType2Prob, oldFaceProbs1, oldFaceProbs2, newFaceProbs2} = new;
 				];
 			];
 		];
@@ -66,13 +60,13 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 		faceCounts1 = totalRolls*oldFaceProbs1;
 		faceCounts2 = totalRolls*oldFaceProbs2;
 		
-		(* Finally, use these counts to compute maximum likelihood estimates for the parameters and return these estimates
-		   in a list.*)
-		(*FIX ME*)
+		(* Finally, use these counts to compute maximum likelihood estimates for the parameters 
+			and return these estimates in a list.*)
+		(* FIX ME *)
 		newType1Prob  = 
 		newType2Prob  = 
-		newFaceProbs1 =
-		newFaceProbs2 =
+		newFaceProbs1 = 
+		newFaceProbs2 = 
 		
 		{newType1Prob,newType2Prob,newFaceProbs1,newFaceProbs2}
 	]
