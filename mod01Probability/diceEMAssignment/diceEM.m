@@ -6,11 +6,11 @@
 		(* Initialize the local variables here.*)
 		numFaces = Max[sample];
 		sampleSize = Dimensions[sample][[1]];
+		binCounts = Table[BinCounts[sample[[i]],{1,numFaces+1,1}],{i,1,sampleSize}];
 		oldFaceProbs1 = Normalize[RandomInteger[{1,10}, numFaces], Total];
 		oldFaceProbs2 = Normalize[RandomInteger[{1,10}, numFaces], Total];
-		binCounts = Table[BinCounts[sample[[i]],{1,numFaces+1,1}],{i,1,sampleSize}];
-		oldType1Prob = dicePosterior[binCounts[[1]],.45,.55,oldFaceProbs1,oldFaceProbs2];
-		oldType2Prob = 1-oldType1Prob;
+		oldType1Prob  = .55;
+		oldType2Prob  = .45;
 		
 		(* Loop here until either maxIterations has been reached or the sum of the absolute values of the changes from one 
 		   iteration to the next in all estimated parameters is less than accuracy.
@@ -31,7 +31,7 @@
 		   					return = {newType2Prob, newType1Prob, newFaceProbs2, newFaceProbs1}
 						]
 					],
-					{oldType1Prob, oldType2Prob, oldFaceProbs1, oldFaceProbs2, newFaceProbs2} = new;
+					{oldType1Prob, oldType2Prob, oldFaceProbs1, oldFaceProbs2} = new;
 				];
 			];
 		];
@@ -45,28 +45,31 @@
 	]
 
 updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFaceProbs2_] :=
-	Module[{posteriorType1, posteriorType2, type1Count, type2Count, faceCounts1, faceCounts2, totalRolls,
+	Module[{posteriorType1, posteriorType2, type1Count, type2Count, faceCounts1, faceCounts2, 
+		draws, rollsPerDraw,
 		newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
 		
 		(*Create list of posterior probabilities of a Type1 die having been rolled on each draw by calling your dicePosteriors,
 		  which you should paste in to this file. *)
-		posteriorType1 = dicePosterior[binCounts,oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2];
+		
+		draws = Dimensions[binCounts][[1]];
+		posteriorType1 = Table[dicePosterior[binCounts[[i]],oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2],{i,1,draws}];
 		posteriorType2 = 1 - posteriorType1;
 		
 		(* Now use the posteriors to calculate EXPECTED counts for each die and each face in the sample.*)
-		totalRolls  = Total[binCounts];
-		type1Count  = totalRolls*posteriorType1;
-		type2Count  = totalRolls*posteriorType2;
-		faceCounts1 = totalRolls*oldFaceProbs1;
-		faceCounts2 = totalRolls*oldFaceProbs2;
+		rollsPerDraw = Dimensions[binCounts][[2]];
+		type1Count   = rollsPerDraw*posteriorType1;
+		type2Count   = rollsPerDraw*posteriorType2;
+		faceCounts1  = rollsPerDraw*oldFaceProbs1;
+		faceCounts2  = rollsPerDraw*oldFaceProbs2;
 		
 		(* Finally, use these counts to compute maximum likelihood estimates for the parameters 
 			and return these estimates in a list.*)
 		(* FIX ME *)
-		newType1Prob  = 
-		newType2Prob  = 
-		newFaceProbs1 = 
-		newFaceProbs2 = 
+		newType1Prob  = Total[type1Count]/(rollsPerDraw*draws);
+		newType2Prob  = Total[type2Count]/(rollsPerDraw*draws);
+		newFaceProbs1 = type1Count/Total[type1Count];
+		newFaceProbs2 = type2Count/Total[type2Count];
 		
 		{newType1Prob,newType2Prob,newFaceProbs1,newFaceProbs2}
 	]
@@ -90,11 +93,10 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 	totalDie  = numType1+numType2;
 	probType1 = numType1/totalDie;
 	probType2 = numType2/totalDie;
-	distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+	distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
 	
 	sides = Range[Length[type1]];
-	dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-	
+	dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
 	picks = RandomVariate[distDice, draws];
 	
 	Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]

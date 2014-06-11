@@ -1,7 +1,7 @@
 (* Mathematica Test File *)
 
 (* Testing the function diceSample, which produces a sample for the bag of dice
-   problem with two types of dice. *)
+   problem with two types of dice.
 
 (* Testing that the dimensions of the sample are correct. *)
 Test[
@@ -138,7 +138,7 @@ Test[
 	,
 	TestID->"ProbabilityTest-20130809-R5O9V9"
 ]
-
+*)
 (* Testing diceEM on a known input sample.*)
 
 Test[
@@ -209,11 +209,10 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 		totalDie  = numType1+numType2;
 		probType1 = numType1/totalDie;
 		probType2 = numType2/totalDie;
-		distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+		distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
 		
 		sides = Range[Length[type1]];
-		dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-		
+		dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
 		picks = RandomVariate[distDice, draws];
 		
 		Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
