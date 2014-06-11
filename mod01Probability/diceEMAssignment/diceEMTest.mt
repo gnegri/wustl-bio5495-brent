@@ -153,7 +153,7 @@ Test[
 	,
 	{0.45, 0.55, {0.09, 0.27, 0.27, 0.38}, {0.37, 0.19, 0.12, 0.32}}
 	,
-	TestID->"ProbabilityTest-20130814-U7U5K4"
+	TestID->"Known Input Sample"
 ]
 
 (* Check that it still works when the number of faces changes*)
@@ -170,7 +170,7 @@ Test[
 	,
 	{0.14, 0.86, {0., 0.3, 0.4, 0.2, 0.1}, {0.28, 0.22, 0.15, 0.35, 0.}}
 	,
-	TestID->"diceEMAssignment-20130919-U7S0M0"
+	TestID->"Number of Faces 4->5"
 ]
 
 
@@ -181,7 +181,7 @@ Test[
 	,
 	{0.4,0.6,{0.3,0.2,0.2,0.2},{0.,0.2,0.2,0.6}}
 	,
-	TestID->"ProbabilityTest-20130729-H6T9V4"
+	TestID->"Stochastic 1"
 ]
 
 (*NOTE: The following test is stochastic -- on very, very rare occasions it may fail legitimately. If it fails 
@@ -191,7 +191,7 @@ Test[
 	,
 	{0.4,0.6,{0.3, 0.2, 0.3, 0.2},{0.1,0.2,0.2,0.5}}
 	,
-	TestID->"ProbabilityTest-20130729-X0W0A0"
+	TestID->"Stochastic 2"
 ]
 
 (*NOTE: The following test is stochastic -- on very, very rare occasions it may fail legitimately. If it fails 
@@ -201,7 +201,7 @@ Test[
 	,
 	{0.4,0.6,{0.3,0.3,0.2,0.2},{0.2,0.2,0.2,0.4}}
 	,
-	TestID->"ProbabilityTest-20130729-M6H3S7"
+	TestID->"Stochastic 3"
 ]
 
 diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
