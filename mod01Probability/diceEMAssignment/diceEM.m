@@ -65,7 +65,6 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 		
 		(* Finally, use these counts to compute maximum likelihood estimates for the parameters 
 			and return these estimates in a list.*)
-		(* FIX ME *)
 		newType1Prob  = Total[type1Count]/(rollsPerDraw*draws);
 		newType2Prob  = Total[type2Count]/(rollsPerDraw*draws);
 		newFaceProbs1 = type1Count/Total[type1Count];
@@ -79,7 +78,6 @@ dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] :=
 	Module[{sides, pBgT1, pBgT2}, 
 
  	sides = Length[binCounts];
- 	
  	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
 	pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
 	
@@ -90,6 +88,7 @@ expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
 
 diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
 	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
+		
 	totalDie  = numType1+numType2;
 	probType1 = numType1/totalDie;
 	probType2 = numType2/totalDie;
