@@ -8,4 +8,4 @@ scoreDNAClasses[outputFile_, keyFile_]:=
   					 /. {"H" -> 1, "M" -> 0};
   		Round[1 - Total[Abs[predictions - truth]] / Length[truth], 0.01]]
 
-classifyDNA[fastaFile_, outputFile_]:=
+(* classifyDNA[fastaFile_, outputFile_] := *)
