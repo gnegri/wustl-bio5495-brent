@@ -1,7 +1,7 @@
 (* Mathematica Test File *)
 
 (* Testing the function diceSample, which produces a sample for the bag of dice
-   problem with two types of dice.
+   problem with two types of dice. *)
 
 (* Testing that the dimensions of the sample are correct. *)
 Test[
@@ -138,7 +138,7 @@ Test[
 	,
 	TestID->"ProbabilityTest-20130809-R5O9V9"
 ]
-*)
+
 (* Testing diceEM on a known input sample.*)
 
 Test[
