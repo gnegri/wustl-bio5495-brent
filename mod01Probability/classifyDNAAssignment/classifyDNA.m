@@ -77,7 +77,7 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 
 (* Compares the output file I create with the answer key *)
 scoreDNAClasses[outputFile_, keyFile_]:=
-	Module[{predictions, truth, kf, kfOut},
+	Module[{predictions, truth, kfOut},
 		predictions=IntegerDigits[Get[outputFile]];
 		kfOut = StringReplace[keyFile,".txt"->"2.txt"];
 		keyFileFix[keyFile,kfOut];
