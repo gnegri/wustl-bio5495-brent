@@ -10,41 +10,100 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      1891,         58]
-NotebookOptionsPosition[      1654,         45]
-NotebookOutlinePosition[      1992,         60]
-CellTagsIndexPosition[      1949,         57]
+NotebookDataLength[      4410,        118]
+NotebookOptionsPosition[      4136,        104]
+NotebookOutlinePosition[      4473,        119]
+CellTagsIndexPosition[      4430,        116]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell[BoxData[{
+Cell[BoxData[
  RowBox[{
   RowBox[{"odFix", "[", "odFile_", "]"}], ":=", 
   RowBox[{"Module", "[", 
    RowBox[{
-    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"fix", ",", "time", ",", "out"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{"fix", " ", "=", " ", 
       RowBox[{"Import", "[", 
        RowBox[{"odFile", ",", "\"\<CSV\>\""}], "]"}]}], ";", 
      "\[IndentingNewLine]", 
-     RowBox[{"fix", "/=", "100"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"time", "=", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"fix", "[", 
+          RowBox[{"[", "j", "]"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", 
+          RowBox[{"Length", "[", "fix", "]"}]}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"fix", "=", 
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"fix", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"2", ";;", "All"}], "]"}], "]"}], "/", "100"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{"Length", "[", "fix", "]"}]}], "}"}]}], "]"}], "//", 
+       "N"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"out", "=", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"Join", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"time", "[", 
+            RowBox[{"[", "k", "]"}], "]"}], "}"}], ",", 
+          RowBox[{"fix", "[", 
+           RowBox[{"[", "k", "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"k", ",", 
+          RowBox[{"Length", "[", "fix", "]"}]}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
      RowBox[{"Export", "[", 
-      RowBox[{"odFile", ",", 
-       RowBox[{"fix", "//", "N"}]}], "]"}]}]}], "\[IndentingNewLine]", 
-   "]"}]}], "\[IndentingNewLine]", 
- RowBox[{"odFix", "[", "\"\<~/Downloads/odFileEx.csv\>\"", "]"}]}], "Input",
+      RowBox[{"odFile", ",", "out"}], "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
  CellChangeTimes->{{3.612281822880494*^9, 3.612281860833651*^9}, {
-  3.612281973314361*^9, 3.612282037505767*^9}, {3.612282080434531*^9, 
-  3.612282081825955*^9}, {3.6122821428663483`*^9, 3.612282300960651*^9}, {
-  3.612282400576797*^9, 3.612282415696323*^9}, {3.612282448769189*^9, 
-  3.612282452368929*^9}, {3.612282507360816*^9, 3.612282534657439*^9}, {
-  3.612282567263352*^9, 3.612282649662776*^9}, {3.6122827091994*^9, 
-  3.61228277516599*^9}}]
+   3.612281973314361*^9, 3.612282037505767*^9}, {3.612282080434531*^9, 
+   3.612282081825955*^9}, {3.6122821428663483`*^9, 3.612282300960651*^9}, {
+   3.612282400576797*^9, 3.612282415696323*^9}, {3.612282448769189*^9, 
+   3.612282452368929*^9}, {3.612282507360816*^9, 3.612282534657439*^9}, {
+   3.612282567263352*^9, 3.612282649662776*^9}, {3.6122827091994*^9, 
+   3.61228277516599*^9}, {3.61279890261893*^9, 3.612798903370536*^9}, {
+   3.61279894028265*^9, 3.6127989809764547`*^9}, {3.612799035835107*^9, 
+   3.6127990645197678`*^9}, {3.612799210681118*^9, 3.612799280217897*^9}, {
+   3.612799352874321*^9, 3.61279935751015*^9}, {3.6127993928292*^9, 
+   3.612799395577496*^9}, {3.612799525593245*^9, 3.612799528447473*^9}, {
+   3.612799606999584*^9, 3.612799638278891*^9}, {3.612800191585793*^9, 
+   3.612800249652211*^9}, {3.612800291475074*^9, 3.61280035525093*^9}, {
+   3.612800412258692*^9, 3.612800521889204*^9}, 3.612800553986759*^9, {
+   3.612800974205145*^9, 3.612801015599066*^9}}],
+
+Cell[BoxData[
+ RowBox[{"odFix", "[", 
+  "\"\</home/mblab/Dropbox/School/mblab/Chemostat \
+analysis/chemostatAnalysis/data/YMR037C/06.24.14/chem4/od.csv\>\"", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.61279964228962*^9, 3.61279968443777*^9}, {
+  3.612799776804381*^9, 3.61279982514188*^9}, {3.6127998825317574`*^9, 
+  3.612800008626322*^9}, {3.6128000443867493`*^9, 3.612800094370574*^9}, {
+  3.6128001282103233`*^9, 3.61280017670509*^9}, {3.612800397904187*^9, 
+  3.6128004041587343`*^9}, {3.6128005088950157`*^9, 3.612800565630578*^9}, {
+  3.612800656062229*^9, 3.6128007490884523`*^9}, {3.612800808911104*^9, 
+  3.6128009658367662`*^9}, {3.612801027896687*^9, 3.612801046507144*^9}}]
 },
-WindowSize->{740, 867},
-WindowMargins->{{295, Automatic}, {110, Automatic}},
+WindowSize->{662, 738},
+WindowMargins->{{372, Automatic}, {96, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
@@ -59,10 +118,10 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 1093, 23, 143, "Input"]
+Cell[557, 20, 2887, 69, 209, "Input"],
+Cell[3447, 91, 685, 11, 99, "Input"]
 }
 ]
 *)
 
 (* End of internal cache information *)
-
