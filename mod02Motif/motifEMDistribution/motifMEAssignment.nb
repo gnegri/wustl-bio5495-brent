@@ -1,0 +1,743 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     32580,        734]
+NotebookOptionsPosition[     29522,        635]
+NotebookOutlinePosition[     29934,        653]
+CellTagsIndexPosition[     29891,        650]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Motif Finding EM assignment", "Title",
+ CellChangeTimes->{{3.5855109621349773`*^9, 3.5855109786207867`*^9}, {
+  3.589537452880289*^9, 3.58953745716191*^9}, {3.589538129491316*^9, 
+  3.5895381327143*^9}, {3.5895844392069798`*^9, 3.589584452050078*^9}}],
+
+Cell["\<\
+This assignment involves writing some code for an EM-based motif finding \
+algorithm and then testing it, doing some experiments, and answering some \
+questions. Please write your answers below the questions and turn this \
+notebook in with your code. Please read the entire notebook including the \
+rubric at the bottom, which explains some important elements of the \
+assignment.\
+\>", "Text",
+ CellChangeTimes->{{3.585512475580336*^9, 3.5855125543489027`*^9}, {
+  3.589537492811056*^9, 3.589537550642374*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Coding", "Section",
+ CellChangeTimes->{{3.5855110461522093`*^9, 3.58551104688463*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Provided files", "Subsection",
+ CellChangeTimes->{{3.58558939219401*^9, 3.5855893941449203`*^9}, {
+  3.589539112993775*^9, 3.589539119281577*^9}},
+ FontColor->Automatic],
+
+Cell[TextData[StyleBox["Three \[OpenCurlyDoubleQuote].m\
+\[CloseCurlyDoubleQuote] files are provided with this distribution. ",
+ FontColor->Automatic]], "Text",
+ CellChangeTimes->{{3.585511054430279*^9, 3.585511089917618*^9}, {
+  3.585511121620488*^9, 3.585511188876453*^9}, {3.585511236981254*^9, 
+  3.585511531292819*^9}, {3.585589550249552*^9, 3.5855895528959713`*^9}, {
+  3.585589618879745*^9, 3.585589736988511*^9}, {3.58558982569786*^9, 
+  3.585589837879303*^9}, {3.5855898971032*^9, 3.585589953134733*^9}, {
+  3.5855899947739897`*^9, 3.5855899989980288`*^9}, {3.585590530378899*^9, 
+  3.585590619913625*^9}, {3.585678954137244*^9, 3.585678994249689*^9}, {
+  3.585915486586301*^9, 3.5859154875789137`*^9}, {3.585915517778281*^9, 
+  3.5859155219063597`*^9}, {3.5860220289383497`*^9, 3.586022029501439*^9}, {
+  3.589537566200644*^9, 3.5895376322742043`*^9}, {3.589537713850307*^9, 
+  3.589537882545096*^9}},
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["The code you are to write for this part of the motif \
+finder lives in motifEMAssignment.m, which contains shells for some high \
+level functions. ",
+ FontColor->Automatic]], "Item",
+ CellChangeTimes->{{3.585511054430279*^9, 3.585511089917618*^9}, {
+   3.585511121620488*^9, 3.585511188876453*^9}, {3.585511236981254*^9, 
+   3.585511531292819*^9}, {3.585589550249552*^9, 3.5855895528959713`*^9}, {
+   3.585589618879745*^9, 3.585589736988511*^9}, {3.58558982569786*^9, 
+   3.585589837879303*^9}, {3.5855898971032*^9, 3.585589953134733*^9}, {
+   3.5855899947739897`*^9, 3.5855899989980288`*^9}, {3.585590530378899*^9, 
+   3.585590619913625*^9}, {3.585678954137244*^9, 3.585678994249689*^9}, {
+   3.585915486586301*^9, 3.5859154875789137`*^9}, {3.585915517778281*^9, 
+   3.5859155219063597`*^9}, {3.5860220289383497`*^9, 3.586022029501439*^9}, {
+   3.589537566200644*^9, 3.5895376322742043`*^9}, {3.589537713850307*^9, 
+   3.589537882545096*^9}, {3.589537929388814*^9, 3.58953792974583*^9}, 
+   3.589541203805993*^9, {3.589569122929731*^9, 3.589569123682303*^9}},
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell[TextData[StyleBox["tools.m contains a few small tools that are either \
+for analyzing your results or are generally useful for handling DNA data. The \
+most important for you is a function for reading in \
+\[OpenCurlyDoubleQuote].fasta\[CloseCurlyDoubleQuote] or \
+\[OpenCurlyDoubleQuote].fa\[CloseCurlyDoubleQuote] files of DNA sequence, \
+converting A,C,G,T to 1, 2, 3, 4, respectively, and taking care of a few \
+other little details.",
+ FontColor->Automatic]], "Item",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQfePI2YsXt71yVIi1vQaiuW4b3wLRz7nnPALR+Wnz
+X4DoY3GZvJeAdMif46o/gPSZ1TJqIPq+WoweiH60UN4WRN8LMfMA0Q7KezxB
+dJavciCI3uOvEgGi245ExILoW+/vg+mP8j4LwOpsaleDaL8Ul7PK2185lvx1
+vwSifx265D0dSJe1fQLT657v8AfRzxhsA0D0N7Z5gaeB9CnuDWB6bfaxx/X7
+Xjl6HON4A6K3m1p/A9G5hYHcDUBaq1BHEERfv2sOpl95pEmAaLcMZnkQPeF2
+tgqI5t0uowGiw7R3r2kE0smXVq4H0QDEia1+
+  "],
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell["\<\
+fixUps.m. This file contains some shell code for the two important fix ups \
+(sounds better than \[OpenCurlyDoubleQuote]hacks\[CloseCurlyDoubleQuote]) in \
+the Bailey and Elkan paper to deal with the none-independence of the \
+overlapping windows and the non-independence of base positions in DNA \
+sequence in general. These will not be needed for Part I of the assignment, \
+but they are provided for future parts and/or extra credit parts.\
+\>", "Item",
+ CellChangeTimes->{{3.589538045386183*^9, 3.5895380762839193`*^9}, {
+  3.589538405116303*^9, 3.589538530194742*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "There are also .mt test files provided for each of these. However, the test \
+file ",
+ StyleBox["motifEMAssignment.m",
+  FontColor->Automatic],
+ "t is blank, so you will have to write your own tests. I wrote a bunch of \
+tests for the low level aspects of my code, but I don\[CloseCurlyQuote]t want \
+to impose the same low level structure on you. Some testing suggestions are \
+provided in the section Testing."
+}], "Text",
+ CellChangeTimes->{{3.5895386853466587`*^9, 3.589538760994632*^9}, {
+   3.589539127234583*^9, 3.589539140418644*^9}, {3.589569102340033*^9, 
+   3.589569314898983*^9}, 3.5895697361365757`*^9, {3.589569771186298*^9, 
+   3.5895697794498787`*^9}}],
+
+Cell["\<\
+At least three DNA sequence files are provided with this distribution.\
+\>", "Text",
+ CellChangeTimes->{{3.589538552114108*^9, 3.589538582738183*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["test.fasta is a tiny file with three very, very short \
+DNA sequences. Useful for early stage testing, and used by some of the tests \
+in the distribution. These sequences do not contain any motif or any other \
+special property.",
+ FontColor->Automatic]], "Item",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQAWIQfePI2YsXt71yVIi1vQaiuW4b3wLRz7nnPALR+Wnz
+X4DoY3GZvJeAdMif46o/gPSZ1TJqIPq+WoweiH60UN4WRN8LMfMA0Q7KezxB
+dJavciCI3uOvEgGi245ExILoW+/vg+mP8j4LwOpsaleDaL8Ul7PK2185lvx1
+vwSifx265D0dSJe1fQLT657v8AfRzxhsA0D0N7Z5gaeB9CnuDWB6bfaxx/X7
+Xjl6HON4A6K3m1p/A9G5hYHcDUBaq1BHEERfv2sOpl95pEmAaLcMZnkQPeF2
+tgqI5t0uowGit3JtzgbRVV1f8kD0vb/MVSB62eWsOhANAO1jttY=
+  "],
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell[TextData[StyleBox["test2.fasta is a small file with about 10 short DNA \
+sequences containing a motif that can be found by the EM algorithm. These are \
+artificial sequences, not taken from a real genome. Useful for mid stage \
+testing of basic function, but success by no means guarantees success on \
+promoters taken from a real genome sequence.",
+ FontColor->Automatic]], "Item",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBWIQfePI2YsXt71yVIi1vQaiuW4b3wLRz7nnPALR+Wnz
+X4DoY3GZvJeAdMif46o/gPSZ1TJqIPq+WoweiH60UN4WRN8LMfMA0Q7KezxB
+dJavciCI3uOvEgGi245ExILoW+/vg+mP8j4LwOpsaleDaL8Ul7PK2185lvx1
+vwSifx265D0dSJe1fQLT657v8AfRzxhsA0D0N7Z5gaeB9CnuDWB6bfaxx/X7
+Xjl6HON4A6K3m1p/A9G5hYHcDUBaq1BHEERfv2sOpl95pEmAaLcMZnkQPeF2
+tgqI5t0uowGit3JtzgbRVV1f8kD0vb/MVSB62eWsOhAtccBlNYiO5+TcDaIB
+nPC+nA==
+  "],
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell[TextData[StyleBox["yeast.fasta contains about 60 promoter sequences from \
+the yeast genome. These sequences were selected such that most or all of them \
+should contain a real motif for a real yeast transcription factor. You will \
+need one or both of the \"fix-ups\" to make your algorithm work on this, and \
+you will also need a decently fast implementation or a fast computer unless \
+you're willing to let it run for on the order of 30-60 minutes. Success on \
+these sequences is not required for some parts of this assignment. See the \
+rubric for details.",
+ FontColor->Automatic]], "Item",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQB2IQfePI2YsXt71yVIi1vQaiuW4b3wLRz7nnPALR+Wnz
+X4DoY3GZvJeAdMif46o/gPSZ1TJqIPq+WoweiH60UN4WRN8LMfMA0Q7KezxB
+dJavciCI3uOvEgGi245ExILoW+/vg+mP8j4LwOpsaleDaL8Ul7PK2185lvx1
+vwSifx265D0dSJe1fQLT657v8AfRzxhsA0D0N7Z5gaeB9CnuDWB6bfaxx/X7
+Xjl6HON4A6K3m1p/A9G5hYHcDUBaq1BHEERfv2sOpl95pEmAaLcMZnkQPeF2
+tgqI5t0uowGit3JtzgbRVV1f8kD0vb/MVSB62eWsOhAtccBlNYiO5+TcDaLl
+fgjsB9EHRB5cBNEflptqmO1/5VjHZK8JogGSqc72
+  "],
+ FontColor->RGBColor[0.5, 0, 0.5]]
+}, Open  ]],
+
+Cell["\<\
+We will probably provide a larger artificial sequence for you to run on later.\
+\>", "Text",
+ CellChangeTimes->{{3.589569669875298*^9, 3.5895696862096663`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Input, output, and data structures", "Subsection",
+ CellChangeTimes->{{3.58558939219401*^9, 3.5855893941449203`*^9}, {
+  3.589539492078855*^9, 3.5895394993139343`*^9}},
+ FontColor->Automatic],
+
+Cell["\<\
+PWMs should be represented as a matrix (list of lists) where the top level \
+list represents positions in the PWM, from one to the length of the PWM. The \
+level 2 lists (rows, in conventional notation) should all have length 4, \
+representing the four nucleotides, A, C, G, T, in that order. Note that this \
+is the opposite of the way they are usually written on the board and in \
+papers, however, I believe it makes the coding and processing easier. I\
+\[CloseCurlyQuote]d be willing to be willing to be convinced otherwise, if \
+someone wants to try to try it the other way, but that would mean rewriting a \
+few of the tests and probably a few lines of the provided code. You may also \
+choose to represent the parameters in log space (I did). However, the final \
+output must be ordinary probabilities in the [0, 1] interval.\
+\>", "Text",
+ CellChangeTimes->{
+  3.585589466096129*^9, {3.5895421332929688`*^9, 3.5895424713548613`*^9}, {
+   3.589554833333681*^9, 3.589554891026023*^9}, {3.5895549226658363`*^9, 
+   3.589554957514019*^9}, {3.589555122334135*^9, 3.5895551419378138`*^9}}],
+
+Cell[TextData[{
+ "There is another important representational consideration which I will \
+leave it to you to decide. Conceptually, when looking for a motif of length \
+W, the algorithm \[OpenCurlyDoubleQuote]shreds\[CloseCurlyDoubleQuote] each \
+input sequence of length L into L-W+1 windows, each overlapping by 1 \
+nucleotide. In your implementation, you may choose to physically shred each \
+input sequence into that many overlapping lists, representing each window as \
+a separate sublist. The alternative (which I used in my implementation) is to \
+keep the input in the form returned by my ",
+ StyleBox["readInput",
+  FontFamily->"Courier"],
+ " function and instead use indexing and looping constructs to do \
+calculations on the conceptual windows, without copying them into sublists. \
+Whichever way you do it, you will still need to keep track of which input \
+sequence each window comes from, and the easiest way to do this is probably \
+to keep the representation of each input sequence within one list, so that \
+the total input is a list of lists, with the level 2 lists representing \
+individual input sequences."
+}], "Text",
+ CellChangeTimes->{{3.589542477594118*^9, 3.5895428222819433`*^9}, {
+  3.589542860348228*^9, 3.589542869418398*^9}}],
+
+Cell["\<\
+For everything else, any data structures or representations that are required \
+to have a specific format are documented in comments in the code.\
+\>", "Text",
+ CellChangeTimes->{{3.589543669545886*^9, 3.589543715610147*^9}}],
+
+Cell["\<\
+The output from your top level function, basicMM, should be a list consisting \
+of the motif PWM, the final estimate for the the mixing parameter lambda \
+(which is also called the prior probability in many places throughout the \
+code), and the final posterior probabilities of the motif having generated \
+each window. This will be matrix whose rows are the posteriors for each input \
+sequence. For an input sequence of length L and motif of length W, there will \
+be L-W+1 posteriors. \
+\>", "Text",
+ CellChangeTimes->{{3.589543744121793*^9, 3.5895437484978533`*^9}, {
+  3.589543816715961*^9, 3.589543819602021*^9}, {3.589543854185882*^9, 
+  3.589543865601663*^9}, {3.589543941977953*^9, 3.589544018722328*^9}, {
+  3.589544062657085*^9, 3.589544102977487*^9}, {3.58954413705022*^9, 
+  3.5895442093617907`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Initialization of the motif PWM and the mixture probability", \
+"Subsection",
+ CellChangeTimes->{{3.58558939219401*^9, 3.5855893941449203`*^9}, {
+   3.589539492078855*^9, 3.5895394993139343`*^9}, {3.589543874889934*^9, 
+   3.5895439121706743`*^9}, {3.5895440338899727`*^9, 3.589544042706687*^9}, 
+   3.589544246726589*^9},
+ FontColor->Automatic],
+
+Cell["\<\
+The Bailey & Elkan paper describes somewhat elaborate methods of trying \
+multiple starting values of lambda. In the provided code, these are not used \
+-- only a single initial value for is used for each. For lambda, the initial \
+value corresponds to an expectation of one motif instance per input sequence. \
+For the motif PWM, I suggest initializing each position by assigning each \
+nucleotide in that position a random real between 1 and 2 and then \
+normalizing (dividing by the total). This will work on the test sequences but \
+the more elaborate procedure may be needed to get reliably good results on \
+real genome sequences.\
+\>", "Text",
+ CellChangeTimes->{{3.589544260897923*^9, 3.5895445242262907`*^9}, {
+  3.589546636501851*^9, 3.589546733890068*^9}, {3.589546769761701*^9, 
+  3.589546828138085*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+The background (\[OpenCurlyDoubleQuote]non-motif\[CloseCurlyDoubleQuote]) \
+model\
+\>", "Subsection",
+ CellChangeTimes->{{3.58558939219401*^9, 3.5855893941449203`*^9}, {
+   3.589539492078855*^9, 3.5895394993139343`*^9}, {3.589543874889934*^9, 
+   3.5895439121706743`*^9}, {3.5895440338899727`*^9, 3.589544042706687*^9}, 
+   3.589544246726589*^9, {3.5895841279867277`*^9, 3.589584146294004*^9}},
+ FontColor->Automatic],
+
+Cell["\<\
+You may choose to keep the background model constant, using all the \
+nucleotides to estimate it just once, regardless of the posteriors. \
+Alternatively, you may update it on every round of EM. This choice should not \
+make much difference in the normal situation, where true motif occurrences \
+are responsible for a very small percentage of the input. However, if your \
+motif is very short (hence it may occur frequently) or the lambda estimate \
+grows very close to 1, it could make a difference.\
+\>", "Text",
+ CellChangeTimes->{{3.589584148678293*^9, 3.589584419037992*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pseudocounts", "Subsection",
+ CellChangeTimes->{{3.58558939219401*^9, 3.5855893941449203`*^9}, {
+   3.589539492078855*^9, 3.5895394993139343`*^9}, {3.589543874889934*^9, 
+   3.5895439121706743`*^9}, {3.5895440338899727`*^9, 3.589544042706687*^9}, 
+   3.589544246726589*^9, {3.589553219059568*^9, 3.589553221225753*^9}},
+ FontColor->Automatic],
+
+Cell["\<\
+For the expected counts that go into updating the motif, Bailey & Elkan use \
+the  normalized frequencies of the nucleotides in the input times a \
+user-defined constant. For simplicity we\[CloseCurlyQuote]ll make that \
+constant 1 for now.\
+\>", "Text",
+ CellChangeTimes->{{3.589553230377996*^9, 3.589553352601717*^9}, {
+  3.589553558994801*^9, 3.589553691819578*^9}}],
+
+Cell["\<\
+In addition, you can save yourself a whole lot of trouble by making sure that \
+the estimated probabilities of nucleotides in the input sequences are never \
+zero. This is helpful when using tiny test data sets. In a \"real\" set of \
+input sequences no nucleotide would ever have frequency zero, so there is a \
+strong reason to believe that all nucleotides will have non-zero \
+probabilities. Therefore, pseudocounts (which implement this prior belief) \
+are well justified.\
+\>", "Text",
+ CellChangeTimes->{{3.589553230377996*^9, 3.589553352601717*^9}, {
+  3.589553558994801*^9, 3.589553867313098*^9}, {3.5895839068342323`*^9, 
+  3.589583936573751*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Testing", "Section",
+ CellChangeTimes->{{3.585512173665118*^9, 3.585512174397122*^9}}],
+
+Cell["\<\
+Here are some suggestions for writing tests. First off, in Workbench, meta-k \
+(or Apple k or Windows k) will pop up a list of templates, one of which is a \
+test function template that you can fill out with a function to call and an \
+expected value. A test ID is generated automatically.\
+\>", "Text",
+ CellChangeTimes->{{3.585512177132576*^9, 3.58551224205259*^9}, {
+   3.585512305828191*^9, 3.585512446845121*^9}, {3.58559091043968*^9, 
+   3.5855909144794207`*^9}, 3.58559094837527*^9, 3.585916140247183*^9, {
+   3.5859161880218983`*^9, 3.585916189733902*^9}, {3.589547355333116*^9, 
+   3.589547465593959*^9}, 3.58956971552535*^9, {3.589569797249955*^9, 
+   3.589569920938146*^9}, {3.589583959753742*^9, 3.5895839613509912`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+One good test to write for almost any function that's supposed to return \
+lists of numbers is to check that it does, because many errors will result in \
+return of a symbolic expression. You can do this check with \
+\>", "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.5895386853466587`*^9, 3.589538760994632*^9}, {
+  3.589539127234583*^9, 3.589539140418644*^9}, {3.589569102340033*^9, 
+  3.589569314898983*^9}, {3.5895697361365757`*^9, 3.589569760284068*^9}, {
+  3.589583973400823*^9, 3.589583974614236*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Apply", "[", 
+  RowBox[{"And", ",", " ", 
+   RowBox[{"Map", "[", 
+    RowBox[{"NumberQ", ",", " ", 
+     RowBox[{"Flatten", "[", "listStructure", "]"}]}], "]"}]}], 
+  "]"}]], "Input",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.589569316251129*^9, 3.5895693162532873`*^9}, 
+   3.589569760284174*^9}],
+
+Cell[TextData[{
+ "where ",
+ StyleBox["listStructure",
+  FontFamily->"Courier"],
+ " is any list or list of lists, etc. Flatten simply eliminates all embedded \
+list structure and returns a single list with all the symbols, numbers, etc."
+}], "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.5895693229462748`*^9, 3.589569393641927*^9}, 
+   3.5895697602842503`*^9}],
+
+Cell[BoxData[
+ RowBox[{"Flatten", "[", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", " ", "2", ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"3", ",", " ", "4"}], "}"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"5", ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"6", ",", " ", "7"}], "}"}]}], "}"}]}], "}"}], "]"}]], "Input",\
+
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.58956939592103*^9, 3.589569424613052*^9}, 
+   3.589569760284322*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "2", ",", "3", ",", "4", ",", "5", ",", "6", ",", "7"}], 
+  "}"}]], "Output",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.589569425963813*^9, 3.5895697602844267`*^9}],
+
+Cell[TextData[{
+ StyleBox["Apply",
+  FontFamily->"Courier"],
+ " takes a function and a list make applies the function with the elements of \
+the list as its arguments:"
+}], "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.589569439881937*^9, 3.589569518881564*^9}, 
+   3.5895697602845087`*^9, {3.58958402144188*^9, 3.58958403947791*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Apply", "[", 
+  RowBox[{"And", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"True", ",", " ", "False", ",", " ", "True", ",", " ", "True"}], 
+    "}"}]}], "]"}]], "Input",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.589569520200089*^9, 3.5895695603345346`*^9}, 
+   3.589569760284582*^9}],
+
+Cell[BoxData["False"], "Output",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.58956956187554*^9, 3.589569760284679*^9}]
+}, Open  ]],
+
+Cell["\<\
+Another good test is to check that the shape of any list structure returned \
+is as you expect. E.g. the length of a list or the dimensions of a matrix.\
+\>", "Text",
+ CellChangeTimes->{{3.589569939710196*^9, 3.589570001866015*^9}}],
+
+Cell["\<\
+The EM algorithm does not require you to explicitly calculate the log \
+likelihood of the entire data set under the estimated parameters, but it\
+\[CloseCurlyQuote]s not hard to do. This could make a very useful high level \
+test which does not require knowing the right answer for all the calculations \
+-- if your implementation is correct, no iteration of EM should decrease the \
+log likelihood, and in general each interation should increase the log \
+likelihood until convergence.\
+\>", "Text",
+ CellChangeTimes->{{3.58954756876147*^9, 3.589547610633979*^9}, {
+  3.589547680018178*^9, 3.589547959354136*^9}, {3.589570007068594*^9, 
+  3.589570017658334*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Experiments and questions", "Section",
+ CellChangeTimes->{{3.5855125680373287`*^9, 3.5855125711403923`*^9}}],
+
+Cell["\<\
+We may distribute some of these in a follow-up part. For now, just focus on \
+getting a correct implementation.\
+\>", "Text",
+ CellChangeTimes->{{3.5895700454758883`*^9, 3.589570064114008*^9}, {
+  3.589577395441348*^9, 3.589577414584161*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Instructions and grading", "Section",
+ CellChangeTimes->{{3.585589085899582*^9, 3.585589086700222*^9}, {
+   3.586022771579047*^9, 3.586022775165971*^9}, {3.589547506333993*^9, 
+   3.589547525506456*^9}, 3.589578378913684*^9}],
+
+Cell["\<\
+Please turn in your .m file containing the code and sufficient documentation \
+to read and understand it, as well as this notebook with results from \
+evaulating:\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQfUezK/fK1leOvtHrG0H0ng22bSA6I2LPahBdZPBt
+PYiWeldyEESfmFZu+xVId2hpOYPotMgXsSBaMvxpKYjWmh5VDaKXpaysB9Gz
+r71X/QWk1xyV0gbRDer3TwRsf+W4I+fGSRB9/obfqdNAeoHlwgsgWvOlyC0Q
+PV1L7AWIFvtSFDN53yvHbwdu5ILoI9UORSB6k71fJYjeMyO1DizurDwLRMu9
+lFsMoqN2N+4G0af85+8H0bZ8S8+A6HunWq6AaHUljXsgmiHj6WMQvZ6D7ymI
+niE65wuI3rXqCph+aLaNdQqQTt3+jR1EAwA6W7RI
+  "]],
+
+Cell["\<\
+basicMM[readInput[\[OpenCurlyDoubleQuote]test.fasta\[CloseCurlyDoubleQuote], \
+2], 2, 2, 10.]\
+\>", "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQfUezK/fK1leOvtHrG0H0ng22bSA6I2LPahBdZPBt
+PYiWeldyEESfmFZu+xVId2hpOYPotMgXsSBaMvxpKYjWmh5VDaKXpaysB9Gz
+r71X/QWk1xyV0gbRDer3TwRsf+W4I+fGSRB9/obfqdNAeoHlwgsgWvOlyC0Q
+PV1L7AWIFvtSFDN53yvHbwdu5ILoI9UORSB6k71fJYjeMyO1DizurDwLRMu9
+lFsMoqN2N+4G0af85+8H0bZ8S8+A6HunWq6AaHUljXsgmiHj6WMQvUQ6+SWI
+Zkmq/gqipY6pfgPRWoxev0D0lIupDFOANAAXB7Je
+  "]],
+
+Cell["\<\
+basicMM[readInput[\[OpenCurlyDoubleQuote]test2.fasta\[CloseCurlyDoubleQuote], \
+8], 8, 200, 10^-2]\
+\>", "Text",
+ CellChangeTimes->{{3.58499210831761*^9, 3.584992269479895*^9}, {
+   3.584992305927824*^9, 3.584992605885792*^9}, {3.5849926396934137`*^9, 
+   3.584992779654065*^9}, {3.585059307737156*^9, 3.585059353317692*^9}, {
+   3.585059567260913*^9, 3.585059759166882*^9}, {3.5850598028309526`*^9, 
+   3.585059837293536*^9}, {3.585069359494947*^9, 3.58506940083663*^9}, {
+   3.585771078973572*^9, 3.5857710867632713`*^9}, {3.586022994463966*^9, 
+   3.5860230450382843`*^9}, {3.586023120653462*^9, 3.586023232692699*^9}, {
+   3.5895774435922956`*^9, 3.589577582773555*^9}, {3.589577618015108*^9, 
+   3.5895776744452753`*^9}, {3.5895777151748943`*^9, 3.589577937102022*^9}, {
+   3.5895780089659567`*^9, 3.58957820405412*^9}, {3.58957823697849*^9, 
+   3.589578341157988*^9}, {3.589578404149764*^9, 3.589578481254169*^9}, {
+   3.5895785271689453`*^9, 3.589578571097124*^9}, {3.589578667855715*^9, 
+   3.5895786731804323`*^9}, {3.589578706312642*^9, 3.5895787551818333`*^9}, 
+   3.589578823398077*^9, {3.589578896069838*^9, 3.589578914965416*^9}, {
+   3.589910932533738*^9, 3.5899109339637403`*^9}}],
+
+Cell[TextData[{
+ "The rubric for this includes the possibility of extra credit points, so \
+please read to the end of the file. The basic assignment will be graded as \
+follows.\n\nA. 2 points for turning in code that takes input of the right \
+form and produces output of the right form, meaning that if I know the number \
+and lengths of the input sequences but not their actual contents, I shouldn't \
+be able to tell that your output is wrong. E.g. all probabilities must be in \
+the interval [0, 1], etc. You must turn in your assignment by the due date \
+stated on the module guide to get these points.\n\nB. 2 points for turning in \
+code containing an implementation of basicMM that correctly initializes the \
+parameters of the model, correctly calls updateProbs, and a version of upDate \
+probs that correctly calls a correct a correct version of \
+calculatePosteriors. This does not require getting the loops in basicMM \
+right, just calling calculatePosteriors once and returning the posterior \
+probsabilities matrix.\n\nC. 2 points for turning in code satisfies B and \
+further includes correct implementations of updateLambda and updatePWM and \
+calls them correctly once, after correctly calculating the posteriors. In \
+other words, one correct round of EM.\n\nD. 2 points for turning in a fully \
+correct implementation, including the loops and convergence criteria in \
+basicMM. This should find the right motif, or one very like in, when run on \
+test2.fasta. If you want to know whether your motif is similar to the correct \
+one, you can always submit the file to the online MEME. That's a different \
+implementation which has probably been improved a lot in the last 20 years, \
+so it won't give you exactly the same result, but there should be marked \
+similarity in the results.\n\nE.  2 points for style (things such as \
+capitalization and full, descriptive names) and legibility, including \
+indentation, line breaks, and comments. Use of global variables, i.e. \
+variables that are not protected by ",
+ StyleBox["Module",
+  FontFamily->"Courier"],
+ ", ",
+ StyleBox["Block",
+  FontFamily->"Courier"],
+ ", or ",
+ StyleBox["With",
+  FontFamily->"Courier"],
+ " is considered very bad style. You must satisfy B-D to get these points."
+}], "Text",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQfUezK/fK1leOvtHrG0H0ng22bSA6I2LPahBdZPBt
+PYiWeldyEESfmFZu+xVId2hpOYPotMgXsSBaMvxpKYjWmh5VDaKXpaysB9Gz
+r71X/QWk1xyV0gbRDer3TwRsf+W4I+fGSRB9/obfqdNAeoHlwgsgWvOlyC0Q
+PV1L7AWIFvtSFDN53yvHbwdu5ILoI9UORSB6k71fJYjeMyO1DizurDwLRMu9
+lFsMoqN2N+4G0af85+8H0bZ8S8+A6HunWq6AaHUljXsgmiHj6WMQvUQ6+SWI
+Zkmq/gqipY6pfgPRb2r/iU4B0nbqnbIg+qYopwaI/lgsC6Yrm+NOgejPJa/P
+geh9dxyvgOhTK+aB6ddzee+Z7n/luJ/vJ5jWm8xtawak95woAdMAPlPgEg==
+
+  "]],
+
+Cell[CellGroupData[{
+
+Cell["Extra credit", "Subsection",
+ CellChangeTimes->{{3.589579010295413*^9, 3.589579014997635*^9}}],
+
+Cell["\<\
+Extra credit means I will decide on the grading scale at the end before \
+adding in the extra credit points. Then I will add them in before calculating \
+individual grades.\
+\>", "Text",
+ CellChangeTimes->{{3.589579086694018*^9, 3.58957914966222*^9}}],
+
+Cell["\<\
+F. 1 extra credit point for integrating the normalization of posteriors that \
+ensures the posteriors within any window never exceed 1. You may use the code \
+in fixUps.m, in which case you need only convince yourself that it is correct \
+and call it in the right place.
+
+G. 2 extra credit points for implementing an outer loop that does multiple \
+rounds of EM by using and updating the \[OpenCurlyDoubleQuote]erasers\
+\[CloseCurlyDoubleQuote] described in the paper. You may use the code in \
+fixUps.m, in which case you need only convince yourself that it is correct \
+and integrate it into your code, however this involves more than just a \
+single call -- you need to pass some extra arguments around, etc. You may \
+want to create a new top-level function called MM. In addition to your code, \
+turn in the consensus sequences of the PWM found on each of 10 iterations of \
+EM and erasing on the file motifs1.fasta, looking for a motif of length 9. \
+You can print out the consensus sequence (the most likely nucleotide for each \
+position) by calling pwmConsensus, which I provided in the file tools.m. \
+motifs1.fasta contains about 60 real yeast promoter sequences, so it may take \
+a while to run. If it\[CloseCurlyQuote]s too slow for you, you can try to \
+speed up your code using some of the tips at \
+http://blog.wolfram.com/2011/12/07/10-tips-for-writing-fast-mathematica-code/ \
+. Take the motif from the first iteration in which the consensus contains \
+more than two nucleotides (e.g. not just A\[CloseCurlyQuote]s and T\
+\[CloseCurlyQuote]s), and go ScerTF, a database of yeast transcription factor \
+binding motifs (developed by Gary Stormo\[CloseCurlyQuote]s lab), to serach \
+for the identity of the TF that regulates all these genes. ScerTF can be \
+found at http://stormo.wustl.edu/ScerTF/. You may need to submit the whole \
+PWM, not just the consensus, to find the right TF.\
+\>", "Text",
+ CellChangeTimes->{{3.58957907891013*^9, 3.589579082597488*^9}, {
+  3.589579154477668*^9, 3.589579255230113*^9}, {3.5895792927739353`*^9, 
+  3.589579698518013*^9}, {3.5895797548218937`*^9, 3.589579775230259*^9}, {
+  3.589579817936317*^9, 3.589579906491151*^9}, {3.58957994581564*^9, 
+  3.589580141958048*^9}, {3.589580187328569*^9, 3.589580333822071*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{772, 1148},
+WindowMargins->{{Automatic, 227}, {Automatic, 0}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 20, \
+2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 257, 3, 114, "Title"],
+Cell[839, 27, 522, 9, 132, "Text"],
+Cell[CellGroupData[{
+Cell[1386, 40, 92, 1, 100, "Section"],
+Cell[CellGroupData[{
+Cell[1503, 45, 175, 3, 54, "Subsection"],
+Cell[1681, 50, 946, 14, 37, "Text"],
+Cell[CellGroupData[{
+Cell[2652, 68, 1119, 16, 57, "Item"],
+Cell[3774, 86, 897, 16, 99, "Item"],
+Cell[4674, 104, 583, 9, 142, "Item"]
+}, Open  ]],
+Cell[5272, 116, 686, 13, 132, "Text"],
+Cell[5961, 131, 160, 3, 37, "Text"],
+Cell[CellGroupData[{
+Cell[6146, 138, 724, 13, 78, "Item"],
+Cell[6873, 153, 840, 15, 120, "Item"],
+Cell[7716, 170, 1088, 18, 163, "Item"]
+}, Open  ]],
+Cell[8819, 191, 170, 3, 37, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9026, 199, 197, 3, 54, "Subsection"],
+Cell[9226, 204, 1101, 16, 251, "Text"],
+Cell[10330, 222, 1257, 20, 323, "Text"],
+Cell[11590, 244, 235, 4, 61, "Text"],
+Cell[11828, 250, 824, 13, 156, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12689, 268, 351, 6, 54, "Subsection"],
+Cell[13043, 276, 826, 13, 204, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13906, 294, 427, 8, 54, "Subsection"],
+Cell[14336, 304, 591, 9, 180, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14964, 318, 348, 5, 54, "Subsection"],
+Cell[15315, 325, 379, 7, 85, "Text"],
+Cell[15697, 334, 666, 11, 156, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16412, 351, 92, 1, 100, "Section"],
+Cell[16507, 354, 743, 11, 109, "Text"],
+Cell[CellGroupData[{
+Cell[17275, 369, 555, 9, 85, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[17833, 380, 354, 9, 36, "Input",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[18190, 391, 397, 9, 86, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[18590, 402, 460, 13, 35, "Input",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[19053, 417, 245, 5, 35, "Output",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[19301, 424, 371, 8, 62, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[19675, 434, 337, 8, 36, "Input",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[20015, 444, 148, 2, 35, "Output",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[20178, 449, 242, 4, 61, "Text"],
+Cell[20423, 455, 673, 11, 156, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21133, 471, 114, 1, 100, "Section"],
+Cell[21250, 474, 252, 5, 61, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21539, 484, 231, 3, 100, "Section"],
+Cell[21773, 489, 575, 12, 61, "Text"],
+Cell[22351, 503, 506, 11, 37, "Text"],
+Cell[22860, 516, 1206, 18, 37, "Text"],
+Cell[24069, 536, 2741, 47, 798, "Text"],
+Cell[CellGroupData[{
+Cell[26835, 587, 100, 1, 54, "Subsection"],
+Cell[26938, 590, 261, 5, 85, "Text"],
+Cell[27202, 597, 2280, 33, 584, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
