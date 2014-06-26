@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     32580,        734]
-NotebookOptionsPosition[     29522,        635]
-NotebookOutlinePosition[     29934,        653]
-CellTagsIndexPosition[     29891,        650]
+NotebookDataLength[     32565,        734]
+NotebookOptionsPosition[     29534,        636]
+NotebookOutlinePosition[     29927,        653]
+CellTagsIndexPosition[     29884,        650]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -209,16 +209,17 @@ level 2 lists (rows, in conventional notation) should all have length 4, \
 representing the four nucleotides, A, C, G, T, in that order. Note that this \
 is the opposite of the way they are usually written on the board and in \
 papers, however, I believe it makes the coding and processing easier. I\
-\[CloseCurlyQuote]d be willing to be willing to be convinced otherwise, if \
-someone wants to try to try it the other way, but that would mean rewriting a \
-few of the tests and probably a few lines of the provided code. You may also \
-choose to represent the parameters in log space (I did). However, the final \
-output must be ordinary probabilities in the [0, 1] interval.\
+\[CloseCurlyQuote]d be willing to be convinced otherwise, if someone wants to \
+try to try it the other way, but that would mean rewriting a few of the tests \
+and probably a few lines of the provided code. You may also choose to \
+represent the parameters in log space (I did). However, the final output must \
+be ordinary probabilities in the [0, 1] interval.\
 \>", "Text",
  CellChangeTimes->{
   3.585589466096129*^9, {3.5895421332929688`*^9, 3.5895424713548613`*^9}, {
    3.589554833333681*^9, 3.589554891026023*^9}, {3.5895549226658363`*^9, 
-   3.589554957514019*^9}, {3.589555122334135*^9, 3.5895551419378138`*^9}}],
+   3.589554957514019*^9}, {3.589555122334135*^9, 3.5895551419378138`*^9}, 
+   3.612790661861988*^9}],
 
 Cell[TextData[{
  "There is another important representational consideration which I will \
@@ -634,11 +635,10 @@ PWM, not just the consensus, to find the right TF.\
 }, Open  ]]
 },
 WindowSize->{772, 1148},
-WindowMargins->{{Automatic, 227}, {Automatic, 0}},
+WindowMargins->{{Automatic, 217}, {Automatic, -10}},
 PrintingCopies->1,
 PrintingPageRange->{1, Automatic},
-FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 20, \
-2012)",
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -653,86 +653,86 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 257, 3, 114, "Title"],
-Cell[839, 27, 522, 9, 132, "Text"],
+Cell[579, 22, 257, 3, 93, "Title"],
+Cell[839, 27, 522, 9, 111, "Text"],
 Cell[CellGroupData[{
-Cell[1386, 40, 92, 1, 100, "Section"],
+Cell[1386, 40, 92, 1, 81, "Section"],
 Cell[CellGroupData[{
-Cell[1503, 45, 175, 3, 54, "Subsection"],
-Cell[1681, 50, 946, 14, 37, "Text"],
+Cell[1503, 45, 175, 3, 45, "Subsection"],
+Cell[1681, 50, 946, 14, 31, "Text"],
 Cell[CellGroupData[{
-Cell[2652, 68, 1119, 16, 57, "Item"],
-Cell[3774, 86, 897, 16, 99, "Item"],
-Cell[4674, 104, 583, 9, 142, "Item"]
+Cell[2652, 68, 1119, 16, 47, "Item"],
+Cell[3774, 86, 897, 16, 83, "Item"],
+Cell[4674, 104, 583, 9, 101, "Item"]
 }, Open  ]],
-Cell[5272, 116, 686, 13, 132, "Text"],
-Cell[5961, 131, 160, 3, 37, "Text"],
+Cell[5272, 116, 686, 13, 91, "Text"],
+Cell[5961, 131, 160, 3, 31, "Text"],
 Cell[CellGroupData[{
-Cell[6146, 138, 724, 13, 78, "Item"],
-Cell[6873, 153, 840, 15, 120, "Item"],
-Cell[7716, 170, 1088, 18, 163, "Item"]
+Cell[6146, 138, 724, 13, 65, "Item"],
+Cell[6873, 153, 840, 15, 83, "Item"],
+Cell[7716, 170, 1088, 18, 137, "Item"]
 }, Open  ]],
-Cell[8819, 191, 170, 3, 37, "Text"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[9026, 199, 197, 3, 54, "Subsection"],
-Cell[9226, 204, 1101, 16, 251, "Text"],
-Cell[10330, 222, 1257, 20, 323, "Text"],
-Cell[11590, 244, 235, 4, 61, "Text"],
-Cell[11828, 250, 824, 13, 156, "Text"]
+Cell[8819, 191, 170, 3, 31, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12689, 268, 351, 6, 54, "Subsection"],
-Cell[13043, 276, 826, 13, 204, "Text"]
+Cell[9026, 199, 197, 3, 45, "Subsection"],
+Cell[9226, 204, 1113, 17, 191, "Text"],
+Cell[10342, 223, 1257, 20, 252, "Text"],
+Cell[11602, 245, 235, 4, 51, "Text"],
+Cell[11840, 251, 824, 13, 131, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[13906, 294, 427, 8, 54, "Subsection"],
-Cell[14336, 304, 591, 9, 180, "Text"]
+Cell[12701, 269, 351, 6, 45, "Subsection"],
+Cell[13055, 277, 826, 13, 171, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[14964, 318, 348, 5, 54, "Subsection"],
-Cell[15315, 325, 379, 7, 85, "Text"],
-Cell[15697, 334, 666, 11, 156, "Text"]
+Cell[13918, 295, 427, 8, 45, "Subsection"],
+Cell[14348, 305, 591, 9, 131, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14976, 319, 348, 5, 45, "Subsection"],
+Cell[15327, 326, 379, 7, 71, "Text"],
+Cell[15709, 335, 666, 11, 111, "Text"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[16412, 351, 92, 1, 100, "Section"],
-Cell[16507, 354, 743, 11, 109, "Text"],
+Cell[16424, 352, 92, 1, 81, "Section"],
+Cell[16519, 355, 743, 11, 71, "Text"],
 Cell[CellGroupData[{
-Cell[17275, 369, 555, 9, 85, "Text",
+Cell[17287, 370, 555, 9, 71, "Text",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[17833, 380, 354, 9, 36, "Input",
+Cell[17845, 381, 354, 9, 32, "Input",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[18190, 391, 397, 9, 86, "Text",
+Cell[18202, 392, 397, 9, 52, "Text",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[18590, 402, 460, 13, 35, "Input",
+Cell[18602, 403, 460, 13, 32, "Input",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[19053, 417, 245, 5, 35, "Output",
+Cell[19065, 418, 245, 5, 32, "Output",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[19301, 424, 371, 8, 62, "Text",
+Cell[19313, 425, 371, 8, 52, "Text",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[19675, 434, 337, 8, 36, "Input",
+Cell[19687, 435, 337, 8, 32, "Input",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}],
-Cell[20015, 444, 148, 2, 35, "Output",
+Cell[20027, 445, 148, 2, 32, "Output",
  CellGroupingRules->{GroupTogetherGrouping, 10000.}]
 }, Open  ]],
-Cell[20178, 449, 242, 4, 61, "Text"],
-Cell[20423, 455, 673, 11, 156, "Text"]
+Cell[20190, 450, 242, 4, 51, "Text"],
+Cell[20435, 456, 673, 11, 111, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[21133, 471, 114, 1, 100, "Section"],
-Cell[21250, 474, 252, 5, 61, "Text"]
+Cell[21145, 472, 114, 1, 81, "Section"],
+Cell[21262, 475, 252, 5, 51, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[21539, 484, 231, 3, 100, "Section"],
-Cell[21773, 489, 575, 12, 61, "Text"],
-Cell[22351, 503, 506, 11, 37, "Text"],
-Cell[22860, 516, 1206, 18, 37, "Text"],
-Cell[24069, 536, 2741, 47, 798, "Text"],
+Cell[21551, 485, 231, 3, 81, "Section"],
+Cell[21785, 490, 575, 12, 51, "Text"],
+Cell[22363, 504, 506, 11, 31, "Text"],
+Cell[22872, 517, 1206, 18, 31, "Text"],
+Cell[24081, 537, 2741, 47, 612, "Text"],
 Cell[CellGroupData[{
-Cell[26835, 587, 100, 1, 54, "Subsection"],
-Cell[26938, 590, 261, 5, 85, "Text"],
-Cell[27202, 597, 2280, 33, 584, "Text"]
+Cell[26847, 588, 100, 1, 45, "Subsection"],
+Cell[26950, 591, 261, 5, 51, "Text"],
+Cell[27214, 598, 2280, 33, 431, "Text"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
