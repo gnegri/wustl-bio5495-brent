@@ -22,5 +22,5 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 	dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
 	picks = RandomVariate[distDice, draws];
 	
-	Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
+	Table[RandomVariate[dist[[picks[[#]]]],rollsPerDraw]&, draws]
 ]
