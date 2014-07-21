@@ -1,7 +1,7 @@
 (* Mathematica Raw Program *)
 
 (* In all of this code, feel free to pass additional parameters, define additional local variables
-   in each Module, and define additional functions, as youo see fit. The structure given below is 
+   in each Module, and define additional functions, as you see fit. The structure given below is 
    meant to help you out but not to shackle you to a particular approach.*)
 
 (* The input format is defined by the function readInput which is defined in the file tools.m *)
