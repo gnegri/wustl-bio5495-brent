@@ -1,0 +1,1524 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     55108,       1515]
+NotebookOptionsPosition[     51769,       1399]
+NotebookOutlinePosition[     52156,       1416]
+CellTagsIndexPosition[     52113,       1413]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "Using ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " for combinatorics and probability"
+}], "Section",
+ CellChangeTimes->{{3.5841264074948*^9, 3.584126429874805*^9}, {
+  3.58412654460423*^9, 3.584126545554195*^9}}],
+
+Cell["\<\
+In this notebook, we will provide the input cells for the examples -- you \
+should evaluate each input cell to see the outputs. In some cases, later \
+examples may not work if you haven\[CloseCurlyQuote]t evaluated all the \
+previous input cells, so please evaluate each example.\
+\>", "Text",
+ CellChangeTimes->{{3.585425130149922*^9, 3.5854251400352373`*^9}, {
+  3.585425346362123*^9, 3.58542535362204*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Using ",
+ StyleBox["Tuples",
+  FontFamily->"Courier"],
+ " to enumerate finite sample spaces"
+}], "Subsection",
+ CellChangeTimes->{{3.5841410978643436`*^9, 3.58414111555546*^9}}],
+
+Cell[TextData[{
+ "You can use ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " to count the number of possible outcomes of an experiment that satisfy a \
+certain criterion. For example, suppose you role two six-side dice. You can \
+generate a list all the possible outcomes for this experiment using the \
+built-in function ",
+ StyleBox["Tuples",
+  FontFamily->"Courier"],
+ ". "
+}], "Text",
+ CellChangeTimes->{{3.584126518044018*^9, 3.584126518324312*^9}, {
+   3.5841265526266203`*^9, 3.584126573171239*^9}, {3.584126689220394*^9, 
+   3.584126778842473*^9}, {3.584126915213667*^9, 3.584126925394765*^9}, {
+   3.584126969947505*^9, 3.5841269712105627`*^9}, {3.58412709825135*^9, 
+   3.584127100298648*^9}, 3.58437419338892*^9, {3.585425008938169*^9, 
+   3.585425068317033*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"sampleSpace", "=", 
+  RowBox[{"Tuples", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "1", ",", " ", "2", ",", " ", "3", ",", " ", "4", ",", " ", "5", ",", 
+      " ", "6"}], "}"}], ",", " ", "2"}], "]"}], " "}]], "Input",
+ CellChangeTimes->{{3.584126935536023*^9, 3.584126957756084*^9}, {
+  3.5841273043720818`*^9, 3.584127307084401*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "6"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618761705975325*^9, 3.618762806440092*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "In the output, the first number is the face shown on the first die rolled \
+and the second number is the face shown on the second die. If you\
+\[CloseCurlyQuote]re interested in the probabilities of events when rolling \
+two fair dice then you can assume all possible outcomes are equally likely. \
+Now suppose you are interested in the probability of the event consisting of \
+all possible outcomes in which the sum of the numbers on the two faces is \
+even. First, we need to know how many of the possible outcomes have an even \
+sum. We can pick those outcomes out of the list of all outcomes by using the \
+built-in function ",
+ StyleBox["Select",
+  FontFamily->"Courier"],
+ ", which takes a list and a function. It applies the function to each \
+element of the list. For example,"
+}], "Text",
+ CellChangeTimes->{{3.584126987059704*^9, 3.584127070354542*^9}, {
+   3.5841271120103407`*^9, 3.584127125706531*^9}, {3.584127176219054*^9, 
+   3.584127293306407*^9}, {3.584127336418653*^9, 3.584127343026614*^9}, {
+   3.5841273917805767`*^9, 3.5841274833709373`*^9}, {3.584127518490346*^9, 
+   3.584127596931047*^9}, {3.584127687467107*^9, 3.584127689083267*^9}, 
+   3.584374215751636*^9, {3.5843742481057177`*^9, 3.584374250007432*^9}, {
+   3.585407409535577*^9, 3.585407417390073*^9}, {3.5854250715820093`*^9, 
+   3.5854251253508*^9}, {3.5854251558315477`*^9, 3.585425179404461*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", " ", "2", ",", " ", "3", ",", " ", "4", ",", " ", "5"}],
+     "}"}], ",", " ", "EvenQ"}], "]"}]], "Input",
+ CellChangeTimes->{{3.584127633141732*^9, 3.584127656972046*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2", ",", "4"}], "}"}]], "Output",
+ CellChangeTimes->{3.618761706084767*^9, 3.618762806781609*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The return value is a new list consisting of the elements of the original \
+list on which the function returned ",
+ StyleBox["True",
+  FontFamily->"Courier"],
+ ". In this case we used the built-in function ",
+ StyleBox["EvenQ",
+  FontFamily->"Courier"],
+ ". The Q at the end signifies a query function that tests whether something \
+meets a criterion -- thus, ",
+ StyleBox["PrimeQ",
+  FontFamily->"Courier"],
+ " tests whether its argument is a prime number. But for our dice example we \
+can\[CloseCurlyQuote]t use ",
+ StyleBox["EvenQ",
+  FontFamily->"Courier"],
+ " directly because we have a list of lists and what we want to know is \
+whether the total of the numbers on the inner list (the die faces) is even. \
+So we need to apply Total before we apply ",
+ StyleBox["EvenQ",
+  FontFamily->"Courier"],
+ ". An elegant way to do that is as follows:"
+}], "Text",
+ CellChangeTimes->{
+  3.5841276272776337`*^9, {3.584127685538134*^9, 3.584128036298811*^9}, {
+   3.5854253060526047`*^9, 3.585425306368429*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"evenSumEvent", "=", 
+  RowBox[{"Select", "[", 
+   RowBox[{"sampleSpace", ",", " ", 
+    RowBox[{
+     RowBox[{"EvenQ", "[", 
+      RowBox[{"Total", "[", "#", "]"}], "]"}], " ", "&"}]}], "]"}]}]], "Input",\
+
+ CellChangeTimes->{{3.5841280392825003`*^9, 3.5841280687317133`*^9}, {
+  3.584128754164874*^9, 3.5841287610354967`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "6"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618761706119661*^9, 3.61876280682775*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The expression  ",
+ StyleBox["EvenQ[Total[#]] &",
+  FontFamily->"Courier"],
+ " defines a function of one argument that first applies ",
+ StyleBox["Total",
+  FontFamily->"Courier"],
+ " to its argument and then applies ",
+ StyleBox["EvenQ",
+  FontFamily->"Courier"],
+ " to the result. The ",
+ StyleBox["#",
+  FontFamily->"Courier"],
+ " (called sharp) refers to the argument and the ",
+ StyleBox["&",
+  FontFamily->"Courier"],
+ " (called ampersand) indicates that the preceding expression should be \
+treated as a function. This is called an anonymous function because it doesn\
+\[CloseCurlyQuote]t have a name -- it is defined just long enough to be used \
+in this one expression. The ampersand is a shorthand notation for ",
+ StyleBox["Function",
+  FontFamily->"Courier"],
+ ", which we could have used instead:"
+}], "Text",
+ CellChangeTimes->{{3.584128083214389*^9, 3.584128326307376*^9}, {
+   3.584128462316907*^9, 3.58412849259516*^9}, 3.585407423798994*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"evenSumEvent", "=", 
+  RowBox[{"Select", "[", 
+   RowBox[{"sampleSpace", ",", " ", 
+    RowBox[{"Function", "[", 
+     RowBox[{"EvenQ", "[", 
+      RowBox[{"Total", "[", "#", "]"}], "]"}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.584128507388942*^9, 3.5841285168462677`*^9}, {
+  3.5841287730320997`*^9, 3.584128774332693*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "6"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618761706155303*^9, 3.618762806870054*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " has many of these shorthand symbols and most of them are better forgotten \
+-- they make code unreadable. However, the ampersand and sharp combination is \
+used almost universally for defining anonymous functions. You can also define \
+anonymous functions with more than one argument and you can name the \
+arguments instead of using ",
+ StyleBox["#",
+  FontFamily->"Courier"],
+ " if you want, although this is done rarely. See the documentation on ",
+ StyleBox["Function",
+  FontFamily->"Courier"],
+ " when you\[CloseCurlyQuote]re ready to learn more about this (but you don\
+\[CloseCurlyQuote]t have to read it now). \n\nNow all that\[CloseCurlyQuote]s \
+left is to count the number of outcomes in the event and divide by the total \
+number of outcomes. The function ",
+ StyleBox["Length",
+  FontFamily->"Courier"],
+ " gives the number of elements in a list:"
+}], "Text",
+ CellChangeTimes->{{3.5841285260131197`*^9, 3.5841285923788157`*^9}, {
+   3.584128629139804*^9, 3.584128691906448*^9}, {3.584128731606599*^9, 
+   3.5841287389624243`*^9}, {3.584128786779657*^9, 3.584128822539068*^9}, {
+   3.584374354019437*^9, 3.5843743833594103`*^9}, {3.584374430081164*^9, 
+   3.584374441606943*^9}, 3.5854074261915283`*^9, {3.585425420486082*^9, 
+   3.585425423497118*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "evenSumEvent", "]"}]], "Input",
+ CellChangeTimes->{{3.5841288241092377`*^9, 3.584128835919304*^9}}],
+
+Cell[BoxData["18"], "Output",
+ CellChangeTimes->{3.618761706192738*^9, 3.618762806913834*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "sampleSpace", "]"}]], "Input",
+ CellChangeTimes->{{3.5841288397630568`*^9, 3.5841288459679213`*^9}}],
+
+Cell[BoxData["36"], "Output",
+ CellChangeTimes->{3.61876170623287*^9, 3.618762806953609*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"probEvenSumEvent", " ", "=", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Length", "[", "evenSumEvent", "]"}], "/", 
+    RowBox[{"Length", "[", "sampleSpace", "]"}]}], "//", "N"}]}]], "Input",
+ CellChangeTimes->{{3.5854013427147903`*^9, 3.5854013669587793`*^9}, {
+  3.585401400890246*^9, 3.5854014025591183`*^9}, {3.5854033704858637`*^9, 
+  3.585403371641748*^9}},
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell[BoxData["0.5`"], "Output",
+ CellChangeTimes->{3.618761706268656*^9, 3.618762806993117*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The ",
+ StyleBox["// N",
+  FontFamily->"Courier"],
+ " at the end means that we want to evaluate the built-in function ",
+ StyleBox["N",
+  FontFamily->"Courier"],
+ " on the preceding expression, to get its decimal value rather than the \
+fraction that is otherwise returned and we were lazy about it by placing the \
+function name at the end.  We could have used functional syntax like so: "
+}], "Text",
+ CellChangeTimes->{{3.585401419854151*^9, 3.585401516581843*^9}, {
+   3.585401549389285*^9, 3.585401780475678*^9}, {3.585401840771674*^9, 
+   3.585401864553729*^9}, {3.58540191803483*^9, 3.585402029257895*^9}, {
+   3.585402151177514*^9, 3.5854021737117434`*^9}, 3.5854025021748257`*^9, {
+   3.58540361926271*^9, 3.5854036194151773`*^9}, 3.585407428678709*^9, {
+   3.585425636099989*^9, 3.585425658895705*^9}, {3.5854257185908833`*^9, 
+   3.5854258098463993`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"probEvenSumEvent", " ", "=", " ", 
+   RowBox[{"N", "[", 
+    RowBox[{
+     RowBox[{"Length", "[", "evenSumEvent", "]"}], "/", 
+     RowBox[{"Length", "[", "sampleSpace", "]"}]}], "]"}]}],
+  FontColor->RGBColor[0.5, 0, 0.5]]], "Input",
+ CellChangeTimes->{{3.5854013427147903`*^9, 3.5854013669587793`*^9}, {
+  3.585401400890246*^9, 3.5854014025591183`*^9}, {3.5854020373258133`*^9, 
+  3.585402040005416*^9}, {3.585403374724786*^9, 3.585403377716056*^9}},
+ FontColor->RGBColor[0.5, 0, 0.5]],
+
+Cell[BoxData["0.5`"], "Output",
+ CellChangeTimes->{3.618761706308368*^9, 3.618762807031788*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Placing the function at the beginning or end of an expression is a matter \
+of style and readability -- in general, I prefer it at the beginning. \
+However,  functions that modify the output format, e.g., ",
+ StyleBox["N",
+  FontFamily->"Courier"],
+ " and ",
+ StyleBox["MatrixForm",
+  FontFamily->"Courier"],
+ ", are often written in this postfix notation, perhaps because such output \
+modifiers are often afterthoughts to the main computation."
+}], "Text",
+ CellChangeTimes->{{3.585402256960517*^9, 3.585402483551083*^9}, {
+   3.585402573054446*^9, 3.585402616916527*^9}, {3.585402684893652*^9, 
+   3.585402699525403*^9}, 3.585402781565366*^9, {3.5854036210859118`*^9, 
+   3.58540362271122*^9}, {3.5854074304707747`*^9, 3.5854074321911592`*^9}, {
+   3.5854258208364267`*^9, 3.585425982515905*^9}}],
+
+Cell[TextData[{
+ "Did you really need ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " to figure out that the probability of getting an even sum when rolling two \
+fair dice is 0.5? Of course not! But here\[CloseCurlyQuote]s a problem that \
+will make you grateful you don\[CloseCurlyQuote]t have to do it by hand."
+}], "Text",
+ CellChangeTimes->{{3.584128852661235*^9, 3.584128938274972*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Practice: Using lists to count the number of outcomes in an event\
+\>", "Subsubsubsection",
+ CellChangeTimes->{{3.584128958790194*^9, 3.584129040530682*^9}}],
+
+Cell["\<\
+Suppose you are rolling the following dice, each of which has an equal \
+probability of turning up each of its faces: two 4-sided dice, three 6-sided, \
+and one 12-sided. Calculate the probability that the sum of the faces is a \
+prime number.
+
+Here\[CloseCurlyQuote]s how to approach it. \
+\>", "Text",
+ CellChangeTimes->{{3.584129050854735*^9, 3.5841291573945293`*^9}, {
+  3.584129397460286*^9, 3.584129399602581*^9}, {3.584129435723102*^9, 
+  3.584129613914554*^9}, {3.5841296507703867`*^9, 3.584130013338787*^9}, {
+  3.584130049214407*^9, 3.5841301137624683`*^9}, {3.584130158434498*^9, 
+  3.584130171819374*^9}, {3.5843744850672483`*^9, 3.584374523426578*^9}, {
+  3.584374582287572*^9, 3.584374589503428*^9}, {3.584696438215898*^9, 
+  3.5846964504464006`*^9}, {3.5854028858643093`*^9, 3.5854028888323717`*^9}, {
+  3.58540296762677*^9, 3.585402970633978*^9}, {3.585426011709279*^9, 
+  3.585426012462529*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Use ",
+ StyleBox["Tuples",
+  FontFamily->"Courier"],
+ " to create a list of all possible outcomes (the sample space). Since your \
+dice are not identical, you\[CloseCurlyQuote]ll have to pass ",
+ StyleBox["Tuples",
+  FontFamily->"Courier"],
+ " a list of lists of possible outcomes for the dice. Please read the \
+documentation on ",
+ StyleBox["Tuples",
+  FontFamily->"Courier"],
+ " far enough to figure out how to do this. The resulting sample space is big \
+so you will probably want to assign the list representing it to a variable \
+like ",
+ StyleBox["sampleSpace",
+  FontFamily->"Courier"],
+ " and put a semi-colon at the end of the line to suppress the printing of \
+the result. If you want to avoid typing in the lists of possible outcomes on \
+each die you can look up and use the function ",
+ StyleBox["Range",
+  FontFamily->"Courier"],
+ ", which generates lists of successive integers. Before going on, check the \
+number of outcomes in the ",
+ StyleBox["sampleSpace",
+  FontFamily->"Courier"],
+ " by using ",
+ StyleBox["Length",
+  FontFamily->"Courier"],
+ " and verify that it is correct."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.585402917584004*^9, 3.5854029204759607`*^9}, 
+   3.585407445648408*^9},
+ FontSize->14],
+
+Cell[TextData[{
+ "Select out the outcomes whose sum is prime and assign them to a variable \
+with a name like ",
+ StyleBox["primeSumEvent",
+  FontFamily->"Courier"],
+ ". The functions ",
+ StyleBox["Total",
+  FontFamily->"Courier"],
+ " and ",
+ StyleBox["PrimeQ",
+  FontFamily->"Courier"],
+ " will be handy for this. "
+}], "ItemNumbered",
+ CellChangeTimes->{{3.5854029451484118`*^9, 3.5854029473875437`*^9}}],
+
+Cell["\<\
+Calculate the actual probability of getting a prime sum on these dice\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.585402961499565*^9, 3.5854029632995243`*^9}}]
+}, Open  ]],
+
+Cell["\<\
+Once you\[CloseCurlyQuote]ve solved this or any other practice problem, \
+please delete neaten up the notebook, deleting things that you tried along \
+the way but weren\[CloseCurlyQuote]t critical to the final solution, just as \
+you would recopy the essentials from your scratchpaper for a handwritten \
+solution.\
+\>", "Text",
+ CellChangeTimes->{{3.5854263782488413`*^9, 3.585426468910321*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"allDice", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Range", "[", "#", "]"}], "&"}], "/@", 
+    RowBox[{"{", 
+     RowBox[{"4", ",", "4", ",", "6", ",", "6", ",", "6", ",", "12"}], 
+     "}"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"threeDice", "=", 
+   RowBox[{"Tuples", "[", "allDice", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"possibleRolls", "=", 
+   RowBox[{"Length", "[", "threeDice", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pPrime", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{"threeDice", ",", 
+     RowBox[{
+      RowBox[{"PrimeQ", "[", 
+       RowBox[{"Total", "[", "#", "]"}], "]"}], "&"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"primeRolls", "=", 
+   RowBox[{"Length", "[", "pPrime", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"primeRolls", "/", "possibleRolls"}], "//", "N"}]}], "Input",
+ CellChangeTimes->{{3.618761860737248*^9, 3.618762046414051*^9}}],
+
+Cell[BoxData["0.2647569444444444`"], "Output",
+ CellChangeTimes->{
+  3.618762046915131*^9, {3.618762793200073*^9, 3.618762807211642*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Permutations and Combinations in Mathematica", "Subsection",
+ CellChangeTimes->{{3.584141749084115*^9, 3.5841417577866497`*^9}}],
+
+Cell[TextData[{
+ "You can use the built in function ",
+ StyleBox["Permutations",
+  FontFamily->"Courier New"],
+ " to enumerate all the permutations of a set represented as list. This lists \
+all the permutations of length exactly 3 (see the reference page on ",
+ StyleBox["Permutations",
+  FontFamily->"Courier"],
+ " for other ways of using it)."
+}], "Text",
+ CellChangeTimes->{{3.584141872827388*^9, 3.5841419455144453`*^9}, {
+  3.584142132770536*^9, 3.584142177554976*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Permutations", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", " ", "2", ",", " ", "3", ",", " ", "4", ",", " ", "5"}],
+     "}"}], ",", " ", 
+   RowBox[{"{", "3", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5841415379452333`*^9, 3.584141557686878*^9}, {
+  3.584141606565291*^9, 3.584141607868393*^9}, {3.584141801852932*^9, 
+  3.584141843837227*^9}, {3.584141950661264*^9, 3.584141968676568*^9}, {
+  3.584142012659925*^9, 3.584142108283642*^9}, {3.584374752847312*^9, 
+  3.5843747695121403`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "5", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "5", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "4", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "4", ",", "3"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618761706336813*^9, 3.61876280725161*^9}]
+}, Open  ]],
+
+Cell["\<\
+Note that the 3 indicating the number of elements you want in the \
+permutations is actually a list containing the number three, {3}. Built in \
+functions are usually heavily overloaded, meaning they do different things \
+depending on what types of arguments you give them. Sometimes arguments have \
+to appear in a list to communicate exactly what you want done with them. In \
+this case, giving just the number 3 instead of the list {3} as the third \
+argument would produce all permutations of size 3 or less, whereas you want \
+permutations of size exactly three. You couldn\[CloseCurlyQuote]t have \
+guessed this -- you just have to read the documentation on the function.\
+\>", "Text",
+ CellChangeTimes->{{3.5841422736046886`*^9, 3.584142286170878*^9}, {
+  3.5843746415389214`*^9, 3.584374741255247*^9}, {3.5843747751613407`*^9, 
+  3.5843748677351418`*^9}, {3.5843750512726173`*^9, 3.5843750874592657`*^9}, {
+  3.584696500381179*^9, 3.58469651397906*^9}}],
+
+Cell[TextData[{
+ "To get all the combinations of a certain size you can use the function ",
+ StyleBox["Subsets",
+  FontFamily->"Courier"],
+ ", which works analogously to ",
+ StyleBox["Permutations",
+  FontFamily->"Courier"],
+ ", in that you indicate an exact size by putting the second argument in a \
+list."
+}], "Text",
+ CellChangeTimes->{{3.5843750914190807`*^9, 3.5843751039069023`*^9}, {
+  3.584375167067278*^9, 3.5843752287409573`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Subsets", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", " ", "2", ",", " ", "3", ",", " ", "4"}], "}"}], ",", 
+   " ", 
+   RowBox[{"{", "2", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.584141627297798*^9, 3.5841416532760897`*^9}, {
+  3.584141776733157*^9, 3.5841417773886433`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618761706387906*^9, 3.618762807370084*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Compare the result to the result of calling ",
+ StyleBox["Permutations",
+  FontFamily->"Courier"],
+ " with the same arguments:"
+}], "Text",
+ CellChangeTimes->{{3.584375265637044*^9, 3.584375311075368*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Permutations", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", " ", "2", ",", " ", "3", ",", " ", "4"}], "}"}], ",", 
+   " ", 
+   RowBox[{"{", "2", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.584375296462429*^9, 3.584375298519538*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618761706425189*^9, 3.618762807471155*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "In comparing them, think about the following questions. For any two \
+numbers, how many of the pairs in the ",
+ StyleBox["Subsets",
+  FontFamily->"Courier New"],
+ " output contain them? How many of the pairs in the ",
+ StyleBox["Permutations",
+  FontFamily->"Courier"],
+ " output contain them?"
+}], "Text",
+ CellChangeTimes->{{3.584375337715583*^9, 3.5843753966592407`*^9}, {
+  3.584375619019113*^9, 3.5843756677233343`*^9}, {3.585426656001109*^9, 
+  3.5854266678468122`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Practice: Number of Combination", "Subsubsubsection",
+ CellChangeTimes->{{3.584128958790194*^9, 3.584129040530682*^9}, {
+  3.618583249453979*^9, 3.6185832615039577`*^9}}],
+
+Cell[TextData[{
+ "In a cell below, use the ",
+ StyleBox["Factorial",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " function of ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " to calculate the number of combinations of 9 things taken 5 at a time. Do \
+not explicitly produce a list of these combinations, just calculate how many \
+there should be using the formula. Once you\[CloseCurlyQuote]ve done it by \
+using ",
+ StyleBox["Factorial",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " several times, look up the documentation on ",
+ StyleBox["Binomial",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " and use it to make the calculation single step."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.6185832706241293`*^9, 3.618583452454014*^9}, {
+  3.618583549623918*^9, 3.618583549626293*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"9", "!"}], "/", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"4", "!"}], "*", 
+    RowBox[{"5", "!"}]}], ")"}]}]], "Input",
+ CellChangeTimes->{{3.618762142880749*^9, 3.618762242820956*^9}, {
+  3.618762300808314*^9, 3.618762307239666*^9}}],
+
+Cell[BoxData["126"], "Output",
+ CellChangeTimes->{{3.618762170680977*^9, 3.618762183443726*^9}, 
+   3.61876224377774*^9, {3.618762301969071*^9, 3.61876230790097*^9}, 
+   3.618762807798994*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Binomial", "[", 
+  RowBox[{"9", ",", "5"}], "]"}]], "Input",
+ CellChangeTimes->{{3.618762276541157*^9, 3.618762284450822*^9}}],
+
+Cell[BoxData["126"], "Output",
+ CellChangeTimes->{{3.618762285209558*^9, 3.618762313091458*^9}, 
+   3.618762808045892*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Now use ",
+ StyleBox["Subsets",
+  FontFamily->"Courier",
+  FontSize->14,
+  FontWeight->"Bold"],
+ " to enumerate and display all the combinations of the letters A through I. \
+Once you\[CloseCurlyQuote]ve seen the list, use ",
+ StyleBox["Length",
+  FontFamily->"Courier",
+  FontSize->14,
+  FontWeight->"Bold"],
+ " to count it. Does it give you the same answer as above?"
+}], "ItemNumbered",
+ CellChangeTimes->{{3.6185832706241293`*^9, 3.618583452454014*^9}, {
+  3.618583549623918*^9, 3.618583642390966*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"letters", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<A\>\"", ",", "\"\<B\>\"", ",", "\"\<C\>\"", ",", "\"\<D\>\"", ",", 
+     "\"\<E\>\"", ",", "\"\<F\>\"", ",", "\"\<G\>\"", ",", "\"\<H\>\"", ",", 
+     "\"\<I\>\""}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Subsets", "[", 
+  RowBox[{"letters", ",", 
+   RowBox[{"{", "5", "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.618762315420775*^9, 3.618762322138892*^9}, {
+   3.618762359180639*^9, 3.618762451460935*^9}, {3.61876255675344*^9, 
+   3.61876262471949*^9}, 3.618762694881475*^9, {3.618762739205537*^9, 
+   3.618762742109279*^9}, {3.618762772508063*^9, 3.618762775886789*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>",
+      ",", "\<\"E\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>",
+      ",", "\<\"F\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"F\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"F\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"F\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"C\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"A\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"F\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"C\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"B\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"G\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"D\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"C\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"H\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"D\"\>", ",", "\<\"E\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"D\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"E\"\>", ",", "\<\"F\"\>", ",", "\<\"G\"\>", ",", "\<\"H\"\>",
+      ",", "\<\"I\"\>"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.618762776593692*^9, 3.618762808332539*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.618762779564466*^9, 3.618762781857997*^9}}],
+
+Cell[BoxData["126"], "Output",
+ CellChangeTimes->{{3.618762782279868*^9, 3.618762808574628*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+InitializationCellWarning->False,
+WindowSize->{576, 744},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+FrontEndVersion->"10.0 for Linux x86 (32-bit) (June 27, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 240, 7, 106, "Section"],
+Cell[822, 31, 419, 7, 121, "Text"],
+Cell[CellGroupData[{
+Cell[1266, 42, 195, 6, 75, "Subsection"],
+Cell[1464, 50, 782, 17, 121, "Text"],
+Cell[CellGroupData[{
+Cell[2271, 71, 372, 9, 32, "Input"],
+Cell[2646, 82, 2241, 75, 143, "Output"]
+}, Open  ]],
+Cell[4902, 160, 1401, 22, 275, "Text"],
+Cell[CellGroupData[{
+Cell[6328, 186, 261, 6, 32, "Input"],
+Cell[6592, 194, 137, 3, 32, "Output"]
+}, Open  ]],
+Cell[6744, 200, 1025, 25, 231, "Text"],
+Cell[CellGroupData[{
+Cell[7794, 229, 351, 9, 55, "Input"],
+Cell[8148, 240, 1178, 39, 77, "Output"]
+}, Open  ]],
+Cell[9341, 282, 977, 25, 209, "Text"],
+Cell[CellGroupData[{
+Cell[10343, 311, 359, 8, 55, "Input"],
+Cell[10705, 321, 1179, 39, 77, "Output"]
+}, Open  ]],
+Cell[11899, 363, 1335, 26, 297, "Text"],
+Cell[CellGroupData[{
+Cell[13259, 393, 138, 2, 32, "Input"],
+Cell[13400, 397, 93, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13530, 403, 139, 2, 32, "Input"],
+Cell[13672, 407, 92, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13801, 413, 420, 9, 55, "Input"],
+Cell[14224, 424, 95, 1, 32, "Output"]
+}, Open  ]],
+Cell[14334, 428, 884, 17, 121, "Text"],
+Cell[CellGroupData[{
+Cell[15243, 449, 523, 11, 55, "Input"],
+Cell[15769, 462, 95, 1, 32, "Output"]
+}, Open  ]],
+Cell[15879, 466, 817, 16, 143, "Text"],
+Cell[16699, 484, 399, 8, 99, "Text"],
+Cell[CellGroupData[{
+Cell[17123, 496, 167, 3, 51, "Subsubsubsection"],
+Cell[17293, 501, 922, 16, 143, "Text"],
+Cell[CellGroupData[{
+Cell[18240, 521, 1246, 33, 271, "ItemNumbered"],
+Cell[19489, 556, 406, 13, 74, "ItemNumbered"],
+Cell[19898, 571, 169, 3, 53, "ItemNumbered"]
+}, Open  ]],
+Cell[20082, 577, 406, 7, 121, "Text"],
+Cell[CellGroupData[{
+Cell[20513, 588, 1009, 29, 165, "Input"],
+Cell[21525, 619, 137, 2, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21723, 628, 134, 1, 47, "Subsection"],
+Cell[21860, 631, 475, 11, 99, "Text"],
+Cell[CellGroupData[{
+Cell[22360, 646, 533, 11, 32, "Input"],
+Cell[22896, 659, 4256, 123, 341, "Output"]
+}, Open  ]],
+Cell[27167, 785, 971, 14, 253, "Text"],
+Cell[28141, 801, 441, 11, 99, "Text"],
+Cell[CellGroupData[{
+Cell[28607, 816, 319, 8, 32, "Input"],
+Cell[28929, 826, 471, 15, 32, "Output"]
+}, Open  ]],
+Cell[29415, 844, 223, 6, 55, "Text"],
+Cell[CellGroupData[{
+Cell[29663, 854, 271, 7, 32, "Input"],
+Cell[29937, 863, 825, 27, 55, "Output"]
+}, Open  ]],
+Cell[30777, 893, 494, 12, 99, "Text"],
+Cell[CellGroupData[{
+Cell[31296, 909, 176, 2, 31, "Subsubsubsection"],
+Cell[31475, 913, 807, 22, 158, "ItemNumbered"],
+Cell[CellGroupData[{
+Cell[32307, 939, 269, 8, 32, "Input"],
+Cell[32579, 949, 192, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32808, 957, 150, 3, 32, "Input"],
+Cell[32961, 962, 122, 2, 32, "Output"]
+}, Open  ]],
+Cell[33098, 967, 524, 15, 95, "ItemNumbered"],
+Cell[CellGroupData[{
+Cell[33647, 986, 679, 14, 77, "Input"],
+Cell[34329, 1002, 17127, 381, 935, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51493, 1388, 125, 2, 32, "Input"],
+Cell[51621, 1392, 96, 1, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

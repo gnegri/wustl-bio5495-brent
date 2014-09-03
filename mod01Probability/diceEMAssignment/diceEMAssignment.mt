@@ -153,7 +153,7 @@ Test[
 	,
 	{0.45, 0.55, {0.09, 0.27, 0.27, 0.38}, {0.37, 0.19, 0.12, 0.32}}
 	,
-	TestID->"Known Input Sample"
+	TestID->"ProbabilityTest-20130814-U7U5K4"
 ]
 
 (* Check that it still works when the number of faces changes*)
@@ -170,7 +170,7 @@ Test[
 	,
 	{0.14, 0.86, {0., 0.3, 0.4, 0.2, 0.1}, {0.28, 0.22, 0.15, 0.35, 0.}}
 	,
-	TestID->"Number of Faces 4->5"
+	TestID->"diceEMAssignment-20130919-U7S0M0"
 ]
 
 
@@ -181,7 +181,7 @@ Test[
 	,
 	{0.4,0.6,{0.3,0.2,0.2,0.2},{0.,0.2,0.2,0.6}}
 	,
-	TestID->"Stochastic 1"
+	TestID->"ProbabilityTest-20130729-H6T9V4"
 ]
 
 (*NOTE: The following test is stochastic -- on very, very rare occasions it may fail legitimately. If it fails 
@@ -191,7 +191,7 @@ Test[
 	,
 	{0.4,0.6,{0.3, 0.2, 0.3, 0.2},{0.1,0.2,0.2,0.5}}
 	,
-	TestID->"Stochastic 2"
+	TestID->"ProbabilityTest-20130729-X0W0A0"
 ]
 
 (*NOTE: The following test is stochastic -- on very, very rare occasions it may fail legitimately. If it fails 
@@ -201,19 +201,5 @@ Test[
 	,
 	{0.4,0.6,{0.3,0.3,0.2,0.2},{0.2,0.2,0.2,0.4}}
 	,
-	TestID->"Stochastic 3"
+	TestID->"ProbabilityTest-20130729-M6H3S7"
 ]
-
-diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
-	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
-		totalDie  = numType1+numType2;
-		probType1 = numType1/totalDie;
-		probType2 = numType2/totalDie;
-		distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
-		
-		sides = Range[Length[type1]];
-		dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-		picks = RandomVariate[distDice, draws];
-		
-		Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
-	]
