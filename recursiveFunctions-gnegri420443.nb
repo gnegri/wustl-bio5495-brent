@@ -1,0 +1,379 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11708,        370]
+NotebookOptionsPosition[      9831,        300]
+NotebookOutlinePosition[     10316,        321]
+CellTagsIndexPosition[     10231,        316]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Defining recursive functions", "Title",
+ CellChangeTimes->{{3.6177954520229063`*^9, 3.6177954566168833`*^9}}],
+
+Cell["The recursion", "Subtitle",
+ CellChangeTimes->{{3.61779548680177*^9, 3.617795490656432*^9}}],
+
+Cell[TextData[{
+ "You can define recursive functions in ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ ". For example, suppose you, with characteristic hubris, decide to scorn the \
+built-in function for squaring numbers and define you own function. Being the \
+clever and mischevious sort (but not putting a high priority on computational \
+efficiency) you decide to define the square of an integer n recursively, in \
+terms of the square of n-1:"
+}], "Text",
+ CellChangeTimes->{{3.61779551407618*^9, 3.617795536727504*^9}, {
+  3.617795595399476*^9, 3.617795771728853*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mySquare", "[", "n_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"mySquare", "[", 
+    RowBox[{"n", "-", "1"}], "]"}], "+", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"2", "n"}], "-", "1"}], ")"}]}]}]], "Input"],
+
+Cell[TextData[{
+ "That\[CloseCurlyQuote]s all well and good, but it will run forever without \
+returning a result. Before you evaluate it to demonstrate that, familiarize \
+yourself with ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ "\[CloseCurlyQuote]s Evaluation pull-down menu. You can usually stop an \
+infinite (or seemingly infinite) computation by Evaluation->Abort Evaluation, \
+but that option is grayed out if nothing is evaluating. Just make sure you \
+know how to find it. Now evaluate the following:"
+}], "Text",
+ CellChangeTimes->{{3.6177958199853973`*^9, 3.617795954323818*^9}, {
+  3.617795993179183*^9, 3.617796004826961*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mySquare", "[", "3", "]"}]], "Input",
+ CellChangeTimes->{{3.617796007563343*^9, 3.617796017314533*^9}, {
+  3.61779700119576*^9, 3.61779700202604*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"$RecursionLimit", "::", "reclim"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Recursion depth of \[NoBreak]\\!\\(1024\\)\[NoBreak] \
+exceeded. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/$RecursionLimit/reclim\\\", ButtonNote -> \
+\\\"$RecursionLimit::reclim\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.618266972353338*^9}],
+
+Cell[BoxData[
+ RowBox[{"Hold", "[", 
+  RowBox[{"mySquare", "[", 
+   RowBox[{
+    RowBox[{"-", "1019"}], "-", "1"}], "]"}], "]"}]], "Output",
+ CellChangeTimes->{3.618266972374051*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Actually, you don\[CloseCurlyQuote]t need to manually abort this evaluation \
+because ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " has a recursion limit, determined by the value of the global variable \
+$RecursionLimit, which defaults to 1024 and can be modified by setting  \
+$RecursionLimit to some other integer."
+}], "Text",
+ CellChangeTimes->{{3.6177960572243156`*^9, 3.617796069118505*^9}, {
+  3.617796672108254*^9, 3.617796790100544*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$RecursionLimit"}]], "Input",
+ CellChangeTimes->{{3.6177967925694237`*^9, 3.6177968075097237`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["\<\"$RecursionLimit gives the current limit on the number of \
+levels of recursion that \!\(\*StyleBox[\\\"the Wolfram Language\\\", \
+\\\"RebrandingTerm\\\", \\\"ReplacedText\\\" -> StyleBox[\\\"Mathematica\\\", \
+FontSlant -> \\\"Italic\\\"]]\) can use. \"\>", "MSG"], "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/$RecursionLimit"]}]], "Print", "PrintUsage",
+ CellChangeTimes->{3.618266972457925*^9},
+ CellTags->"Info3618248972-8984560"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The base case", "Subtitle",
+ CellChangeTimes->{{3.61779548680177*^9, 3.6177955019520817`*^9}}],
+
+Cell[TextData[{
+ "To make ",
+ StyleBox["mySquare",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ " work right, you need to define a base-case where the recursion stops. That \
+is particularly simple in ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ ":"
+}], "Text",
+ CellChangeTimes->{{3.61779682492515*^9, 3.617796841789899*^9}, {
+  3.6177969006462584`*^9, 3.6177969657768393`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mySquare", "[", "1", "]"}], "=", "1"}]], "Input",
+ CellChangeTimes->{{3.6177969709583683`*^9, 3.617796982072172*^9}, {
+  3.617797215649414*^9, 3.617797240875717*^9}}],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{3.618266972503626*^9}]
+}, Open  ]],
+
+Cell["\<\
+Notice that we do not use a := for delayed evaluation here -- it\
+\[CloseCurlyQuote]s fine for the right hand side to be evaluated when we \
+define the function. Now things should work.\
+\>", "Text",
+ CellChangeTimes->{{3.6177970173365307`*^9, 3.6177970708136873`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mySquare", "[", "3", "]"}]], "Input"],
+
+Cell[BoxData["9"], "Output",
+ CellChangeTimes->{3.61826697251422*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"mySquare", "[", "z", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"z", ",", "10"}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "4", ",", "9", ",", "16", ",", "25", ",", "36", ",", "49", ",", 
+   "64", ",", "81", ",", "100"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266972550805*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Important generalization", "Subtitle",
+ CellChangeTimes->{{3.61779548680177*^9, 3.6177955019520817`*^9}, {
+  3.617797097199724*^9, 3.6177971006367702`*^9}}],
+
+Cell["\<\
+Remember this: You can define the value of a function on a particular input \
+and that will override the general rule for that particular input, leaving \
+the rule unchanged for all other inputs. You can do this using either \
+immediate evaluation (=) or delayed evalution (:=).\
+\>", "Text",
+ CellChangeTimes->{{3.617797104476466*^9, 3.617797205765703*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Practice: Defining recursive functions", "Subsubsubsection",
+ CellChangeTimes->{{3.583175578135281*^9, 3.583175585252611*^9}, {
+  3.583237215724431*^9, 3.583237230152749*^9}, {3.583237385305098*^9, 
+  3.583237408360573*^9}, {3.583350266707965*^9, 3.5833502680112123`*^9}, {
+  3.58342604161637*^9, 3.58342604629023*^9}, {3.583498856500457*^9, 
+  3.5834988629059267`*^9}, {3.583505142291054*^9, 3.5835051472415533`*^9}, {
+  3.583512441172587*^9, 3.5835124550655746`*^9}, {3.583514468298832*^9, 
+  3.583514469463975*^9}, {3.61779736428045*^9, 3.6177973689104767`*^9}}],
+
+Cell[TextData[{
+ "The Fibonacci numbers are defined recursively as the sum of previous two \
+fibonacci numbers. There are two base cases: The first and second Fibonacci \
+numbers are both 1. Define a function ",
+ StyleBox["fibonacci[n]",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ " that returns the nth Fibonacci number for any positive integer n. (Because \
+of the recursion limit it will only work for n<1024, but \
+don\[CloseCurlyQuote]t worry about that.) If you\[CloseCurlyQuote]re not sure \
+how to do it, refer to the example above. You need to define the recursion \
+and two base cases, for ",
+ StyleBox["fibonacci[1]",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ " and ",
+ StyleBox["fibonacci[2]",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ "."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.617797461611758*^9, 3.617797629207663*^9}, {
+  3.61779766705835*^9, 3.617797751803505*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"fib", "[", "n_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"fib", "[", 
+     RowBox[{"n", "-", "1"}], "]"}], "+", 
+    RowBox[{"fib", "[", 
+     RowBox[{"n", "-", "2"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fib", "[", "1", "]"}], "=", "1"}], ";", " ", 
+  RowBox[{
+   RowBox[{"fib", "[", "2", "]"}], "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"fib", "[", "9", "]"}]}], "Input",
+ CellChangeTimes->{{3.618265410172922*^9, 3.618265473443041*^9}}],
+
+Cell[BoxData["34"], "Output",
+ CellChangeTimes->{{3.6182654509154*^9, 3.618265473916407*^9}, 
+   3.618266972629638*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "To demonstrate that your function works correctly, use ",
+ StyleBox["Table",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ " to generate a list of the first 10 Fibonacci numbers."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.617797461611758*^9, 3.617797629207663*^9}, {
+  3.61779766705835*^9, 3.61779776337106*^9}, {3.617797799166296*^9, 
+  3.6177978201812363`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"fib", "[", "i", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "10"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.618265507038994*^9, 3.618265527874117*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "1", ",", "2", ",", "3", ",", "5", ",", "8", ",", "13", ",", "21",
+    ",", "34", ",", "55"}], "}"}]], "Output",
+ CellChangeTimes->{3.618265528341979*^9, 3.618266972638264*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 656},
+WindowMargins->{{8, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Linux x86 (32-bit) (June 27, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3618248972-8984560"->{
+  Cell[3779, 110, 572, 12, 63, "Print",
+   CellTags->"Info3618248972-8984560"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3618248972-8984560", 10127, 310}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 115, 1, 96, "Title"],
+Cell[698, 25, 98, 1, 54, "Subtitle"],
+Cell[799, 28, 580, 11, 99, "Text"],
+Cell[1382, 41, 240, 8, 32, "Input"],
+Cell[1625, 51, 649, 12, 121, "Text"],
+Cell[CellGroupData[{
+Cell[2299, 67, 174, 3, 32, "Input"],
+Cell[2476, 72, 474, 10, 23, "Message"],
+Cell[2953, 84, 182, 5, 32, "Output"]
+}, Open  ]],
+Cell[3150, 92, 473, 10, 77, "Text"],
+Cell[CellGroupData[{
+Cell[3648, 106, 128, 2, 32, "Input"],
+Cell[3779, 110, 572, 12, 63, "Print",
+ CellTags->"Info3618248972-8984560"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4388, 127, 100, 1, 54, "Subtitle"],
+Cell[4491, 130, 407, 13, 55, "Text"],
+Cell[CellGroupData[{
+Cell[4923, 147, 201, 4, 32, "Input"],
+Cell[5127, 153, 70, 1, 32, "Output"]
+}, Open  ]],
+Cell[5212, 157, 279, 5, 55, "Text"],
+Cell[CellGroupData[{
+Cell[5516, 166, 61, 1, 32, "Input"],
+Cell[5580, 169, 69, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5686, 175, 167, 5, 32, "Input"],
+Cell[5856, 182, 210, 5, 32, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6115, 193, 162, 2, 54, "Subtitle"],
+Cell[6280, 197, 368, 6, 77, "Text"],
+Cell[CellGroupData[{
+Cell[6673, 207, 571, 7, 31, "Subsubsubsection"],
+Cell[7247, 216, 953, 25, 137, "ItemNumbered"],
+Cell[CellGroupData[{
+Cell[8225, 245, 533, 15, 77, "Input"],
+Cell[8761, 262, 119, 2, 32, "Output"]
+}, Open  ]],
+Cell[8895, 267, 400, 10, 53, "ItemNumbered"],
+Cell[CellGroupData[{
+Cell[9320, 281, 228, 6, 32, "Input"],
+Cell[9551, 289, 228, 5, 65, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

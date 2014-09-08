@@ -1,0 +1,1389 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     45872,       1380]
+NotebookOptionsPosition[     40429,       1193]
+NotebookOutlinePosition[     40763,       1208]
+CellTagsIndexPosition[     40720,       1205]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Functional Programming", "Title",
+ CellChangeTimes->{{3.6178195107386637`*^9, 3.617819515534622*^9}}],
+
+Cell[TextData[{
+ StyleBox["Procedural",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["programming",
+  FontSlant->"Italic"],
+ " is a style in which you do a lot of assigning values to variables and \
+reading or modifying those values during a computation. You also tend to \
+write explicit loops using constructs like ",
+ StyleBox["Do",
+  FontFamily->"Courier"],
+ " or ",
+ StyleBox["For",
+  FontFamily->"Courier"],
+ ". ",
+ StyleBox["Functional programming",
+  FontSlant->"Italic"],
+ " is a style in which you tend to apply functions in a nested fashion, using \
+the return value from one functional call as the input to another without \
+storing the return value in any named variable. Instead of making explicit \
+loops, you tend to apply functions to all elements of a list or matrix. ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " supports both procedural and functional programming and I tend to use a \
+mix of the two. However, I generally prefer functional style because it\
+\[CloseCurlyQuote]s usually more compact and elegant, using fewer lines code \
+than a procedural style program that accomplishes the same thing. It\
+\[CloseCurlyQuote]s also more easily parallelizable, and ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " provides simple ways of parallelizing functional programs to run on many \
+processors at once."
+}], "Text",
+ CellChangeTimes->{{3.585490217628696*^9, 3.585490347555243*^9}, {
+  3.5854904030372868`*^9, 3.585490407939007*^9}, {3.585490439131268*^9, 
+  3.585490573339354*^9}, {3.58549779496743*^9, 3.5854978182678623`*^9}, {
+  3.5854978553411922`*^9, 3.585497975289422*^9}, {3.585498019892356*^9, 
+  3.585498122042062*^9}, {3.617818964602151*^9, 3.617819030353047*^9}, {
+  3.6178190706348143`*^9, 3.617819076220262*^9}, {3.6178195013645782`*^9, 
+  3.6178195027465982`*^9}, {3.617871035701408*^9, 3.617871088184875*^9}}],
+
+Cell[TextData[{
+ "The basic way of packaging multiple items of data together in ",
+ StyleBox["Mathematica ",
+  FontSlant->"Italic"],
+ "is the list. Lists are efficient data structures in ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " (don\[CloseCurlyQuote]t worry, their not implemented as linked lists). \
+Four fundamental operations in functional programming are:"
+}], "Text",
+ CellChangeTimes->{{3.585490217628696*^9, 3.585490347555243*^9}, {
+  3.5854904030372868`*^9, 3.585490407939007*^9}, {3.585490439131268*^9, 
+  3.585490573339354*^9}, {3.58549779496743*^9, 3.5854978182678623`*^9}, {
+  3.5854978553411922`*^9, 3.585497975289422*^9}, {3.585498019892356*^9, 
+  3.585498122042062*^9}, {3.617818964602151*^9, 3.617819030353047*^9}, {
+  3.6178190706348143`*^9, 3.6178191991772747`*^9}, {3.617871464844273*^9, 
+  3.617871465516629*^9}, {3.617871551877316*^9, 3.61787155370518*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Generating new lists, either by carrying out computations or by reading them \
+in from files.\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.585490217628696*^9, 3.585490347555243*^9}, {
+  3.5854904030372868`*^9, 3.585490407939007*^9}, {3.585490439131268*^9, 
+  3.585490573339354*^9}, {3.58549779496743*^9, 3.5854978182678623`*^9}, {
+  3.5854978553411922`*^9, 3.585497975289422*^9}, {3.585498019892356*^9, 
+  3.585498122042062*^9}, {3.617818964602151*^9, 3.617819030353047*^9}, {
+  3.6178190706348143`*^9, 3.617819251268634*^9}, {3.6178192826471024`*^9, 
+  3.617819287119053*^9}}],
+
+Cell[TextData[{
+ "Transforming lists by applying functions to all their elements. Also called \
+",
+ StyleBox["mapping ",
+  FontSlant->"Italic"],
+ "functions over elements of a list. This can often replace explicit ",
+ StyleBox["Do",
+  FontFamily->"Courier",
+  FontSize->14,
+  FontWeight->"Bold"],
+ " or ",
+ StyleBox["For",
+  FontFamily->"Courier",
+  FontSize->14,
+  FontWeight->"Bold"],
+ " loops."
+}], "ItemNumbered",
+ CellChangeTimes->{{3.585490217628696*^9, 3.585490347555243*^9}, {
+  3.5854904030372868`*^9, 3.585490407939007*^9}, {3.585490439131268*^9, 
+  3.585490573339354*^9}, {3.58549779496743*^9, 3.5854978182678623`*^9}, {
+  3.5854978553411922`*^9, 3.585497975289422*^9}, {3.585498019892356*^9, 
+  3.585498122042062*^9}, {3.617818964602151*^9, 3.617819030353047*^9}, {
+  3.6178190706348143`*^9, 3.617819251268634*^9}, {3.6178192826471024`*^9, 
+  3.617819387268084*^9}, {3.61787214510716*^9, 3.6178721927282667`*^9}}],
+
+Cell["\<\
+Culling out selected items from a list. This can often replicit explicit If \
+inside an explicit loop.\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.585490217628696*^9, 3.585490347555243*^9}, {
+  3.5854904030372868`*^9, 3.585490407939007*^9}, {3.585490439131268*^9, 
+  3.585490573339354*^9}, {3.58549779496743*^9, 3.5854978182678623`*^9}, {
+  3.5854978553411922`*^9, 3.585497975289422*^9}, {3.585498019892356*^9, 
+  3.585498122042062*^9}, {3.617818964602151*^9, 3.617819030353047*^9}, {
+  3.6178190706348143`*^9, 3.617819251268634*^9}, {3.6178192826471024`*^9, 
+  3.617819359578619*^9}, {3.617819394283568*^9, 3.61781941963942*^9}, {
+  3.617871130808262*^9, 3.617871139924898*^9}, {3.617871451325783*^9, 
+  3.617871451332452*^9}, {3.6178729565618887`*^9, 3.617872996073988*^9}}],
+
+Cell["\<\
+Reduce, or summarize the contents of a list. Examples include taking the \
+length of the list, the maximum or minimum values, or the average of all the \
+values. Built-in functions that do things can often replace looping code that \
+does the same thing.\
+\>", "ItemNumbered",
+ CellChangeTimes->{{3.585490217628696*^9, 3.585490347555243*^9}, {
+  3.5854904030372868`*^9, 3.585490407939007*^9}, {3.585490439131268*^9, 
+  3.585490573339354*^9}, {3.58549779496743*^9, 3.5854978182678623`*^9}, {
+  3.5854978553411922`*^9, 3.585497975289422*^9}, {3.585498019892356*^9, 
+  3.585498122042062*^9}, {3.617818964602151*^9, 3.617819030353047*^9}, {
+  3.6178190706348143`*^9, 3.617819251268634*^9}, {3.6178192826471024`*^9, 
+  3.617819359578619*^9}, {3.617819394283568*^9, 3.61781941963942*^9}, {
+  3.617871130808262*^9, 3.617871139924898*^9}, {3.617871451325783*^9, 
+  3.6178715241067467`*^9}, {3.6178722354945383`*^9, 3.617872290638783*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Functional programming is closely related to the ",
+ StyleBox["MapReduce",
+  FontSlant->"Italic"],
+ " framework for parallel computing used by Google and other \
+\[OpenCurlyDoubleQuote]cloud computing\[CloseCurlyDoubleQuote] providers."
+}], "Text",
+ CellChangeTimes->{{3.617872296868093*^9, 3.617872361347687*^9}}],
+
+Cell["\<\
+The following sections briefly describe programming constructs for doing each \
+of these things. When you actually start programming in functional style, you\
+\[CloseCurlyQuote]ll end up reading the documentation on these constructs and \
+learning more related constructs.\
+\>", "Text",
+ CellChangeTimes->{{3.617819424002993*^9, 3.617819479874427*^9}, 
+   3.617872295263171*^9, 3.617872364874941*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Generating new lists", "Section",
+ CellChangeTimes->{{3.617819567736989*^9, 3.617819586430498*^9}}],
+
+Cell[TextData[{
+ "The most basic way of generating a list is with the function ",
+ StyleBox["Range",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.6178195921824493`*^9, 3.617819611814294*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Range", "[", 
+  RowBox[{"1", ",", "12", ",", "3"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6178196215520573`*^9, 3.617819633166875*^9}, {
+  3.617819664085903*^9, 3.617819665513566*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "4", ",", "7", ",", "10"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266848659776*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "A much more general way is with the function ",
+ StyleBox["Table",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.6178196786599703`*^9, 3.617819696667948*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"2", "^", "x"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", " ", "1", ",", " ", "10"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.617819709478557*^9, 3.617819748619828*^9}, {
+  3.617825943681864*^9, 3.6178259597427063`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",", "128", ",", 
+   "256", ",", "512", ",", "1024"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849001542*^9}]
+}, Open  ]],
+
+Cell["You can also generate lists of random numbers:", "Text",
+ CellChangeTimes->{{3.617826549150711*^9, 3.617826581372212*^9}, {
+  3.6178377633091297`*^9, 3.617837780612479*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RandomReal", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", " ", "10"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6178265839029093`*^9, 3.61782659040301*^9}, {
+  3.617837726843137*^9, 3.617837735183432*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1.8350816022951977`", ",", "1.1718233431729228`", ",", 
+   "1.109960063338422`", ",", "1.8024743008677404`", ",", 
+   "1.5234088446934226`", ",", "1.8455880521329442`", ",", 
+   "1.64435080700317`", ",", "1.6749251647596552`", ",", "1.327523147890244`",
+    ",", "1.800923064957094`"}], "}"}]], "Output",
+ CellChangeTimes->{3.617837737348328*^9, 3.618266849049115*^9}]
+}, Open  ]],
+
+Cell["\<\
+Finally, when you read data in from a file the result is often a list.\
+\>", "Text",
+ CellChangeTimes->{{3.6178259834218273`*^9, 3.617826060186809*^9}, {
+  3.617871181990901*^9, 3.617871193491475*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Mapping functions over lists", "Section",
+ CellChangeTimes->{{3.617826100539421*^9, 3.617826109969652*^9}}],
+
+Cell["\<\
+Built-in math functions that apply to individual numbers can also be applied \
+to entire lists. Here are some examples.\
+\>", "Text",
+ CellChangeTimes->{{3.617826086307363*^9, 3.617826091185986*^9}, {
+  3.617826125752747*^9, 3.617826171167952*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Range", "[", "10", "]"}], "^", "2"}]], "Input",
+ CellChangeTimes->{{3.617826180713832*^9, 3.6178261924483852`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "4", ",", "9", ",", "16", ",", "25", ",", "36", ",", "49", ",", 
+   "64", ",", "81", ",", "100"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849093623*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "PrimeQ", " ", "tests", " ", "whether", " ", "a", " ", "number", " ", "is",
+     " ", 
+    RowBox[{"prime", "."}]}], "*)"}], 
+  RowBox[{"PrimeQ", "[", 
+   RowBox[{"Range", "[", "10", "]"}], "]"}], " "}]], "Input",
+ CellChangeTimes->{{3.6178263493641567`*^9, 3.6178264417732687`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "False", ",", "True", ",", "True", ",", "False", ",", "True", ",", "False", 
+   ",", "True", ",", "False", ",", "False", ",", "False"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849142891*^9}]
+}, Open  ]],
+
+Cell["\<\
+Math functions that take two arguments, such as addition, can be applied to \
+pairs of lists as long as the lists have the same Length.\
+\>", "Text",
+ CellChangeTimes->{{3.617826238488106*^9, 3.617826275194427*^9}, {
+  3.617872423805161*^9, 3.617872427145101*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Range", "[", "10", "]"}], "+", 
+  RowBox[{"Range", "[", 
+   RowBox[{"2", ",", "11"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.617826279291716*^9, 3.6178262977096863`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "3", ",", "5", ",", "7", ",", "9", ",", "11", ",", "13", ",", "15", ",", 
+   "17", ",", "19", ",", "21"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849192421*^9}]
+}, Open  ]],
+
+Cell["\<\
+Functions that take more than one argument can also be applied to a list and \
+a number, for example:\
+\>", "Text",
+ CellChangeTimes->{{3.617826474823043*^9, 3.617826495539657*^9}, 
+   3.6178724506484613`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Range", "[", "10", "]"}], "*", "2"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2", ",", "4", ",", "6", ",", "8", ",", "10", ",", "12", ",", "14", ",", 
+   "16", ",", "18", ",", "20"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849242418*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "For functions that don\[CloseCurlyQuote]t map automatically, including \
+user-defined functions, you can use ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " to apply them to each element of a list and return the list of results."
+}], "Text",
+ CellChangeTimes->{{3.617826327611314*^9, 3.617826335574993*^9}, {
+  3.617837921352583*^9, 3.617837972487851*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Generates", " ", "a", " ", "3", "x4", " ", "matrix"}], ",", " ", 
+    
+    RowBox[{
+     RowBox[{"i", ".", "e", ".", " ", "list"}], "-", "of", "-", "lists"}], 
+    ",", " ", 
+    RowBox[{
+    "that", " ", "contains", " ", "random", " ", "integers", " ", "between", 
+     " ", "1", " ", "and", " ", "10."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"myMatrix", "=", 
+   RowBox[{"RandomInteger", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", " ", "10"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", " ", "4"}], "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.585498145280555*^9, 3.585498219839137*^9}, {
+  3.617872493580256*^9, 3.617872547814649*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"7", ",", "9", ",", "1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "5", ",", "5", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "6", ",", "5", ",", "6"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.58549820751812*^9, 3.585498221665909*^9}, 
+   3.617838156767105*^9, 3.618266849296969*^9}]
+}, Open  ]],
+
+Cell["Totaling each sublist can be done very cleanly use Map.", "Text",
+ CellChangeTimes->{{3.585498247304131*^9, 3.5854982643892517`*^9}, {
+  3.585498301940701*^9, 3.5854984095640793`*^9}, {3.617838175402032*^9, 
+  3.617838226881476*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"Total", ",", " ", "myMatrix"}], "]"}]], "Input",
+ CellChangeTimes->{{3.585498431214964*^9, 3.5854984417419033`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"19", ",", "18", ",", "20"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849307803*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "This applied ",
+ StyleBox["Total",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " to every element of the top level list and returned the list of results. "
+}], "Text",
+ CellChangeTimes->{{3.585498457388484*^9, 3.585498574385909*^9}, 
+   3.617838391609132*^9}],
+
+Cell[TextData[{
+ "Now suppose you want a list containing the total of each sublist if it\
+\[CloseCurlyQuote]s over 25, but 0 if it\[CloseCurlyQuote]s not. You\
+\[CloseCurlyQuote]re going to have to define a temporary function that exists \
+just long enough to apply it to every element of the list ",
+ StyleBox["myMatrix",
+  FontFamily->"Courier"],
+ ". Here\[CloseCurlyQuote]s how you do that:"
+}], "Text",
+ CellChangeTimes->{{3.585498598940082*^9, 3.585498701325737*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Total", "[", "#", "]"}], " ", ">", " ", "25"}], ",", " ", 
+      RowBox[{"Total", "[", "#", "]"}], ",", " ", "0"}], "]"}], " ", "&"}], 
+   ",", " ", "myMatrix"}], "]"}]], "Input",
+ CellChangeTimes->{{3.585498706255266*^9, 3.585498708756503*^9}, {
+  3.5854987448095083`*^9, 3.585498805019216*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849361308*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["#",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " stands for an element of the list and ",
+ StyleBox["&",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " indicates that the preceding expression should be treated as a function. A \
+slightly more efficient way to do this would be to use one ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " to create the list of totals and another ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " to replace substitute 0 for any of the totals that are not over 25:"
+}], "Text",
+ CellChangeTimes->{{3.585498840320257*^9, 3.585498853127613*^9}, {
+  3.585498884305119*^9, 3.585498898832192*^9}, {3.5854989715909643`*^9, 
+  3.585498992527226*^9}, {3.61783847264364*^9, 3.617838474077859*^9}, {
+  3.617838586928275*^9, 3.6178386276296377`*^9}, {3.617872644633814*^9, 
+  3.6178726456752462`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"#", " ", ">", " ", "25"}], ",", " ", "#", ",", " ", "0"}], 
+     "]"}], " ", "&"}], ",", " ", 
+   RowBox[{"Map", "[", 
+    RowBox[{"Total", ",", " ", "myMatrix"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.585499012219975*^9, 3.5854990328082533`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{3.61826684941043*^9}]
+}, Open  ]],
+
+Cell["\<\
+This is more efficient because it never applies Total to the same sublist \
+twice.\
+\>", "Text",
+ CellChangeTimes->{{3.58549904830482*^9, 3.585499063934626*^9}}],
+
+Cell[TextData[{
+ "In most situations where you use a looping construct like ",
+ StyleBox["Do",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " or ",
+ StyleBox["For",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", you can construct a list and use ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " on it instead. In normal functional code, each time ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " applies a function to an element of a list, the result does not depend on \
+whether the function has already been applied to other elements of the list. \
+In other words, you can think of all the function applications in ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " as happening in parallel and completing in no particular order. This is \
+very convenient of automated code parallelization, which can be accomplished \
+by using ",
+ StyleBox["ParallelMap ",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ "in place of ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". "
+}], "Text",
+ CellChangeTimes->{{3.6178387046028214`*^9, 3.617838953322508*^9}, {
+  3.61783901804247*^9, 3.617839076553308*^9}, {3.6178391067520638`*^9, 
+  3.6178393046198053`*^9}, {3.617839879274516*^9, 3.617840017264145*^9}, {
+  3.617840066270233*^9, 3.617840076605551*^9}, {3.6178727035896606`*^9, 
+  3.617872804344198*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"Factorial", ",", " ", 
+   RowBox[{"Range", "[", 
+    RowBox[{"1", ",", "20"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.617840107413143*^9, 3.6178401413474483`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "2", ",", "6", ",", "24", ",", "120", ",", "720", ",", "5040", 
+   ",", "40320", ",", "362880", ",", "3628800", ",", "39916800", ",", 
+   "479001600", ",", "6227020800", ",", "87178291200", ",", "1307674368000", 
+   ",", "20922789888000", ",", "355687428096000", ",", "6402373705728000", 
+   ",", "121645100408832000", ",", "2432902008176640000"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266849465934*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ParallelMap", "[", 
+  RowBox[{"Factorial", ",", " ", 
+   RowBox[{"Range", "[", 
+    RowBox[{"1", ",", "20"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.617840158403266*^9, 3.61784016135713*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "2", ",", "6", ",", "24", ",", "120", ",", "720", ",", "5040", 
+   ",", "40320", ",", "362880", ",", "3628800", ",", "39916800", ",", 
+   "479001600", ",", "6227020800", ",", "87178291200", ",", "1307674368000", 
+   ",", "20922789888000", ",", "355687428096000", ",", "6402373705728000", 
+   ",", "121645100408832000", ",", "2432902008176640000"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266851305597*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Of course, it is possible to write code in which the result of ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " applying a function to an element of a list depends on which other \
+elements the function has already been applied to. This is a very tacky, low \
+class programming style."
+}], "Text",
+ CellChangeTimes->{{3.617840218650469*^9, 3.61784031401506*^9}, 
+   3.617840542327558*^9, {3.617872840498025*^9, 3.6178728407582283`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{"Don", "'"}], "t", " ", "do", " ", "this"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.617839452290092*^9, 3.617839456788456*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"x", "=", "0"}], ";"}]], "Input",
+ CellChangeTimes->{{3.617839439365222*^9, 3.617839447071273*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"yuck", "[", "list_", "]"}], ":=", 
+  RowBox[{"Map", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"x", "<", "10"}], ",", 
+       RowBox[{"x", "=", 
+        RowBox[{"x", "+", 
+         RowBox[{"#", "^", "2"}]}]}], ",", 
+       RowBox[{"x", "=", 
+        RowBox[{"-", "x"}]}]}], "]"}], " ", "&"}], ",", " ", "list"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.617839310744516*^9, 3.6178394358802977`*^9}, {
+  3.617839565541998*^9, 3.617839566886417*^9}, {3.617839641226686*^9, 
+  3.6178396436902018`*^9}, {3.617839729684832*^9, 3.617839782284156*^9}, {
+  3.6178403602303*^9, 3.6178403676620083`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"list", "=", 
+  RowBox[{"RandomInteger", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", " ", "4"}], "}"}], ",", " ", "5"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6178395261746187`*^9, 3.617839542313882*^9}, {
+  3.61783966765934*^9, 3.617839672120338*^9}, {3.617839831442356*^9, 
+  3.617839833308793*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"3", ",", "2", ",", "4", ",", "4", ",", "3"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266819148325*^9, 3.618266851999909*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"yuck", "[", "list", "]"}]], "Input",
+ CellChangeTimes->{{3.61783947862778*^9, 3.6178395058373337`*^9}, 
+   3.6178395369911327`*^9, {3.617839598316824*^9, 3.6178395990706367`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"9", ",", "13", ",", 
+   RowBox[{"-", "13"}], ",", "3", ",", "12"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266821057726*^9, 3.618266852027047*^9}]
+}, Open  ]],
+
+Cell["Don\[CloseCurlyQuote]t ever let me catch you trying a stunt like \
+this.", "Text",
+ CellChangeTimes->{{3.617840407229451*^9, 3.617840417811934*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Practice: Using Map", "Subsubsubsection",
+ CellChangeTimes->{{3.583175578135281*^9, 3.583175585252611*^9}, {
+  3.583237215724431*^9, 3.583237230152749*^9}, {3.583237385305098*^9, 
+  3.583237408360573*^9}, {3.583350266707965*^9, 3.5833502680112123`*^9}, {
+  3.58342604161637*^9, 3.58342604629023*^9}, {3.583498856500457*^9, 
+  3.5834988629059267`*^9}, {3.583505142291054*^9, 3.5835051472415533`*^9}, {
+  3.583512441172587*^9, 3.5835124550655746`*^9}, {3.583514468298832*^9, 
+  3.583514469463975*^9}, {3.583517624331842*^9, 3.583517631065776*^9}, {
+  3.583519420630145*^9, 3.583519422650053*^9}, {3.583596780716548*^9, 
+  3.5835967844023867`*^9}, {3.617840521562731*^9, 3.617840525784638*^9}}],
+
+Cell[TextData[{
+ "Here is a function that takes as input a list of strings and returns the \
+same list of strings with ",
+ StyleBox["\[OpenCurlyDoubleQuote]...Not!\[CloseCurlyDoubleQuote] ",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ "added to the end of each one."
+}], "Text",
+ CellChangeTimes->{{3.61784079691191*^9, 3.617840815725697*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"negator", "[", "stringList_", "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"resultsList", "=", 
+      RowBox[{"{", "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"i", "=", "1"}], ",", 
+       RowBox[{"i", "<=", 
+        RowBox[{"Length", "[", "stringList", "]"}]}], ",", 
+       RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"resultsList", ",", " ", 
+         RowBox[{"StringJoin", "[", 
+          RowBox[{
+           RowBox[{"stringList", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", "\"\<...Not!\>\""}], "]"}]}],
+         "]"}]}], "]"}], ";", "\[IndentingNewLine]", "resultsList"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.6178408189207706`*^9, 3.6178409697675734`*^9}, {
+  3.617841104966737*^9, 3.617841113314056*^9}, {3.617841273496256*^9, 
+  3.617841288861506*^9}, {3.618266708948006*^9, 3.618266710326992*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"negator", "[", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<I am cool.\>\"", ",", " ", "\"\<I am hip.\>\"", ",", " ", 
+    "\"\<I really care.\>\""}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6178411187883997`*^9, 3.617841164113296*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"I am cool....Not!\"\>", ",", "\<\"I am hip....Not!\"\>", 
+   ",", "\<\"I really care....Not!\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.617841165128141*^9, {3.617841277146665*^9, 3.6178412939185553`*^9}, 
+   3.618266852065672*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Define a function ",
+ StyleBox["coolNegator",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " that behaves just ",
+ StyleBox["negator",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " but uses ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " instead of ",
+ StyleBox["For",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " and doesn\[CloseCurlyQuote]t use ",
+ StyleBox["Module",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " or ",
+ StyleBox["AppendTo",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " at all. It should be just two lines."
+}], "Text",
+ CellChangeTimes->{{3.617840537335998*^9, 3.6178405379040737`*^9}, {
+  3.6178406238149967`*^9, 3.6178407671137247`*^9}, {3.617841319052204*^9, 
+  3.6178413946808987`*^9}, {3.618266653949355*^9, 3.618266654754474*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"coolNegator", "[", "stringList_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"StringJoin", "[", 
+     RowBox[{"#", ",", "\"\<..Not!\>\""}], "]"}], "&"}], "/@", 
+   "stringList"}]}]], "Input",
+ CellChangeTimes->{{3.618266655910567*^9, 3.618266698202381*^9}, {
+  3.618266734825404*^9, 3.618266784474899*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"coolNegator", "[", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<I am cool.\>\"", ",", " ", "\"\<I am hip.\>\"", ",", " ", 
+    "\"\<I really care.\>\""}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.618266719270803*^9, 3.618266721787711*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"I am cool...Not!\"\>", ",", "\<\"I am hip...Not!\"\>", 
+   ",", "\<\"I really care...Not!\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.618266722385166*^9, 3.618266787448239*^9}, 
+   3.618266852105734*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Selecting or culling elements from a list", "Section",
+ CellChangeTimes->{{3.617826100539421*^9, 3.617826109969652*^9}, {
+  3.617872935586852*^9, 3.617872943963426*^9}}],
+
+Cell[TextData[{
+ StyleBox["Beginners often have trouble functionalizing loops that decide \
+whether to include something in a result list depending on the outcome of an ",
+  FontSlant->"Plain"],
+ StyleBox["If",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[" test. The reason this seems hard is that applying a function with \
+Map produces a list containing one result for element of the input list, so \
+the lengths of the input and output lists are always the same. Since \
+selecting certain elements from a list can\[CloseCurlyQuote]t be done with ",
+  FontSlant->"Plain"],
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[", there is a built-in function ",
+  FontSlant->"Plain"],
+ StyleBox["Select",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[" that does it. ",
+  FontSlant->"Plain"],
+ StyleBox["Select[list, criterion]",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[" returns a list containing the elements of the input ",
+  FontSlant->"Plain"],
+ StyleBox["list",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[" on which the function ",
+  FontSlant->"Plain"],
+ StyleBox["criterion",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[" returns ",
+  FontSlant->"Plain"],
+ StyleBox["True",
+  FontFamily->"Courier",
+  FontWeight->"Bold",
+  FontSlant->"Plain"],
+ StyleBox[":",
+  FontSlant->"Plain"]
+}], "Text",
+ CellChangeTimes->{{3.617873019561426*^9, 3.6178732903943853`*^9}, 
+   3.6178740475246696`*^9, {3.617874105932584*^9, 3.617874249862764*^9}},
+ FontSlant->"Italic"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "4", ",", "7", ",", "6", ",", "2"}], "}"}], 
+   ",", "EvenQ"}], "]"}]], "Input",
+ CellID->13616],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2", ",", "4", ",", "6", ",", "2"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266852142141*^9}]
+}, Open  ]],
+
+Cell["\<\
+You can also use an unnamed, or \[OpenCurlyDoubleQuote]pure\
+\[CloseCurlyDoubleQuote] funciton to select items\
+\>", "Text",
+ CellChangeTimes->{{3.6178740124546127`*^9, 3.6178740402369432`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "4", ",", "7", ",", "6", ",", "2"}], "}"}], 
+   ",", 
+   RowBox[{
+    RowBox[{"#", ">", "2"}], "&"}]}], "]"}]], "Input",
+ CellID->10299],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"4", ",", "7", ",", "6"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266852150404*^9},
+ ImageSize->{61, 13},
+ ImageMargins->{{0, 0}, {0, 0}},
+ ImageRegion->{{0, 1}, {0, 1}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Practice: Using Select", "Subsubsubsection",
+ CellChangeTimes->{{3.583175578135281*^9, 3.583175585252611*^9}, {
+  3.583237215724431*^9, 3.583237230152749*^9}, {3.583237385305098*^9, 
+  3.583237408360573*^9}, {3.583350266707965*^9, 3.5833502680112123`*^9}, {
+  3.58342604161637*^9, 3.58342604629023*^9}, {3.583498856500457*^9, 
+  3.5834988629059267`*^9}, {3.583505142291054*^9, 3.5835051472415533`*^9}, {
+  3.583512441172587*^9, 3.5835124550655746`*^9}, {3.583514468298832*^9, 
+  3.583514469463975*^9}, {3.583517624331842*^9, 3.583517631065776*^9}, {
+  3.583519420630145*^9, 3.583519422650053*^9}, {3.583596780716548*^9, 
+  3.5835967844023867`*^9}, {3.617840521562731*^9, 3.617840525784638*^9}, {
+  3.6178747059535227`*^9, 3.617874708002359*^9}}],
+
+Cell[TextData[{
+ "Write a function ",
+ StyleBox["primes",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " that takes an argument ",
+ StyleBox["n",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " and returns a list of the prime numbers found in the first ",
+ StyleBox["n",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " positive integers. You will want to use ",
+ StyleBox["Range",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["PrimeQ",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", and ",
+ StyleBox["Select",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". Do not use ",
+ StyleBox["Do",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["For",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["While",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["If",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", or related procedural constructs."
+}], "Text",
+ CellChangeTimes->{{3.617874718417595*^9, 3.6178748667820587`*^9}, {
+  3.6178755901853933`*^9, 3.6178756085450077`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"primes", "[", "n_", "]"}], ":=", 
+  RowBox[{"Select", "[", 
+   RowBox[{
+    RowBox[{"Range", "[", "n", "]"}], ",", "PrimeQ"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.618266071110248*^9, 3.618266132824347*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"primes", "[", "5", "]"}]], "Input",
+ CellChangeTimes->{{3.618266136121626*^9, 3.618266137423954*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2", ",", "3", ",", "5"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266137833186*^9, 3.618266230540804*^9, 
+  3.618266852190216*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Reducing a list to a number", "Section",
+ CellChangeTimes->{{3.617826100539421*^9, 3.617826109969652*^9}, {
+  3.617872935586852*^9, 3.617872943963426*^9}, {3.617874910985614*^9, 
+  3.617874928012155*^9}}],
+
+Cell[TextData[{
+ "There are lots of functions that take a list as input and return a single \
+number, including ",
+ StyleBox["Total",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["Mean",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["Median",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["Variance",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", etc."
+}], "Text",
+ CellChangeTimes->{{3.617874938659172*^9, 3.617874987578424*^9}, {
+  3.61787502152277*^9, 3.617875023529594*^9}, {3.6178751088963614`*^9, 
+  3.6178751237348003`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"list", "=", 
+  RowBox[{"RandomInteger", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "10"}], "}"}], ",", "5"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6178752402048273`*^9, 3.617875261003862*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "4", ",", "6", ",", "4", ",", "6"}], "}"}]], "Output",
+ CellChangeTimes->{3.618266160223631*^9, 3.618266852217278*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Median", "[", "list", "]"}]], "Input",
+ CellChangeTimes->{{3.617875265784054*^9, 3.617875272438566*^9}}],
+
+Cell[BoxData["4"], "Output",
+ CellChangeTimes->{3.618266164070165*^9, 3.618266852242465*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Mean", "[", "list", "]"}]], "Input",
+ CellChangeTimes->{{3.617875277653623*^9, 3.617875280598544*^9}}],
+
+Cell[BoxData[
+ FractionBox["21", "5"]], "Output",
+ CellChangeTimes->{3.61826616637345*^9, 3.618266852266055*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Max", "[", "list", "]"}]], "Input",
+ CellChangeTimes->{{3.617875451666153*^9, 3.617875460873465*^9}, 
+   3.6178755275170927`*^9}],
+
+Cell[BoxData["6"], "Output",
+ CellChangeTimes->{3.618266168600621*^9, 3.618266852298459*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Min", "[", "list", "]"}]], "Input",
+ CellChangeTimes->{{3.6178754971274147`*^9, 3.6178755004484053`*^9}}],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{3.618266172097822*^9, 3.618266852309629*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Practice: Reducing lists to numbers", "Subsubsubsection",
+ CellChangeTimes->{{3.583175578135281*^9, 3.583175585252611*^9}, {
+  3.583237215724431*^9, 3.583237230152749*^9}, {3.583237385305098*^9, 
+  3.583237408360573*^9}, {3.583350266707965*^9, 3.5833502680112123`*^9}, {
+  3.58342604161637*^9, 3.58342604629023*^9}, {3.583498856500457*^9, 
+  3.5834988629059267`*^9}, {3.583505142291054*^9, 3.5835051472415533`*^9}, {
+  3.583512441172587*^9, 3.5835124550655746`*^9}, {3.583514468298832*^9, 
+  3.583514469463975*^9}, {3.583517624331842*^9, 3.583517631065776*^9}, {
+  3.583519420630145*^9, 3.583519422650053*^9}, {3.583596780716548*^9, 
+  3.5835967844023867`*^9}, {3.617840521562731*^9, 3.617840525784638*^9}, {
+  3.6178747059535227`*^9, 3.617874708002359*^9}, {3.6178755700756493`*^9, 
+  3.617875580154189*^9}}],
+
+Cell[TextData[{
+ "Write a function ",
+ StyleBox["maxPrime",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " that takes an argument ",
+ StyleBox["n",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " and returns the largest prime number found in the first ",
+ StyleBox["n",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " positive integers. Please do this the easy way, using your function ",
+ StyleBox["primes",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". "
+}], "Text",
+ CellChangeTimes->{{3.617875629232027*^9, 3.617875927337644*^9}, {
+  3.617875958800239*^9, 3.6178760748719807`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"maxPrime", "[", "n_", "]"}], ":=", 
+  RowBox[{"Max", "@@", 
+   RowBox[{"primes", "[", "n", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.618266177051144*^9, 3.61826621460295*^9}, {
+  3.618266257244491*^9, 3.618266298192174*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"maxPrime", "[", "10", "]"}]], "Input",
+ CellChangeTimes->{{3.618266216432581*^9, 3.618266239950694*^9}}],
+
+Cell[BoxData["7"], "Output",
+ CellChangeTimes->{{3.618266220595063*^9, 3.618266264414949*^9}, 
+   3.618266299461934*^9, 3.618266852400443*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "This demonstrates how functional programming can promote modularity and \
+reuse of code. I often start by writing low level functions that do simple \
+things to individual items. Then I write functions that map the low level \
+functions over lists. Then I compose the mapping functions, as in ",
+ StyleBox["step3[step2[step1[list]]]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", producing a \"pipeline\" in which individual items are processed through \
+a series of steps in parallel. The steps are often ",
+ StyleBox["Map",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " steps, but they can also be ",
+ StyleBox["Select",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " steps.\n\nThis exercise also demonstrates that there are cases in which \
+procedural programming is more efficient. If you know at the start that you \
+only want the largest prime less or equal to n, it is more efficent to write \
+a loop that counts down from n, testing each successively smaller number and \
+breaking out of the loop as soon as a prime is found. In cases where \
+efficiency matters and you only care about finding a needle in a haystack, \
+you should sometimes use procedural implementations. However, do not always \
+write the most efficient code at the cost of readability. An important \
+programming skill is learning to think about whether a particular function \
+needs to be fast (e.g. it is applied to billions of data items) or not (e.g. \
+it is only applied to a small number of items at the end of a long \
+computation)."
+}], "Text",
+ CellChangeTimes->{{3.617875629232027*^9, 3.617875927337644*^9}, {
+  3.617875958800239*^9, 3.617876336855474*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["More on functional programming", "Section",
+ CellChangeTimes->{{3.617826100539421*^9, 3.617826109969652*^9}, {
+  3.617872935586852*^9, 3.617872943963426*^9}, {3.617874910985614*^9, 
+  3.617874928012155*^9}, {3.617876364691535*^9, 3.617876373752145*^9}}],
+
+Cell[TextData[{
+ "Functional programming takes a while to get used to. ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " provides a lot of learning resources on functional programming which are \
+listed in the documentation guide \
+\[OpenCurlyDoubleQuote]guide/FunctionalProgramming\[CloseCurlyDoubleQuote]. \
+We will start out gently. On your assignments, we will suggest functional \
+implementations where it is simple and obvious how to do it, and it shortens \
+the code. Please do your best to incorporate functional programming in your \
+code. Later on, we may subtract a small number of style points for \
+particularly bulky procedural code that is easily functionalized."
+}], "Text",
+ CellChangeTimes->{{3.617876378675295*^9, 3.617876596898881*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 744},
+WindowMargins->{{104, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Linux x86 (32-bit) (June 27, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 107, 1, 96, "Title"],
+Cell[690, 25, 1860, 39, 231, "Text"],
+Cell[2553, 66, 892, 16, 77, "Text"],
+Cell[CellGroupData[{
+Cell[3470, 86, 586, 10, 33, "ItemNumbered"],
+Cell[4059, 98, 925, 23, 53, "ItemNumbered"],
+Cell[4987, 123, 786, 12, 33, "ItemNumbered"],
+Cell[5776, 137, 940, 14, 74, "ItemNumbered"]
+}, Open  ]],
+Cell[6731, 154, 332, 7, 55, "Text"],
+Cell[7066, 163, 410, 7, 77, "Text"],
+Cell[CellGroupData[{
+Cell[7501, 174, 105, 1, 67, "Section"],
+Cell[7609, 177, 233, 7, 33, "Text"],
+Cell[CellGroupData[{
+Cell[7867, 188, 209, 4, 32, "Input"],
+Cell[8079, 194, 136, 3, 32, "Output"]
+}, Open  ]],
+Cell[8230, 200, 217, 7, 33, "Text"],
+Cell[CellGroupData[{
+Cell[8472, 211, 292, 7, 32, "Input"],
+Cell[8767, 220, 214, 5, 32, "Output"]
+}, Open  ]],
+Cell[8996, 228, 179, 2, 33, "Text"],
+Cell[CellGroupData[{
+Cell[9200, 234, 257, 6, 32, "Input"],
+Cell[9460, 242, 411, 8, 55, "Output"]
+}, Open  ]],
+Cell[9886, 253, 211, 4, 33, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10134, 262, 113, 1, 67, "Section"],
+Cell[10250, 265, 258, 5, 55, "Text"],
+Cell[CellGroupData[{
+Cell[10533, 274, 150, 3, 32, "Input"],
+Cell[10686, 279, 210, 5, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10933, 289, 339, 9, 32, "Input"],
+Cell[11275, 300, 238, 5, 32, "Output"]
+}, Open  ]],
+Cell[11528, 308, 274, 5, 55, "Text"],
+Cell[CellGroupData[{
+Cell[11827, 317, 207, 5, 32, "Input"],
+Cell[12037, 324, 208, 5, 32, "Output"]
+}, Open  ]],
+Cell[12260, 332, 219, 5, 55, "Text"],
+Cell[CellGroupData[{
+Cell[12504, 341, 82, 2, 32, "Input"],
+Cell[12589, 345, 208, 5, 32, "Output"]
+}, Open  ]],
+Cell[12812, 353, 397, 9, 55, "Text"],
+Cell[CellGroupData[{
+Cell[13234, 366, 765, 20, 77, "Input"],
+Cell[14002, 388, 403, 10, 32, "Output"]
+}, Open  ]],
+Cell[14420, 401, 239, 3, 33, "Text"],
+Cell[CellGroupData[{
+Cell[14684, 408, 163, 3, 32, "Input"],
+Cell[14850, 413, 128, 3, 32, "Output"]
+}, Open  ]],
+Cell[14993, 419, 282, 8, 33, "Text"],
+Cell[15278, 429, 472, 9, 77, "Text"],
+Cell[CellGroupData[{
+Cell[15775, 442, 424, 11, 32, "Input"],
+Cell[16202, 455, 125, 3, 32, "Output"]
+}, Open  ]],
+Cell[16342, 461, 901, 23, 77, "Text"],
+Cell[CellGroupData[{
+Cell[17268, 488, 369, 10, 32, "Input"],
+Cell[17640, 500, 124, 3, 32, "Output"]
+}, Open  ]],
+Cell[17779, 506, 171, 4, 33, "Text"],
+Cell[17953, 512, 1393, 39, 143, "Text"],
+Cell[CellGroupData[{
+Cell[19371, 555, 219, 5, 32, "Input"],
+Cell[19593, 562, 460, 8, 99, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20090, 575, 224, 5, 32, "Input"],
+Cell[20317, 582, 460, 8, 99, "Output"]
+}, Open  ]],
+Cell[20792, 593, 476, 10, 77, "Text"],
+Cell[21271, 605, 180, 4, 32, "Input"],
+Cell[21454, 611, 133, 3, 32, "Input"],
+Cell[21590, 616, 676, 18, 32, "Input"],
+Cell[CellGroupData[{
+Cell[22291, 638, 342, 8, 32, "Input"],
+Cell[22636, 648, 167, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22840, 656, 203, 3, 32, "Input"],
+Cell[23046, 661, 189, 4, 32, "Output"]
+}, Open  ]],
+Cell[23250, 668, 154, 2, 33, "Text"],
+Cell[CellGroupData[{
+Cell[23429, 674, 697, 9, 31, "Subsubsubsection"],
+Cell[24129, 685, 348, 8, 55, "Text"],
+Cell[24480, 695, 1049, 25, 121, "Input"],
+Cell[CellGroupData[{
+Cell[25554, 724, 258, 6, 32, "Input"],
+Cell[25815, 732, 281, 6, 32, "Output"]
+}, Open  ]],
+Cell[26111, 741, 823, 29, 55, "Text"],
+Cell[26937, 772, 347, 9, 32, "Input"],
+Cell[CellGroupData[{
+Cell[27309, 785, 260, 6, 32, "Input"],
+Cell[27572, 793, 251, 5, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27884, 805, 175, 2, 67, "Section"],
+Cell[28062, 809, 1692, 52, 165, "Text"],
+Cell[CellGroupData[{
+Cell[29779, 865, 195, 6, 32, "Input",
+ CellID->13616],
+Cell[29977, 873, 135, 3, 32, "Output"]
+}, Open  ]],
+Cell[30127, 879, 204, 4, 33, "Text"],
+Cell[CellGroupData[{
+Cell[30356, 887, 235, 8, 32, "Input",
+ CellID->10299],
+Cell[30594, 897, 212, 6, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30843, 908, 751, 10, 31, "Subsubsubsection"],
+Cell[31597, 920, 1063, 44, 77, "Text"],
+Cell[32663, 966, 246, 6, 32, "Input"],
+Cell[CellGroupData[{
+Cell[32934, 976, 125, 2, 32, "Input"],
+Cell[33062, 980, 172, 4, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33295, 991, 210, 3, 67, "Section"],
+Cell[33508, 996, 595, 22, 55, "Text"],
+Cell[CellGroupData[{
+Cell[34128, 1022, 236, 6, 32, "Input"],
+Cell[34367, 1030, 167, 3, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34571, 1038, 128, 2, 32, "Input"],
+Cell[34702, 1042, 92, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34831, 1048, 126, 2, 32, "Input"],
+Cell[34960, 1052, 112, 2, 49, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35109, 1059, 153, 3, 32, "Input"],
+Cell[35265, 1064, 92, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35394, 1070, 129, 2, 32, "Input"],
+Cell[35526, 1074, 92, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35655, 1080, 815, 11, 31, "Subsubsubsection"],
+Cell[36473, 1093, 601, 20, 55, "Text"],
+Cell[37077, 1115, 260, 6, 32, "Input"],
+Cell[CellGroupData[{
+Cell[37362, 1125, 128, 2, 32, "Input"],
+Cell[37493, 1129, 142, 2, 65, "Output"]
+}, Open  ]],
+Cell[37650, 1134, 1679, 31, 363, "Text"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39378, 1171, 259, 3, 67, "Section"],
+Cell[39640, 1176, 761, 13, 165, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
