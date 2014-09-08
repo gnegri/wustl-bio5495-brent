@@ -1,33 +1,6 @@
 (* ::Package:: *)
 
 (* Make sure to include your diceSample and dicePosterior functions here.*)
-dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
-	Module[{sides, pBgT1, pBgT2}, 
-
- 	sides = Length[binCounts];
- 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
-	pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
-	
-	(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
-]
-
-expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
-
-diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
-	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
-		
-	totalDie  = numType1+numType2;
-	probType1 = numType1/totalDie;
-	probType2 = numType2/totalDie;
-	distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
-	
-	sides = Range[Length[type1]];
-	dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-	picks = RandomVariate[distDice, draws];
-	
-	Table[RandomVariate[dist[[picks[[i]]]],rollsPerDraw], {i,1,draws}]
-]
- 
 diceEM[sample_, maxIterations_, accuracy_]:=
 	Module[{numFaces, draws, binCounts, old, new, iter=0, 
 		oldType1Prob, oldType2Prob, oldFaceProbs1, oldFaceProbs2, 
@@ -36,7 +9,7 @@ diceEM[sample_, maxIterations_, accuracy_]:=
 		(* Initialize the local variables here.*)
 		numFaces = Max[sample];
 		draws = Dimensions[sample][[1]];
-		binCounts = Table[BinCounts[sample[[i]],{1,numFaces+1,1}],{i,draws}];
+		binCounts = BinCounts[#,{1,numFaces+1,1}]&/@sample;
 		oldFaceProbs1 = Normalize[RandomInteger[{1,10}, numFaces], Total];
 		oldFaceProbs2 = Normalize[RandomInteger[{1,10}, numFaces], Total];
 		oldType1Prob  = .4;
@@ -56,8 +29,8 @@ diceEM[sample_, maxIterations_, accuracy_]:=
 			If[iter>maxIterations || Total[Total[Abs[new-old]]] <= accuracy,
 				Return[
 					If[newType1Prob <= newType2Prob,
-							{newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
-							{newType2Prob, newType1Prob, newFaceProbs2, newFaceProbs1}
+						{newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
+						{newType2Prob, newType1Prob, newFaceProbs2, newFaceProbs1}
 					]
 				]
 			];
@@ -73,7 +46,7 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 		(*Create list of posterior probabilities of a Type1 die having been rolled on each draw by calling your dicePosteriors,
 		  which you should paste in to this file. *)
 		draws = Dimensions[binCounts][[1]];
-		posteriorType1 = Table[dicePosterior[binCounts[[i]],oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2],{i,draws}];
+		posteriorType1 = dicePosterior[#,oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2]&/@binCounts;
 
 		(* Now use the posteriors to calculate EXPECTED counts for each die and each face in the sample. *)
 		faceCounts1 = Total[binCounts*posteriorType1];
@@ -88,3 +61,29 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 		
 		{newType1Prob,newType2Prob,newFaceProbs1,newFaceProbs2}
 	]
+	
+dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
+	Module[{sides, pBgT1, pBgT2}, 
+
+ 	sides = Length[binCounts];
+ 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
+	pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+	
+	(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
+]
+
+expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
+
+diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
+	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
+	totalDie  = numType1+numType2;
+	probType1 = numType1/totalDie;
+	probType2 = numType2/totalDie;
+	distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+	
+	sides = Range[Length[type1]];
+	dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
+	picks = RandomVariate[distDice, draws];
+	
+	RandomVariate[dist[[#]], rollsPerDraw]&/@picks
+]
