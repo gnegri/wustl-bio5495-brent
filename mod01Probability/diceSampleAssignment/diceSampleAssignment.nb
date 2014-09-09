@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     15316,        426]
-NotebookOptionsPosition[     13878,        372]
-NotebookOutlinePosition[     14212,        387]
-CellTagsIndexPosition[     14169,        384]
+NotebookDataLength[     10856,        291]
+NotebookOptionsPosition[      9902,        253]
+NotebookOutlinePosition[     10244,        268]
+CellTagsIndexPosition[     10201,        265]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -80,116 +80,34 @@ example of how ",
    3.5849912338312187`*^9}, {3.58499135379578*^9, 3.5849914177019157`*^9}, 
    3.585776177111597*^9, {3.588454133120453*^9, 3.5884542233530765`*^9}}],
 
-Cell[BoxData[
- RowBox[{"<<", 
-  "\"\</home/gnegri/Documents/wustl-bio5495-brent.git/trunk/mod01Probability/\
-diceSampleAssignment/diceSample.m\>\""}]], "Input",
- CellChangeTimes->{{3.619182481233796*^9, 3.619182502010519*^9}}],
-
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"diceSample", "[", 
-   RowBox[{"1", ",", "0", ",", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"1", "/", "2"}], ",", 
-      RowBox[{"1", "/", "4"}], ",", 
-      RowBox[{"1", "/", "4"}]}], "}"}], ",", 
-    RowBox[{"{", 
-     RowBox[{"0", ",", 
-      RowBox[{"1", "/", "5"}], ",", 
-      RowBox[{"4", "/", "5"}]}], "}"}], ",", "3", ",", "5"}], "]"}], "//", 
-  "MatrixForm"}]], "Input",
+ RowBox[{"diceSample", "[", 
+  RowBox[{"1", ",", "0", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"1", "/", "2"}], ",", 
+     RowBox[{"1", "/", "4"}], ",", 
+     RowBox[{"1", "/", "4"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"1", "/", "5"}], ",", 
+     RowBox[{"4", "/", "5"}]}], "}"}], ",", "3", ",", "5"}], "]"}]], "Input",
  CellChangeTimes->{{3.584990395362302*^9, 3.5849904237385397`*^9}, {
-  3.58577573271355*^9, 3.585775739045986*^9}, {3.619182833762057*^9, 
-  3.619182836447529*^9}}],
-
-Cell[BoxData[
- TagBox[
-  RowBox[{"(", "\[NoBreak]", GridBox[{
-     {"2", "3", "1", "2", "2"},
-     {"1", "3", "3", "3", "3"},
-     {"1", "1", "2", "3", "1"}
-    },
-    GridBoxAlignment->{
-     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
-      "RowsIndexed" -> {}},
-    GridBoxSpacings->{"Columns" -> {
-        Offset[0.27999999999999997`], {
-         Offset[0.7]}, 
-        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
-        Offset[0.2], {
-         Offset[0.4]}, 
-        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
-  Function[BoxForm`e$, 
-   MatrixForm[BoxForm`e$]]]], "Output",
- CellChangeTimes->{
-  3.584990390347258*^9, 3.5849904283006763`*^9, 3.619182507282921*^9, {
-   3.61918264799326*^9, 3.61918270028212*^9}, {3.61918283944981*^9, 
-   3.619182854054235*^9}}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Dimensions", "[", 
-  RowBox[{"diceSample", "[", 
-   RowBox[{"1", ",", "1", ",", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"1", "/", "4"}], ",", 
-      RowBox[{"1", "/", "4"}], ",", 
-      RowBox[{"1", "/", "4"}], ",", 
-      RowBox[{"1", "/", "4"}]}], "}"}], ",", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"1", "/", "5"}], ",", 
-      RowBox[{"1", "/", "5"}], ",", 
-      RowBox[{"1", "/", "5"}], ",", 
-      RowBox[{"2", "/", "5"}]}], "}"}], ",", "7", ",", "10"}], "]"}], 
-  "]"}]], "Input",
- CellChangeTimes->{{3.619182802315232*^9, 3.619182804653779*^9}}],
+  3.58577573271355*^9, 3.585775739045986*^9}}],
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"7", ",", "10"}], "}"}]], "Output",
- CellChangeTimes->{3.619182805393346*^9, 3.619182856503784*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"Module", "[", 
   RowBox[{
    RowBox[{"{", 
-    RowBox[{"sample", "=", 
-     RowBox[{"diceSample", "[", 
-      RowBox[{"1", ",", "0", ",", 
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{"1", "/", "3"}], ",", 
-         RowBox[{"1", "/", "3"}], ",", 
-         RowBox[{"1", "/", "3"}], ",", "0"}], "}"}], ",", 
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{"1", "/", "5"}], ",", 
-         RowBox[{"1", "/", "5"}], ",", 
-         RowBox[{"1", "/", "5"}], ",", 
-         RowBox[{"2", "/", "5"}]}], "}"}], ",", "20", ",", "20"}], "]"}]}], 
-    "}"}], ",", 
-   RowBox[{"(", 
-    RowBox[{
-     RowBox[{
-      RowBox[{"Max", "[", "sample", "]"}], "\[Equal]", "3"}], "&&", 
-     RowBox[{
-      RowBox[{"Min", "[", "sample", "]"}], "\[Equal]", "1"}]}], ")"}]}], 
-  "]"}]], "Input",
- CellChangeTimes->{{3.619182883855229*^9, 3.619182883857516*^9}}],
-
-Cell[BoxData["True"], "Output",
- CellChangeTimes->{3.619182884490766*^9}]
+    RowBox[{"3", ",", "2", ",", "2", ",", "2", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1", ",", "1", ",", "3", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2", ",", "2", ",", "3", ",", "1"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.584990390347258*^9, 3.5849904283006763`*^9}]
 }, Open  ]],
 
 Cell[TextData[{
@@ -329,50 +247,13 @@ comments."
   3.584992305927824*^9, 3.584992605885792*^9}, {3.5849926396934137`*^9, 
   3.584992779654065*^9}, {3.585069175651806*^9, 3.585069213500437*^9}, {
   3.58577591122612*^9, 3.5857759326650457`*^9}, {3.585776400743526*^9, 
-  3.585776401503727*^9}, {3.585776473877668*^9, 3.585776474151823*^9}}],
-
-Cell[BoxData[
- RowBox[{"<<", 
-  "\"\</home/gnegri/Documents/wustl-bio5495-brent.git/trunk/mod01Probability/\
-classifyDNAAssignment/classifyDNAAssignment.m\>\""}]], "Input"],
-
-Cell[BoxData[
- RowBox[{"classifyDNA", "[", 
-  RowBox[{
-  "\"\</home/gnegri/Documents/wustl-bio5495-brent.git/trunk/mod01Probability/\
-classifyDNAAssignment/mixed.fa\>\"", ",", 
-   "\"\</home/gnegri/Documents/wustl-bio5495-brent.git/trunk/mod01Probability/\
-classifyDNAAssignment/output.txt\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.619180819094835*^9, 3.619180840343547*^9}, {
-  3.619180872369235*^9, 3.619180898595505*^9}, {3.619181068890768*^9, 
-  3.619181069267405*^9}, {3.619181217829507*^9, 3.619181219792714*^9}, {
-  3.619181569300769*^9, 3.619181569751835*^9}, {3.619181809920693*^9, 
-  3.619181812128842*^9}}],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"scoreDNAClasses", "[", 
-  RowBox[{
-  "\"\</home/gnegri/Documents/wustl-bio5495-brent.git/trunk/mod01Probability/\
-classifyDNAAssignment/output.txt\>\"", ",", 
-   "\"\</home/gnegri/Documents/wustl-bio5495-brent.git/trunk/mod01Probability/\
-classifyDNAAssignment/answers.txt\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.619181679417426*^9, 3.619181702482446*^9}}],
-
-Cell[BoxData["0.99`"], "Output",
- CellChangeTimes->{{3.619181949855847*^9, 3.619181963234056*^9}, 
-   3.619183616082382*^9}]
-}, Open  ]],
-
-Cell[BoxData[""], "Input",
- CellChangeTimes->{{3.619181865527491*^9, 3.619181873634288*^9}}]
+  3.585776401503727*^9}, {3.585776473877668*^9, 3.585776474151823*^9}}]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{702, 743},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+WindowSize->{942, 985},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
+FrontEndVersion->"9.0 for Microsoft Windows (64-bit) (January 25, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -387,45 +268,29 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 105, 1, 80, "Section"],
-Cell[687, 25, 2654, 55, 567, "Text"],
-Cell[3344, 82, 226, 4, 55, "Input"],
+Cell[579, 22, 105, 1, 86, "Section"],
+Cell[687, 25, 2654, 55, 450, "Text"],
 Cell[CellGroupData[{
-Cell[3595, 90, 585, 16, 55, "Input"],
-Cell[4183, 108, 835, 22, 63, "Output"]
+Cell[3366, 84, 490, 13, 31, "Input"],
+Cell[3859, 99, 389, 10, 31, "Output"]
+}, Open  ]],
+Cell[4263, 112, 704, 15, 69, "Text"],
+Cell[CellGroupData[{
+Cell[4992, 131, 180, 3, 31, "Input"],
+Cell[5175, 136, 689, 19, 58, "Output"]
+}, Open  ]],
+Cell[5879, 158, 218, 4, 30, "Text"],
+Cell[CellGroupData[{
+Cell[6122, 166, 102, 1, 49, "Subsection"],
+Cell[6227, 169, 653, 14, 107, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5055, 135, 592, 17, 55, "Input"],
-Cell[5650, 154, 138, 3, 32, "Output"]
+Cell[6917, 188, 108, 1, 49, "Subsection"],
+Cell[7028, 191, 1067, 25, 108, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5825, 162, 877, 26, 99, "Input"],
-Cell[6705, 190, 73, 1, 32, "Output"]
-}, Open  ]],
-Cell[6793, 194, 704, 15, 88, "Text"],
-Cell[CellGroupData[{
-Cell[7522, 213, 180, 3, 32, "Input"],
-Cell[7705, 218, 689, 19, 63, "Output"]
-}, Open  ]],
-Cell[8409, 240, 218, 4, 49, "Text"],
-Cell[CellGroupData[{
-Cell[8652, 248, 102, 1, 44, "Subsection"],
-Cell[8757, 251, 653, 14, 127, "Text"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[9447, 270, 108, 1, 44, "Subsection"],
-Cell[9558, 273, 1067, 25, 173, "Text"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[10662, 303, 112, 1, 44, "Subsection"],
-Cell[10777, 306, 1627, 25, 386, "Text"],
-Cell[12407, 333, 172, 3, 77, "Input"],
-Cell[12582, 338, 622, 11, 121, "Input"],
-Cell[CellGroupData[{
-Cell[13229, 353, 387, 7, 121, "Input"],
-Cell[13619, 362, 124, 2, 65, "Output"]
-}, Open  ]],
-Cell[13758, 367, 92, 1, 32, "Input"]
+Cell[8132, 221, 112, 1, 49, "Subsection"],
+Cell[8247, 224, 1627, 25, 296, "Text"]
 }, Open  ]]
 }, Open  ]]
 }
