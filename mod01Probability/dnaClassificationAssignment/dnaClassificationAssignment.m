@@ -10,12 +10,18 @@ scoreDNAClasses[outputFile_, keyFile_]:=
   	]
 
 classifyDNA[fastaFile_, outputFile_]:=
-	Module[{seqs=Import[fastaFile,"FASTA"], seqDice, pH, pM, pSeqH, pSeqM, bin, posteriors},
-		Put[outputFile];
-		seqDice=Characters[seqs]/.{"A"->1,"T"->2,"C"->3,"G"->4};
-		{pH, pM, pSeqH, pSeqM, bin} = seqEM[seqDice, 100, 10^-2];
-		posteriors=Round[seqPosterior[#,pH,pM,pSeqH,pSeqM]]&/@bin;
-		Put[posteriors,outputFile];
+	Module[{sequences=Import[fastaFile,"FASTA"], sequenceD4, 
+		prH, prM, prNucleotidesH, prNucleotidesM, binCounts, posteriorProbabilityHvsM},
+		
+		(* consider a DNA sequence as a 4-sided die, where each base is a roll *)
+		sequenceD4=Characters[sequences]/.{"A"->1,"T"->2,"C"->3,"G"->4};
+		
+		(* generate probabilities for human and malaria DNA, as well as the "face" probabilities *)
+		{prH, prM, prNucleotidesH, prNucleotidesM, binCounts} = seqEM[sequenceD4, 100, 10^-2];
+		
+		(* generate posterior probabilites from EM output *)
+		posteriorProbabilityHvsM=Round[seqPosterior[#,prH, prM, prNucleotidesH, prNucleotidesM]]&/@binCounts;
+		Put[posteriorProbabilityHvsM,outputFile]
 	]
  
 seqEM[sample_, maxIterations_, accuracy_]:=
@@ -80,13 +86,14 @@ updateSeqProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFace
 	]
 	
 seqPosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
-	Module[{sides, pBgT1, pBgT2}, 
-
- 		sides = Length[binCounts];
+	Module[{sides = Length[binCounts], pBgT1, pBgT2}, 
+	
+		(* Take the Product of each particular (faceprob^bincount) *)
  		pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
 		pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
 	
+		(* formula for posterior likelihood *)
 		(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
 	]
-
+(* performs the exponentiation, setting 0^0 = 1 *)
 expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];

@@ -3,14 +3,14 @@
   appears in that draw and the relative numbers of Type 1 and Type 2 dice in the bag as well as the face probabilities
   for Type 1 and Type 2 dice. The single number returned is the posterior probability of Type 1.*)
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
-	Module[{sides, pBgT1, pBgT2}, 
-
- 	sides = Length[binCounts];
- 	
- 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
-	pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+	Module[{sides = Length[binCounts], pBgT1, pBgT2}, 
 	
-	(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
-]
-(* if in dicePosterior only works in a .nb? *)
+		(* Take the Product of each particular (faceprob^bincount) *)
+	 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
+		pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+		
+		(* formula for posterior likelihood *)
+		(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
+	]
+(* performs the exponentiation, setting 0^0 = 1 *)
 expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];

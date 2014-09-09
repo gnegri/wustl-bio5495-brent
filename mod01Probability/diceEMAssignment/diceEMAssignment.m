@@ -63,27 +63,31 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 	]
 	
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
-	Module[{sides, pBgT1, pBgT2}, 
-
- 	sides = Length[binCounts];
- 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
-	pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+	Module[{sides = Length[binCounts], pBgT1, pBgT2}, 
 	
-	(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
-]
-
+		(* Take the Product of each particular (faceprob^bincount) *)
+	 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
+		pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+	
+		(* formula for posterior likelihood *)
+		(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
+	]
+(* performs the exponentiation, setting 0^0 = 1 *)
 expHelper[a_, b_] := If[a==0 && b==0, 1, a^b];
 
 diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
-	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
-	totalDie  = numType1+numType2;
-	probType1 = numType1/totalDie;
-	probType2 = numType2/totalDie;
-	distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+	Module[{totalDie = numType1+numType2, sides = Range[Length[type1]],
+		 probType1, probType2, distDice, dist, picks},
 	
-	sides = Range[Length[type1]];
-	dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-	picks = RandomVariate[distDice, draws];
-	
-	RandomVariate[dist[[#]], rollsPerDraw]&/@picks
-]
+		(* determine likelihood of drawing each die *)
+		probType1 = numType1/totalDie;
+		probType2 = numType2/totalDie;
+		
+		(* define each probTypeN to be 1 or 2, then pick draws_ number of random dice *)
+		distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+		picks = RandomVariate[distDice, draws];
+		
+		(* Return a list of rollsPerDraw in each draw *)
+		dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
+		RandomVariate[dist[[#]], rollsPerDraw]&/@picks	
+	]

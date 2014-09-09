@@ -12,15 +12,18 @@
   The return value is a matrix (list of lists). Each row (list) has length rollsPerDraw and contains
   integers representing the die faces shown on the rolls of one die. *)
 diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] := 
-	Module[{totalDie, probType1, probType2, distDice, sides, dist, picks},
-	totalDie  = numType1+numType2;
-	probType1 = numType1/totalDie;
-	probType2 = numType2/totalDie;
-	distDice  = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+	Module[{totalDie = numType1+numType2, sides = Range[Length[type1]],
+		 probType1, probType2, distDice, dist, picks},
 	
-	sides = Range[Length[type1]];
-	dist  = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
-	picks = RandomVariate[distDice, draws];
-	
-	RandomVariate[dist[[#]], rollsPerDraw]&/@picks
-]
+		(* determine likelihood of drawing each die *)
+		probType1 = numType1/totalDie;
+		probType2 = numType2/totalDie;
+		
+		(* define each probTypeN to be 1 or 2, then pick draws_ number of random dice *)
+		distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
+		picks = RandomVariate[distDice, draws];
+		
+		(* Return a list of rollsPerDraw in each draw *)
+		dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
+		RandomVariate[dist[[#]], rollsPerDraw]&/@picks	
+	]
