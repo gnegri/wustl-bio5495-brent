@@ -8,7 +8,7 @@ diceEM[sample_, maxIterations_, accuracy_]:=
 		    
 		(* Initialize the local variables here.*)
 		numFaces = Max[sample];
-		draws = Dimensions[sample][[1]];
+		draws = Length[sample];
 		binCounts = BinCounts[#,{1,numFaces+1,1}]&/@sample;
 		oldFaceProbs1 = Normalize[RandomInteger[{1,10}, numFaces], Total];
 		oldFaceProbs2 = Normalize[RandomInteger[{1,10}, numFaces], Total];
@@ -40,12 +40,11 @@ diceEM[sample_, maxIterations_, accuracy_]:=
 	]
 
 updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFaceProbs2_] :=
-	Module[{posteriorType1, faceCounts1, faceCounts2, draws, 
+	Module[{posteriorType1, faceCounts1, faceCounts2, draws = Length[binCounts], 
 		newType1Prob, newType2Prob, newFaceProbs1, newFaceProbs2},
 		
 		(*Create list of posterior probabilities of a Type1 die having been rolled on each draw by calling your dicePosteriors,
 		  which you should paste in to this file. *)
-		draws = Dimensions[binCounts][[1]];
 		posteriorType1 = dicePosterior[#,oldType1Prob,oldType2Prob,oldFaceProbs1,oldFaceProbs2]&/@binCounts;
 
 		(* Now use the posteriors to calculate EXPECTED counts for each die and each face in the sample. *)
@@ -54,7 +53,7 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 	
 		(* Finally, use these counts to compute maximum likelihood estimates for the parameters 
 			and return these estimates in a list. *)
-		newType1Prob = Total[posteriorType1]/draws;
+		newType1Prob  = Total[posteriorType1]/draws;
 		newType2Prob  = 1 - newType1Prob;
 		newFaceProbs1 = faceCounts1/Total[faceCounts1];
 		newFaceProbs2 = faceCounts2/Total[faceCounts2];
@@ -63,11 +62,10 @@ updateProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFacePro
 	]
 	
 dicePosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
-	Module[{sides = Length[binCounts], pBgT1, pBgT2}, 
+	Module[{pBgT1, pBgT2}, 
 	
 		(* Take the Product of each particular (faceprob^bincount) *)
-	 	pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
-		pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+		{pBgT1, pBgT2} = Inner[expHelper, #, binCounts, Times] &/@ {faceProbs1, faceProbs2};
 	
 		(* formula for posterior likelihood *)
 		(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
@@ -85,7 +83,7 @@ diceSample[numType1_, numType2_, type1_, type2_, draws_, rollsPerDraw_] :=
 		
 		(* define each probTypeN to be 1 or 2, then pick draws_ number of random dice *)
 		distDice = EmpiricalDistribution[{probType1, probType2}->{1,2}];
-		picks = RandomVariate[distDice, draws];
+		picks    = RandomVariate[distDice, draws];
 		
 		(* Return a list of rollsPerDraw in each draw *)
 		dist = {EmpiricalDistribution[type1->sides], EmpiricalDistribution[type2->sides]};
