@@ -4,7 +4,7 @@
    problem with two types of dice. *)
 
 (* Testing that the dimensions of the sample are correct. *)
-Test[
+(*Test[
 	Dimensions[diceSample[1, 1, {1/4, 1/4, 1/4, 1/4}, {1/5, 1/5, 1/5, 2/5}, 7, 10]]
 	,
 	{7,10}
@@ -52,13 +52,13 @@ Test[Module[{sample1=diceSample[1, 1, {1/4, 1/4, 1/4, 1/4}, {1/4, 1/4, 1/4, 1/4}
 	False
 	,
 	TestID->"ProbabilityTest-20130806-K6G3Y1"
-]
+]*)
 
 
 (* Testing dicePosterior *)
 (* Testing that if all counts and probabilities are equal the posterior is 1/2.*)
 
-Test[
+(*Test[
 	N[dicePosterior[{1, 1, 1, 1}, 0.5, 0.5, {1/4, 1/4, 1/4, 1/4}, {1/4, 1/4, 1/4, 1/4}], 2]
 	,
 	0.50
@@ -137,7 +137,7 @@ Test[
 	0.78
 	,
 	TestID->"ProbabilityTest-20130809-R5O9V9"
-]
+]*)
 
 (* Testing diceEM on a known input sample.*)
 
