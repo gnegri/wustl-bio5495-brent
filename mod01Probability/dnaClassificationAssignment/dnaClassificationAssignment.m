@@ -31,7 +31,7 @@ seqEM[sample_, maxIterations_, accuracy_]:=
 		    
 		(* Initialize the local variables here.*)
 		numFaces = Max[sample];
-		draws = Dimensions[sample][[1]];
+		draws = Length[sample];
 		binCounts = BinCounts[#,{1,numFaces+1,1}]&/@sample;
 		oldFaceProbs1 = Normalize[RandomInteger[{1,10}, numFaces], Total];
 		oldFaceProbs2 = Normalize[RandomInteger[{1,10}, numFaces], Total];
@@ -77,7 +77,7 @@ updateSeqProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFace
 	
 		(* Finally, use these counts to compute maximum likelihood estimates for the parameters 
 			and return these estimates in a list. *)
-		newType1Prob = Total[posteriorType1]/draws;
+		newType1Prob  = Total[posteriorType1]/draws;
 		newType2Prob  = 1 - newType1Prob;
 		newFaceProbs1 = faceCounts1/Total[faceCounts1];
 		newFaceProbs2 = faceCounts2/Total[faceCounts2];
@@ -86,11 +86,10 @@ updateSeqProbs[binCounts_, oldType1Prob_, oldType2Prob_, oldFaceProbs1_, oldFace
 	]
 	
 seqPosterior[binCounts_, type1Prior_, type2Prior_, faceProbs1_, faceProbs2_] := 
-	Module[{sides = Length[binCounts], pBgT1, pBgT2}, 
+	Module[{pBgT1, pBgT2}, 
 	
 		(* Take the Product of each particular (faceprob^bincount) *)
- 		pBgT1 = Product[expHelper[faceProbs1[[j]],binCounts[[j]]], {j, sides}];
-		pBgT2 = Product[expHelper[faceProbs2[[k]],binCounts[[k]]], {k, sides}];
+		{pBgT1, pBgT2} = Inner[expHelper, #, binCounts, Times] &/@ {faceProbs1, faceProbs2};
 	
 		(* formula for posterior likelihood *)
 		(pBgT1*type1Prior)/(pBgT1*type1Prior + pBgT2*type2Prior)
