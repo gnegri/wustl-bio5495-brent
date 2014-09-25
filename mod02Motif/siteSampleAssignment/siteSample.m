@@ -22,19 +22,24 @@
   siteFreqs and contains integers representing the bases in one drawn sequence. 
   *)
 siteSample[siteProb_, backgroundProb_, siteFreqs_, backgroundFreqs_, numDraws_] := 
-	Module[{nucelotides=Range[4], seqDist, picks, dist, siteDist, backgroundDist, numSites = Length[siteFreqs]},
+	Module[{nucelotides=Range[4], seqDist, picks, dist, siteDist, backgroundDist, numBases = Length[siteFreqs]},
 		(*Verifying data input is in the correct form*)
 		If[Length[backgroundFreqs]!=4 || Total[backgroundFreqs]!=1, Return["Improper backgroundFreqs"]];
 		If[Length[siteFreqs\[Transpose]]!=4 || Total[Total[siteFreqs\[Transpose]]]!=Length[siteFreqs], Return["Improper siteFreqs sublist[s]"]];
 		
+		(* map each probability to 1 or 2 *)
 		seqDist = EmpiricalDistribution[{siteProb, backgroundProb}->{1,2}];
+		(* then pick numDraws_ number of either site or background seqs based on their probabilty *)
 		picks = Thread[RandomVariate[seqDist, numDraws]];
 		
-		siteDist = EmpiricalDistribution[#->nucelotides]&/@siteFreqs;
-		backgroundDist = Table[EmpiricalDistribution[backgroundFreqs->nucelotides],{numSites}];
-		dist = Transpose[{siteDist,backgroundDist}];
+		(* map each nucelotide probability to the nucleotides (represented as 1,2,3,4) for each site *)
+		siteDist = EmpiricalDistribution[#->nucelotides]&/@siteFreqs;	
+		(* creates a list of {{siteDist_n, backgroundDist},...} *)
+		backgroundDist = Table[EmpiricalDistribution[backgroundFreqs->nucelotides],{numBases}];
+		dist = {siteDist,backgroundDist};
 		
-		Table[RandomVariate[dist[[i,picks[[j]]]]],{j,1,numDraws},{i,1,numSites}]
+		(* for each pick, generate a sequence based on the specific nuceleotide frequency *)
+		Table[RandomVariate[dist[[#,i]]],{i,numBases}]&/@picks
 	]
 	
 toBases[sample_] := sample/.{1->"A",2->"C",3->"G",4->"T"};
