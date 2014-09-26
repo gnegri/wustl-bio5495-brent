@@ -11,7 +11,5 @@ sitePosterior[sequence_, sitePrior_, backgroundPrior_, siteProbs_, backgroundPro
  		pSgS  = Product[siteProbs[[i,sequence[[i]]]],{i,len}];
  		
  		(* zero event for both = .5 *)
- 		If[pSgBG == 0 && pSgS==0, Return[.5]];
- 		
- 		(sitePrior*pSgS)/(sitePrior*pSgS + backgroundPrior*pSgBG)
+ 		If[pSgBG == 0 && pSgS==0, .5, (sitePrior*pSgS)/(sitePrior*pSgS + backgroundPrior*pSgBG)]
  	]
