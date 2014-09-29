@@ -1,1 +1,0 @@
-(* Mathematica Test File *)
