@@ -1,18 +1,32 @@
  <<tools`
  
  siteEMFasta[inputFilename_, motifWidth_, maxIterations_, accuracy_]:=
- 	Module[{}, 
+ 	Module[{sequences, siteProb, backgroundProb, siteFreqs, backgroundFreqs, lengths, numSeqs, subSubSeqs}, 
  		(* Read in the input file using readInput from tools,
  		   then use the sequences to produce a list of overlapping windows,
  		   each motifWidth long, to pass into siteEM *)
- 		   
+ 		sequences=readInput[inputFilename, motifWidth];
+ 		lengths = Length[#] &/@sequences;
+ 		numSeqs = Length[sequences];
+ 		subSubSeqs = Flatten[Table[sequences[[i, j;;j+motifWidth-1]],{i,numSeqs},{j,lengths[[i]]-(motifWidth-1)}], 1];
+ 		
  		(* Call siteEM, then return the value for lambda (siteProb) and 
  		   the value for theta (siteFreqs) *)
- 		]
+ 		{siteProb, backgroundProb, siteFreqs, backgroundFreqs} = siteEM[subSubSeqs, maxIterations, accuracy];
+ 		{siteProb, siteFreqs}
+ 	]
  
  siteEM[sequences_, maxIterations_, accuracy_]:=
-	Module[{},
+	Module[{old, new, iter = 0,
+		siteProbNew, backgroundProbNew, siteFreqsNew, backgroundFreqsNew, 
+		siteProbOld, backgroundProbOld, siteFreqsOld, backgroundFreqsOld},
+		
 		(* Initialize the local variables here.*)
+		siteProbOld = .2;
+		backgroundProbOld = .8;
+		siteFreqsOld = Table[Normalize[RandomInteger[{1,10},4], Total], {Length[sequences\[Transpose]]}];
+		backgroundFreqsOld = {.2, .2, .3, .3};
+		old = {siteProbOld, backgroundProbOld, siteFreqsOld, backgroundFreqsOld};
 		
 		(* Loop here until either maxIterations has been reached or the sum of the absolute values of the changes from one 
 		   iteration to the next in all estimated parameters is less than accuracy.
@@ -20,22 +34,46 @@
 		   Then test whether the termination conditions have been met (Return[] breaks a loop returning its argument).
 		   Finally, if termination conditions have not been met, set old values to be the same as the new values.
 		   *)
+		While[True,
+			iter++;
+			new = updateProbs[sequences, siteProbOld, backgroundProbOld, siteFreqsOld, backgroundFreqsOld];
+			{siteProbNew, backgroundProbNew, siteFreqsNew, backgroundFreqsNew} = new;
+			If[iter>=maxIterations || Total[Abs[new-old], 3] <= accuracy,
+				Return[{siteProbNew, backgroundProbNew, siteFreqsNew, backgroundFreqsNew}]
+			];
+			{siteProbOld, backgroundProbOld, siteFreqsOld, backgroundFreqsOld} = new;
+			old = new;
+		]
 		
 		(*Return the bound site parameters first.*)
 	]
 
-updateProbs[sequences_, oldSiteProb_, oldBackgroundProb_, oldSiteFreqs_, oldBackgroundFreqs_] := 
- 	Module[{},
+updateProbs[sequences_, siteProbOld_, backgroundProbOld_, siteFreqsOld_, backgroundFreqsOld_] := 
+ 	Module[{sitePosteriors, backgroundPosteriors, siteExpected, backgroundExpected, 
+ 			siteProbNew, backgroundProbNew, siteFreqsNew, backgroundFreqsNew},
+ 		
  		(*Create list of posterior probabilities of a bound site 
  		having been picked for each draw by calling your sitePosteriors,
   		which you should paste in to this file.*)
+  		sitePosteriors = sitePosterior[#, siteProbOld, backgroundProbOld, siteFreqsOld, backgroundFreqsOld] &/@sequences;
+  		backgroundPosteriors = 1-sitePosteriors;
   		
-  		(*Now use the posteriors to calculate EXPECTED counts for each die
-		 and each face in the sample.*)
+  		(* Now use the posteriors to calculate EXPECTED counts for each die
+		   and each face in the sample. *)
+		 (* Length[sample] = # of draws *)
+		 (* Length[siteFreqs] = #nt *)
+		siteExpected = (BinCounts[#, {1,5,1}] &/@(sequences\[Transpose])*Total[sitePosteriors])+1;
+		backgroundExpected = (Total[(BinCounts[#, {1,5,1}] &/@sequences)*backgroundPosteriors])+1;
 		
 		(*Finally, use these counts to compute maximum likelihood estimates for the
 		parameters and return these estimates in a list.*)
-  		
+  		siteFreqsNew = #/Total[#] &/@siteExpected;
+  		backgroundFreqsNew = backgroundExpected/Total[backgroundExpected];
+
+		siteProbNew = Total[sitePosteriors]/Length[sequences];
+		backgroundProbNew = Total[backgroundPosteriors]/Length[sequences];
+		
+  		{siteProbNew, backgroundProbNew, siteFreqsNew, backgroundFreqsNew}
   ]
 (* Make sure to include your siteSample and sitePosterior functions here.*)
 siteSample[siteProb_, backgroundProb_, siteFreqs_, backgroundFreqs_, numDraws_] := 
