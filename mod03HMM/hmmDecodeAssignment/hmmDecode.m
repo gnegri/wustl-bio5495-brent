@@ -15,16 +15,39 @@ OUTPUT
 *)
 
 (* TODO: write the decode function *)
-decode[observationSeq_, states_, alphabet_, emissionMatrix_, transitionMatrix_] := 
-	Module[{stateSeq}, 
+decode[observationSeq_, states_, alphabet_, emissionMatrix_, transitionMatrix_, initialStateProbs_:{.5,.5}] := 
+	Module[{numObs = Length[observationSeq], oldDelta, aMatrix, 
+		aMatrices = {{{"mm","hm"},{"mh","hh"}}}, lastState, stateSeq}, 
 		
-		(* Return the state sequence *)
+		(*delta_0 {1, 2} = b_i(O_t) * P(q_t=S_i) *)
+		oldDelta = emissionMatrix[[All,observationSeq[[1]]]]*initialStateProbs;
+		
+		Do[
+			(*transition probabilites * delta_t-1; argument to be maximized*)
+			aMatrix = Transpose[transitionMatrix*oldDelta];
+			(* store to a list  *)
+			AppendTo[aMatrices, aMatrix];
+			(*b_i(O_t) * max(aMatrix), rest delta to this for next round*)
+			oldDelta = emissionMatrix[[All, observationSeq[[i]]]]*Max @@@ aMatrix,
+		{i,2,numObs}];
+		
+		(* Find last sequence state for backtrace *)
+		lastState = Flatten[Position[oldDelta, Max[oldDelta]]][[1]];
+		stateSeq = {states[[lastState]]};
+		
+		(* use previously calculated transition probabilites * delta_t-1*)
+		Do[
+			lastState = Flatten[Position[aMatrices[[-i, lastState]], Max[aMatrices[[-i, lastState]]]]][[1]];
+			PrependTo[stateSeq, states[[lastState]]],
+		{i,numObs-1}];
+		
+		stateSeq
 	];
+
 
 (* calculateAccuracy takes a state sequence genereted from mixed2.fa and calculates 
 the number of correctly labeled states.  Note: this function only computes the
 accuracy for the mixed2.fa observations.
-
 INPUT
  - stateSeq = [list] list of state sequences, e.g., {h,m,h,m,m}
  
@@ -34,12 +57,13 @@ INPUT
 *)
 	
 calculateAccuracy[stateSeq_] := 
-	Module[{keyStateSequence, numCorrectStates},
+	Module[{keyStateSequence, numCorrectStates, percentCorrect},
 	
 	keyStateSequence = Flatten[Characters[ToLowerCase[Import["mixed2key.fa"]]]];
-	numCorrectStates = Count[MapThread[Equal, {stateSeq, keyStateSequence}], True]
-	
-	];
+	numCorrectStates = Count[MapThread[Equal, {stateSeq, keyStateSequence}], True];
+
+	percentCorrect = numCorrectStates/Length[stateSeq]*100 //N
+];
 
 (* readHMM takes a HMM text file and outputs the state names, the alphabet
 the transition matrix, and emission matrix of the HMM
@@ -98,7 +122,7 @@ readHMM[file_] :=
 	transitionList = ToExpression[a[[firstTransitionIndex ;; lastTransitionIndex]]];
 	transitionMatrix = Partition[transitionList, numStates];
 	
-	{states, alphabet, emissionMatrix, transitionMatrix}
+	{states, alphabet, emissionMatrix, transitionMatrix, initialStateProbs}
 
 ];
 
