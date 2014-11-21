@@ -1,0 +1,695 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     28347,        686]
+NotebookOptionsPosition[     26576,        626]
+NotebookOutlinePosition[     27199,        650]
+CellTagsIndexPosition[     27156,        647]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["The toggle switch", "Section",
+ CellChangeTimes->{{3.560380356695088*^9, 3.560380364967122*^9}, 
+   3.5938706469052877`*^9, {3.5940622616381187`*^9, 3.594062265958865*^9}, {
+   3.59568455712807*^9, 3.5956845582113028`*^9}}],
+
+Cell["\<\
+One of the best known examples of a rationally designed and successfully \
+implemented transcriptional regulatory circuit is the bistable (or \
+\[OpenCurlyDoubleQuote]toggle\[CloseCurlyDoubleQuote]) switch, described in:\
+\>", "Text",
+ CellChangeTimes->{{3.5941233593220043`*^9, 3.594123404011348*^9}, {
+  3.595684549081359*^9, 3.595684550659172*^9}, {3.624820521516651*^9, 
+  3.624820525195719*^9}}],
+
+Cell["\<\
+Gardner, TS, Cantor, CR, & Collins, JJ. (2000). Construction of a genetic \
+toggle switch in Escherichia coli. Nature, 403(6767), 339-342. doi: \
+10.1038/35002131\
+\>", "Text",
+ CellChangeTimes->{{3.5941233593220043`*^9, 3.5941234222812366`*^9}}],
+
+Cell["\<\
+Please read that paper as well as the corresponding course notes, then come \
+back to the material presented below.\
+\>", "Text",
+ CellChangeTimes->{{3.5941234253613853`*^9, 3.594123437673052*^9}, {
+  3.624820611507764*^9, 3.624820617171707*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Visualizing the Toggle Switch", "Subsection",
+ CellChangeTimes->{{3.6249837165350227`*^9, 3.624983741022736*^9}}],
+
+Cell["\<\
+Gardner et al. use the following model of their two-repressor system:\
+\>", "Text",
+ CellChangeTimes->{{3.594125180249055*^9, 3.594125259137116*^9}, {
+   3.59412572861126*^9, 3.594125840777089*^9}, {3.594125947427878*^9, 
+   3.5941259589556932`*^9}, {3.594128039914034*^9, 3.594128134994152*^9}, {
+   3.594128454911211*^9, 3.594128505290328*^9}, {3.594128595963154*^9, 
+   3.5941286234902477`*^9}, {3.594128664194448*^9, 3.594128697577379*^9}, 
+   3.594129278131548*^9, {3.624983781221977*^9, 3.624983814048073*^9}, {
+   3.624983984994021*^9, 3.6249839872508583`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["du", "dt"], "\[Equal]", 
+  RowBox[{
+   FractionBox["alpha1", 
+    RowBox[{"1", "+", 
+     SuperscriptBox["v", "beta"]}]], "-", "u"}]}]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.594125527004784*^9, 3.5941255710750923`*^9}, {
+  3.624984063847025*^9, 3.624984146881504*^9}, {3.624984177185121*^9, 
+  3.624984177597053*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["dv", "dt"], "\[Equal]", 
+  RowBox[{
+   FractionBox["alpha2", 
+    RowBox[{"1", "+", 
+     SuperscriptBox["u", "gamma"]}]], "-", "v"}]}]], "DisplayFormulaNumbered",\
+
+ CellChangeTimes->{{3.594125527004784*^9, 3.5941255710750923`*^9}, {
+  3.624984063847025*^9, 3.624984146881504*^9}, {3.62498417982987*^9, 
+  3.6249841958013783`*^9}, {3.624984431337434*^9, 3.624984431763749*^9}}],
+
+Cell[TextData[{
+ "where ",
+ StyleBox["u",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " and ",
+ StyleBox["v",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " stand for the concentrations of the two proteins. The model does not have \
+a separate representation for mRNA concentration -- protein and mRNA from \
+each gene are conflated into a single variable. This model and the derivation \
+of these equations are discussed elsewhere. Here, we look examine the steady \
+states of this system as a function of the parameters ",
+ StyleBox["alpha1",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["alpha2",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", ",
+ StyleBox["beta",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", and ",
+ StyleBox["gamma",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ".\n\nAt steady state, the rate of change of each protein\[CloseCurlyQuote]s \
+concentration is zero, so we have:"
+}], "Text",
+ CellChangeTimes->{{3.594125180249055*^9, 3.594125259137116*^9}, {
+   3.59412572861126*^9, 3.594125840777089*^9}, {3.594125947427878*^9, 
+   3.5941259589556932`*^9}, {3.594128039914034*^9, 3.594128134994152*^9}, {
+   3.594128454911211*^9, 3.594128505290328*^9}, {3.594128595963154*^9, 
+   3.5941286234902477`*^9}, {3.594128664194448*^9, 3.594128697577379*^9}, 
+   3.594129278131548*^9, {3.624983781221977*^9, 3.624983814048073*^9}, {
+   3.624983984994021*^9, 3.6249839872508583`*^9}, {3.62498421416068*^9, 
+   3.624984314369684*^9}, {3.624984355104742*^9, 3.624984393662249*^9}, {
+   3.624984434500083*^9, 3.62498447066448*^9}}],
+
+Cell[BoxData[
+ RowBox[{"u", "\[Equal]", 
+  FractionBox["alpha1", 
+   RowBox[{"1", "+", 
+    SuperscriptBox["v", "beta"]}]]}]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.594125527004784*^9, 3.5941255710750923`*^9}, {
+  3.624984063847025*^9, 3.624984146881504*^9}, {3.624984177185121*^9, 
+  3.624984177597053*^9}, {3.624984489067226*^9, 3.6249844916417847`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"v", "\[Equal]", 
+  FractionBox["alpha2", 
+   RowBox[{"1", "+", 
+    SuperscriptBox["u", "gamma"]}]]}]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.594125527004784*^9, 3.5941255710750923`*^9}, {
+  3.624984063847025*^9, 3.624984146881504*^9}, {3.62498417982987*^9, 
+  3.6249841958013783`*^9}, {3.624984431337434*^9, 3.624984431763749*^9}, {
+  3.624984503863936*^9, 3.624984512775425*^9}}],
+
+Cell[TextData[{
+ "For fixed values of the parameters, each equation defines a curve relating \
+specific values of ",
+ StyleBox["u",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " and ",
+ StyleBox["v",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". For the entire system to be at equilibrium, both of these equations must \
+be true, which happens when the two lines cross. If we set up a ",
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " to control the values of the parameters with sliders, we can watch how the \
+two curves change when we change parameter values. We can also see how many \
+times they cross. The number of equilibrium states is equal to the number of \
+times the lines cross. However, keep in mind that some of these equilibria \
+may be unstable, meaning that very small changes in concentrations could be \
+amplified by the dynamics of the system, pushing it away from the equlibrium. \
+The only thing guaranteed by equilibria in general is that the rates of \
+change are zero when the system is exactly at the equilibrium."
+}], "Text",
+ CellChangeTimes->{{3.624984558871808*^9, 3.6249846470036793`*^9}, {
+  3.624984681447625*^9, 3.624984781498457*^9}, {3.624985095970352*^9, 
+  3.624985185267995*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Exercise: Finding parameters for multiple equilibria.", "Subsubsection",
+ CellChangeTimes->{{3.6249853917467957`*^9, 3.6249854204079037`*^9}}],
+
+Cell["\<\
+Evaluating the input below will produce a Manipulate object with sliders for \
+the four parameters. First, try to find parameter settings with three \
+equilibria (crossings). Leaving that in place, copy the expression to make a \
+new graph object and find settings with one equilibrium (and it should be \
+apparent that there will be no others beyond the boundaries of the plot). \
+What is your feeling about how many combinations of parameter values yield \
+one equilibrium and how many yield three?\
+\>", "Text",
+ CellChangeTimes->{{3.62498542518106*^9, 3.624985588789567*^9}, {
+  3.62498569352247*^9, 3.624985732998516*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"alpha2", "/", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"u", "^", "gamma"}]}], ")"}]}], ",", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"alpha1", "/", "u"}], ")"}], "-", "1"}], ")"}], "^", 
+        RowBox[{"(", 
+         RowBox[{"1", "/", "beta"}], ")"}]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"u", ",", "0", ",", "10"}], "}"}], ",", " ", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "5"}], "}"}]}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha1", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"beta", ",", "0.1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha2", ",", "0.1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"gamma", ",", "0.1", ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.593969761712955*^9, 3.593969812290613*^9}, {
+   3.59396994226293*^9, 3.5939699944998083`*^9}, {3.5939700360693903`*^9, 
+   3.5939700840370893`*^9}, {3.593970135044578*^9, 3.593970185916758*^9}, {
+   3.5939702409657593`*^9, 3.593970242365842*^9}, {3.5939735394807577`*^9, 
+   3.59397354524642*^9}, {3.593973588494578*^9, 3.59397360206837*^9}, {
+   3.593973683601297*^9, 3.593973710476667*^9}, {3.593973754243046*^9, 
+   3.593973781932825*^9}, {3.593973840922069*^9, 3.593973931940486*^9}, {
+   3.593974315096179*^9, 3.59397432126291*^9}, {3.593974599657933*^9, 
+   3.593974602919533*^9}, {3.593974694655491*^9, 3.593974694949079*^9}, 
+   3.59397472996712*^9, {3.593975311957058*^9, 3.593975352720455*^9}, {
+   3.593975684870408*^9, 3.593975685335191*^9}, {3.594060870625627*^9, 
+   3.594060878002448*^9}, {3.624985232015897*^9, 3.624985257806032*^9}, {
+   3.62498529550602*^9, 3.624985296827155*^9}, {3.625234191446091*^9, 
+   3.625234192449583*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alpha1$$ = 2.43, $CellContext`alpha2$$ = 
+    2.41, $CellContext`beta$$ = 3., $CellContext`gamma$$ = 3., 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`alpha1$$], 0.1, 5}, {
+      Hold[$CellContext`beta$$], 0.1, 3}, {
+      Hold[$CellContext`alpha2$$], 0.1, 3}, {
+      Hold[$CellContext`gamma$$], 0.1, 3}}, Typeset`size$$ = {
+    450., {148., 156.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`alpha1$807$$ = 
+    0, $CellContext`beta$808$$ = 0, $CellContext`alpha2$809$$ = 
+    0, $CellContext`gamma$810$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`alpha1$$ = 0.1, $CellContext`alpha2$$ = 
+        0.1, $CellContext`beta$$ = 0.1, $CellContext`gamma$$ = 0.1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`alpha1$$, $CellContext`alpha1$807$$, 0], 
+        Hold[$CellContext`beta$$, $CellContext`beta$808$$, 0], 
+        Hold[$CellContext`alpha2$$, $CellContext`alpha2$809$$, 0], 
+        Hold[$CellContext`gamma$$, $CellContext`gamma$810$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Plot[{$CellContext`alpha2$$/(
+         1 + $CellContext`u^$CellContext`gamma$$), \
+($CellContext`alpha1$$/$CellContext`u - 1)^(
+          1/$CellContext`beta$$)}, {$CellContext`u, 0, 10}, 
+        PlotRange -> {0, 5}], 
+      "Specifications" :> {{$CellContext`alpha1$$, 0.1, 
+         5}, {$CellContext`beta$$, 0.1, 3}, {$CellContext`alpha2$$, 0.1, 
+         3}, {$CellContext`gamma$$, 0.1, 3}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{507., {249., 256.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.625234194411723*^9}]
+}, Open  ]],
+
+Cell["\<\
+The expression below yields a vector field visualization in which the arrows \
+represent the gradient of the (u, v) vector -- i.e. the direction the state \
+will change from each point in (u, v) space. Here stable equilibria are \
+surrounded by arrows pointing inward toward the equilibrium, whereas unstable \
+equilibria are surrounded by arrows pointing outward (or some in and some \
+out). In this case, the equilibria can be quite broad and shallow, meaning \
+the arrows around them are quite small. To really see what is happening you \
+may need to look up the options to VectorPlot so you can play with the length.
+
+For this plot type, too, try to find settings with one equilibrium and \
+settings with three. For the settings with three, which ones are stable and \
+which are unstable?\
+\>", "Text",
+ CellChangeTimes->{{3.624985756918034*^9, 3.624985805102708*^9}, {
+  3.6249862456705647`*^9, 3.624986473779132*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"VectorPlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"alpha1", "/", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"v", "^", "beta"}]}], ")"}]}], "-", "u"}], ",", 
+       RowBox[{
+        RowBox[{"alpha2", "/", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"u", "^", "gamma"}]}], ")"}]}], "-", "v"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"v", ",", "0", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"u", ",", "0", ",", "5"}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha1", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"beta", ",", "0.1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha2", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"gamma", ",", "0.1", ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5939757825577497`*^9, 3.593975790810821*^9}, 
+   3.593975828847046*^9, {3.593976091910935*^9, 3.593976093876004*^9}, {
+   3.593976260827456*^9, 3.593976261055024*^9}, {3.593976301793092*^9, 
+   3.593976309538137*^9}, {3.594060308011899*^9, 3.594060310581786*^9}, {
+   3.594060354126286*^9, 3.594060356403948*^9}, {3.5941438993066072`*^9, 
+   3.594143903951503*^9}, {3.594485178724749*^9, 3.59448517941632*^9}, {
+   3.594489656223736*^9, 3.594489661343894*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alpha1$$ = 3.71, $CellContext`alpha2$$ = 
+    3.795, $CellContext`beta$$ = 3., $CellContext`gamma$$ = 3., 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`alpha1$$], 0.1, 5}, {
+      Hold[$CellContext`beta$$], 0.1, 3}, {
+      Hold[$CellContext`alpha2$$], 0.1, 5}, {
+      Hold[$CellContext`gamma$$], 0.1, 3}}, Typeset`size$$ = {
+    450., {224., 233.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`alpha1$7195$$ = 
+    0, $CellContext`beta$7196$$ = 0, $CellContext`alpha2$7197$$ = 
+    0, $CellContext`gamma$7198$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`alpha1$$ = 0.1, $CellContext`alpha2$$ = 
+        0.1, $CellContext`beta$$ = 0.1, $CellContext`gamma$$ = 0.1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`alpha1$$, $CellContext`alpha1$7195$$, 0], 
+        Hold[$CellContext`beta$$, $CellContext`beta$7196$$, 0], 
+        Hold[$CellContext`alpha2$$, $CellContext`alpha2$7197$$, 0], 
+        Hold[$CellContext`gamma$$, $CellContext`gamma$7198$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      VectorPlot[{$CellContext`alpha1$$/(
+          1 + $CellContext`v^$CellContext`beta$$) - $CellContext`u, \
+$CellContext`alpha2$$/(
+          1 + $CellContext`u^$CellContext`gamma$$) - $CellContext`v}, \
+{$CellContext`v, 0, 5}, {$CellContext`u, 0, 5}], 
+      "Specifications" :> {{$CellContext`alpha1$$, 0.1, 
+         5}, {$CellContext`beta$$, 0.1, 3}, {$CellContext`alpha2$$, 0.1, 
+         5}, {$CellContext`gamma$$, 0.1, 3}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{507., {326., 333.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.625234307277731*^9}]
+}, Open  ]],
+
+Cell["\<\
+Here is yet a third way of looking at the state space. Play this one, too, to \
+find qualitatively different parameter combinations.\
+\>", "Text",
+ CellChangeTimes->{{3.6249865579123507`*^9, 3.624986612521494*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"ContourPlot", "[", 
+    RowBox[{
+     RowBox[{"Norm", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"alpha1", "/", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{"v", "^", "beta"}]}], ")"}]}], "-", "u"}], ",", 
+        RowBox[{
+         RowBox[{"alpha2", "/", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{"u", "^", "gamma"}]}], ")"}]}], "-", "v"}]}], "}"}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"v", ",", "0.001", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"u", ",", "0.001", ",", "5"}], "}"}], ",", 
+     RowBox[{"Contours", "\[Rule]", 
+      RowBox[{"Function", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"min", ",", "max"}], "}"}], ",", 
+        RowBox[{"Rescale", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+           "0", ",", "\[IndentingNewLine]", "0.005", ",", "0.05", ",", " ", 
+            "0.1", " ", ",", "0.2", ",", "0.9"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"min", ",", "max"}], "}"}]}], "]"}]}], "]"}]}]}], "]"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha1", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"beta", ",", "0.1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha2", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"gamma", ",", "0.1", ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.594060532185732*^9, 3.5940606397860813`*^9}, {
+   3.594060748758582*^9, 3.594060755965019*^9}, {3.594061815928041*^9, 
+   3.594061829990116*^9}, 3.594061863813905*^9, {3.594062042754849*^9, 
+   3.5940620496094503`*^9}, {3.594227877999539*^9, 3.594227914852659*^9}, {
+   3.594228085271222*^9, 3.5942280917022963`*^9}, {3.5942281328856497`*^9, 
+   3.594228161115272*^9}, {3.5944007824831343`*^9, 3.59440078284783*^9}, {
+   3.594400856234256*^9, 3.5944008586878443`*^9}, {3.594489826908914*^9, 
+   3.594489832113308*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alpha1$$ = 4.495, $CellContext`alpha2$$ = 
+    3.835, $CellContext`beta$$ = 3., $CellContext`gamma$$ = 3., 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`alpha1$$], 0.1, 5}, {
+      Hold[$CellContext`beta$$], 0.1, 3}, {
+      Hold[$CellContext`alpha2$$], 0.1, 5}, {
+      Hold[$CellContext`gamma$$], 0.1, 3}}, Typeset`size$$ = {
+    450., {224., 233.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`alpha1$9677$$ = 
+    0, $CellContext`beta$9678$$ = 0, $CellContext`alpha2$9679$$ = 
+    0, $CellContext`gamma$9680$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`alpha1$$ = 0.1, $CellContext`alpha2$$ = 
+        0.1, $CellContext`beta$$ = 0.1, $CellContext`gamma$$ = 0.1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`alpha1$$, $CellContext`alpha1$9677$$, 0], 
+        Hold[$CellContext`beta$$, $CellContext`beta$9678$$, 0], 
+        Hold[$CellContext`alpha2$$, $CellContext`alpha2$9679$$, 0], 
+        Hold[$CellContext`gamma$$, $CellContext`gamma$9680$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ContourPlot[
+        Norm[{$CellContext`alpha1$$/(
+           1 + $CellContext`v^$CellContext`beta$$) - $CellContext`u, \
+$CellContext`alpha2$$/(
+           1 + $CellContext`u^$CellContext`gamma$$) - $CellContext`v}], \
+{$CellContext`v, 0.001, 5}, {$CellContext`u, 0.001, 5}, Contours -> 
+        Function[{$CellContext`min, $CellContext`max}, 
+          
+          Rescale[{0, 0.005, 0.05, 0.1, 0.2, 0.9}, {0, 
+           1}, {$CellContext`min, $CellContext`max}]]], 
+      "Specifications" :> {{$CellContext`alpha1$$, 0.1, 
+         5}, {$CellContext`beta$$, 0.1, 3}, {$CellContext`alpha2$$, 0.1, 
+         5}, {$CellContext`gamma$$, 0.1, 3}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{507., {326., 333.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.5940606116541758`*^9, 3.59406064106166*^9}, 
+   3.5940607568115892`*^9, {3.594061817783278*^9, 3.594061831374879*^9}, 
+   3.5940618644357567`*^9, 3.594062050373554*^9, 3.5942279163452473`*^9, 
+   3.59422809717223*^9, 3.594228162517943*^9, 3.594400784907229*^9, 
+   3.59440085936235*^9, 3.5944898333923264`*^9, 3.62523434770396*^9}]
+}, Open  ]],
+
+Cell["\<\
+Here is a final visualization, in which the height of the surface represents \
+the magnitude of the gradient, so that stable equilibria will appear as wells \
+and unstable equilibria as sadles or hilltops.\
+\>", "Text",
+ CellChangeTimes->{{3.6249866917565413`*^9, 3.624986756634411*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot3D", "[", 
+    RowBox[{
+     RowBox[{"Norm", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"alpha1", "/", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{"v", "^", "beta"}]}], ")"}]}], "-", "u"}], ",", 
+        RowBox[{
+         RowBox[{"alpha2", "/", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{"u", "^", "gamma"}]}], ")"}]}], "-", "v"}]}], "}"}], 
+      "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"v", ",", "0.001", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"u", ",", "0.001", ",", "5"}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha1", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"beta", ",", "0.1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"alpha2", ",", "0.1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"gamma", ",", "0.1", ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.594485662730267*^9, 3.5944857311749353`*^9}, {
+  3.594489872769972*^9, 3.594489876775069*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`alpha1$$ = 4.05, $CellContext`alpha2$$ = 
+    4.4350000000000005`, $CellContext`beta$$ = 3., $CellContext`gamma$$ = 3., 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`alpha1$$], 0.1, 5}, {
+      Hold[$CellContext`beta$$], 0.1, 3}, {
+      Hold[$CellContext`alpha2$$], 0.1, 5}, {
+      Hold[$CellContext`gamma$$], 0.1, 3}}, Typeset`size$$ = {
+    450., {178., 186.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`alpha1$13959$$ = 
+    0, $CellContext`beta$13960$$ = 0, $CellContext`alpha2$13961$$ = 
+    0, $CellContext`gamma$13962$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`alpha1$$ = 0.1, $CellContext`alpha2$$ = 
+        0.1, $CellContext`beta$$ = 0.1, $CellContext`gamma$$ = 0.1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`alpha1$$, $CellContext`alpha1$13959$$, 0], 
+        Hold[$CellContext`beta$$, $CellContext`beta$13960$$, 0], 
+        Hold[$CellContext`alpha2$$, $CellContext`alpha2$13961$$, 0], 
+        Hold[$CellContext`gamma$$, $CellContext`gamma$13962$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot3D[
+        Norm[{$CellContext`alpha1$$/(
+           1 + $CellContext`v^$CellContext`beta$$) - $CellContext`u, \
+$CellContext`alpha2$$/(
+           1 + $CellContext`u^$CellContext`gamma$$) - $CellContext`v}], \
+{$CellContext`v, 0.001, 5}, {$CellContext`u, 0.001, 5}], 
+      "Specifications" :> {{$CellContext`alpha1$$, 0.1, 
+         5}, {$CellContext`beta$$, 0.1, 3}, {$CellContext`alpha2$$, 0.1, 
+         5}, {$CellContext`gamma$$, 0.1, 3}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{507., {279., 286.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.594485735406694*^9, 3.594489877569153*^9, 
+  3.625234466593596*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{996, 744},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+Magnification->1.25,
+FrontEndVersion->"10.0 for Linux x86 (32-bit) (June 27, 2014)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
+   Cell[
+    StyleData["Text"]], 
+   Cell[
+    StyleData["Text"]]}, Visible -> False, FrontEndVersion -> 
+  "10.0 for Linux x86 (32-bit) (June 27, 2014)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 229, 3, 83, "Section"],
+Cell[811, 27, 410, 7, 67, "Text"],
+Cell[1224, 36, 256, 5, 67, "Text"],
+Cell[1483, 43, 256, 5, 67, "Text"],
+Cell[CellGroupData[{
+Cell[1764, 52, 119, 1, 58, "Subsection"],
+Cell[1886, 55, 578, 9, 40, "Text"],
+Cell[2467, 66, 367, 9, 53, "DisplayFormulaNumbered"],
+Cell[2837, 77, 417, 10, 51, "DisplayFormulaNumbered"],
+Cell[3257, 89, 1584, 40, 201, "Text"],
+Cell[4844, 131, 366, 7, 53, "DisplayFormulaNumbered"],
+Cell[5213, 140, 415, 8, 51, "DisplayFormulaNumbered"],
+Cell[5631, 150, 1258, 26, 254, "Text"],
+Cell[CellGroupData[{
+Cell[6914, 180, 148, 1, 46, "Subsubsection"],
+Cell[7065, 183, 637, 10, 174, "Text"],
+Cell[CellGroupData[{
+Cell[7727, 197, 1977, 44, 89, "Input"],
+Cell[9707, 243, 2460, 49, 525, "Output"]
+}, Open  ]],
+Cell[12182, 295, 933, 15, 281, "Text"],
+Cell[CellGroupData[{
+Cell[13140, 314, 1429, 35, 89, "Input"],
+Cell[14572, 351, 2501, 49, 679, "Output"]
+}, Open  ]],
+Cell[17088, 403, 224, 4, 67, "Text"],
+Cell[CellGroupData[{
+Cell[17337, 411, 2116, 54, 139, "Input"],
+Cell[19456, 467, 3024, 57, 679, "Output"]
+}, Open  ]],
+Cell[22495, 527, 297, 5, 67, "Text"],
+Cell[CellGroupData[{
+Cell[22817, 536, 1120, 32, 89, "Input"],
+Cell[23940, 570, 2584, 50, 585, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

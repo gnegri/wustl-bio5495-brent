@@ -1,0 +1,950 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     32680,        941]
+NotebookOptionsPosition[     30357,        868]
+NotebookOutlinePosition[     31028,        893]
+CellTagsIndexPosition[     30985,        890]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " supplement to systems biology course notes"
+}], "Title",
+ CellChangeTimes->{{3.56000283686349*^9, 3.560002855465654*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction to this document", "Section",
+ CellChangeTimes->{{3.560002873342511*^9, 3.560002950030843*^9}, {
+  3.5600044740834103`*^9, 3.560004476483227*^9}}],
+
+Cell[TextData[{
+ "This ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " notebook is meant as a supplement to the Bio5495 course notes on systems \
+biology. This notebook does not repeat text from the course notes except for \
+text that refers directly to examples or code. Each example here should \
+correspond to an example in the notes. The output cells from evaluating each \
+example have been deleted -- you have to evaluate each example in order and \
+think about the result."
+}], "Text",
+ CellChangeTimes->{{3.560002966487059*^9, 3.560002975438374*^9}, {
+   3.56000306059657*^9, 3.5600031661700172`*^9}, {3.592595316703397*^9, 
+   3.592595352387169*^9}, 3.6247368801986523`*^9},
+ FontSize->16]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exploring the expression of an unregulated gene", "Section",
+ CellChangeTimes->{{3.560005086201968*^9, 3.560005090420394*^9}}],
+
+Cell[TextData[StyleBox["Consider a single gene that is transcribed at a \
+constant rate and assume that its RNA degrades at a rate proportional to the \
+number of copies of the RNA present (i.e. each individual RNA molecular has a \
+fixed probability of decaying in any given second). We can express this \
+verbal model as a differential equation that gives the rate of change of the \
+RNA concentration. (We will simplify our thought process by assuming that \
+cell volume is constant, so our units of \[OpenCurlyDoubleQuote]concentration\
+\[CloseCurlyDoubleQuote] will be molecules per cell.)",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.560005099779334*^9, 3.56000519010301*^9}, {
+   3.560007070167489*^9, 3.560007094017353*^9}, {3.560075714925434*^9, 
+   3.5600757156148233`*^9}, 3.5925918952721987`*^9, {3.5940508732371492`*^9, 
+   3.594050875041729*^9}, {3.594050914372383*^9, 3.594050950519656*^9}, {
+   3.624736911551499*^9, 3.6247369753174257`*^9}}],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{
+   FractionBox["dm", "dt"], "=", 
+   RowBox[{"s", "-", 
+    RowBox[{"mDeg", "*", "m"}]}]}],
+  FontFamily->"Times New Roman Italic"]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.5940509963491898`*^9, 3.594051063916925*^9}, {
+   3.594052266630083*^9, 3.594052285306356*^9}, {3.594052435507023*^9, 
+   3.594052467020314*^9}, 3.5940559070747128`*^9}],
+
+Cell[TextData[{
+ StyleBox["where ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Times New Roman Italic"],
+ StyleBox[" is the concentration of the mRNA (in molecules per cell), ",
+  FontSize->16],
+ StyleBox["s",
+  FontFamily->"Times New Roman",
+  FontSlant->"Italic"],
+ StyleBox[" is the transcription rate (in molecules per second per cell), and \
+",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Times New Roman",
+  FontSlant->"Italic"],
+ StyleBox[" is the degradation rate constant for the mRNA (in units of \"per \
+second\"). The degradation rate constant is actually the fraction of the \
+total mRNA that degrades per second, and since a fraction has no units, the \
+units of ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Times New Roman",
+  FontSlant->"Italic"],
+ StyleBox[" are just \[OpenCurlyDoubleQuote]per \
+second\[CloseCurlyDoubleQuote]. This makes sense also because when you \
+multiply it by mRNA concentration, the product has units molecules per cell \
+per second, which is appropriate for the rate of change of a concentration. \
+This equation can be integrated in closed form to give the concentration m as \
+a function of time. ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560005099779334*^9, 3.56000519010301*^9}, {
+   3.560007070167489*^9, 3.560007094017353*^9}, {3.560075714925434*^9, 
+   3.5600757156148233`*^9}, 3.5925918952721987`*^9, {3.5940508732371492`*^9, 
+   3.594050875041729*^9}, {3.594050914372383*^9, 3.594050950519656*^9}, {
+   3.594051084011245*^9, 3.594051385377871*^9}, {3.594052477138961*^9, 
+   3.594052477914332*^9}, {3.594054993088057*^9, 3.5940549932871027`*^9}, {
+   3.5940550425986834`*^9, 3.5940550437509727`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"solutions", "=", 
+  RowBox[{"DSolve", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"m", "'"}], "[", "t", "]"}], "\[Equal]", 
+     RowBox[{"s", " ", "-", 
+      RowBox[{"mDeg", "*", " ", 
+       RowBox[{"m", "[", "t", "]"}]}]}]}], ",", "m", ",", "t"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.560007114108472*^9, {3.560007183729102*^9, 3.560007301339203*^9}, {
+   3.560193496710268*^9, 3.560193523160377*^9}, {3.592592293542948*^9, 
+   3.592592296635488*^9}, {3.594055060683082*^9, 3.594055062593584*^9}}],
+
+Cell[TextData[{
+ StyleBox["DSolve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" solves differential expressions symbolically. The arguments in \
+this case are a differential equation, where ",
+  FontSize->16],
+ StyleBox["m\[CloseCurlyQuote][t]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" represents the first derivitive of ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" with respect to ",
+  FontSize->16],
+ StyleBox["t",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", the name of the function we want to solve for, and the name of \
+the independent variable. Notice that the differential equation has a double \
+equals sign to differentiate it from an assigment. The output shows that ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" is a function of ",
+  FontSize->16],
+ StyleBox["t",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and that the form of the function is",
+  FontSize->16],
+ StyleBox[" ",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    FractionBox["s", "mDeg"],
+    FontFamily->"Times New Roman",
+    FontWeight->"Plain",
+    FontSlant->"Italic"], TraditionalForm]],
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" plus a constant times ",
+  FontSize->16],
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", 
+    RowBox[{
+     RowBox[{"-", "mDeg"}], "*", "t"}]], TraditionalForm]],
+  FontFamily->"Times New Roman",
+  FontSlant->"Italic"],
+ ".",
+ StyleBox[" ",
+  FontSize->16],
+ StyleBox["C[1]",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ StyleBox[" indicates a constant whose value is not determined by the \
+differential equation. ",
+  FontSize->16],
+ StyleBox["DSolve",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ StyleBox[" can return multiple solutions, so the output is actually a list \
+of solutions. ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560007317091897*^9, 3.560007431446549*^9}, {
+   3.560007466135874*^9, 3.5600075019324703`*^9}, {3.5600075857732*^9, 
+   3.560007754901615*^9}, {3.5600757779781027`*^9, 3.560075778509467*^9}, {
+   3.560193570607852*^9, 3.560193584253704*^9}, {3.560193629873354*^9, 
+   3.560193705658671*^9}, {3.592591939952496*^9, 3.592591941100605*^9}, {
+   3.592591988707136*^9, 3.5925920891384897`*^9}, {3.592592123443996*^9, 
+   3.59259214408215*^9}, {3.5925921866188498`*^9, 3.5925922710916348`*^9}, {
+   3.592592308771071*^9, 3.592592330058674*^9}, {3.592592383890902*^9, 
+   3.592592416186455*^9}, {3.594051422886993*^9, 3.5940514252986517`*^9}, 
+   3.5940518132378473`*^9, {3.595616776779829*^9, 3.5956167895903587`*^9}, {
+   3.624737251966107*^9, 3.6247372527724247`*^9}}],
+
+Cell[TextData[{
+ StyleBox["To figure out  the value of the constant ",
+  FontSize->16],
+ StyleBox["C[1]",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ StyleBox[", you can ask ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" to evaluate its solution at time zero by using the solution as a \
+\[OpenCurlyDoubleQuote]rule\[CloseCurlyDoubleQuote] to evaluate ",
+  FontSize->16],
+ StyleBox["m[0]",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ StyleBox[". ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{
+  3.5601937016383553`*^9, {3.5601939388311577`*^9, 3.560193963243143*^9}, 
+   3.5925923632634983`*^9, {3.592592421194293*^9, 3.59259248817069*^9}}],
+
+Cell[BoxData[
+ RowBox[{"mZeroTime", "=", 
+  RowBox[{
+   RowBox[{"m", "[", "0", "]"}], "/.", "solutions"}]}]], "Input",
+ CellChangeTimes->{{3.560007759664401*^9, 3.560007772811199*^9}, {
+  3.5601939045108347`*^9, 3.5601939074702463`*^9}, {3.560194017699904*^9, 
+  3.5601940211794863`*^9}, {3.5601940831612053`*^9, 3.560194084529806*^9}, {
+  3.560194186776445*^9, 3.560194207230083*^9}, {3.592592594543933*^9, 
+  3.592592598435548*^9}, {3.594051832422703*^9, 3.594051843454921*^9}}],
+
+Cell[TextData[{
+ StyleBox["The slash-dot (short for ",
+  FontSize->16],
+ StyleBox["ReplaceAll", "Program",
+  FontWeight->"Bold"],
+ StyleBox[") means to evaluate or simplify the expression that comes before \
+the slash-dot by using the replacement rules that come after the slash-dot.  \
+Now that we have the solution at time zero with the unknown constant in it, \
+we can solve for the constant in terms of a measured initial concentration ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ".",
+ StyleBox[" ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560007782895021*^9, 3.56000795315289*^9}, 
+   3.5601939209143267`*^9, {3.592592620746615*^9, 3.592592622418488*^9}, 
+   3.5935378934165583`*^9, {3.594051849134223*^9, 3.5940518533700457`*^9}, {
+   3.5940519060505867`*^9, 3.594051907594286*^9}, 3.62473730388758*^9}],
+
+Cell[BoxData[
+ RowBox[{"cSoln", "=", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"mZeroTime", "\[Equal]", "m0"}], ",", 
+    RowBox[{"C", "[", "1", "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.560007956654656*^9, 3.560007981711363*^9}, {
+  3.560194215590354*^9, 3.560194218374031*^9}, {3.5601942570604877`*^9, 
+  3.560194259892748*^9}, {3.5925926635015097`*^9, 3.5925926667537947`*^9}}],
+
+Cell[TextData[{
+ StyleBox["This is the result we want, but it looks a little funny. To make \
+it look better, we can use the built in function ",
+  FontSize->16],
+ StyleBox["Simplify",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[":",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560008104197336*^9, 3.560008149625355*^9}, {
+  3.5601942366511374`*^9, 3.560194237483082*^9}, {3.5940519479262333`*^9, 
+  3.594051951185981*^9}}],
+
+Cell[BoxData[
+ RowBox[{"cSoln", " ", "=", 
+  RowBox[{"Simplify", "[", "cSoln", "]"}]}]], "Input",
+ CellChangeTimes->{{3.560008005665482*^9, 3.560008017608061*^9}, {
+  3.5601942703640757`*^9, 3.560194272283956*^9}, {3.560194899546452*^9, 
+  3.560194902474024*^9}}],
+
+Cell[TextData[{
+ StyleBox["This gives the value of the constant in the form we want it in. \
+Now to get the full solution to the original differential equation, we have \
+to use this last result to substitute for the constant ",
+  FontSize->16],
+ StyleBox["C[1]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" in the original solution.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560008169345429*^9, 3.5600082573829317`*^9}, {
+  3.5601943090092382`*^9, 3.560194310056678*^9}}],
+
+Cell[BoxData[
+ RowBox[{"finalList", "=", 
+  RowBox[{"solutions", "/.", " ", "cSoln"}]}]], "Input",
+ CellChangeTimes->{{3.560008036538002*^9, 3.560008057238164*^9}, {
+  3.56019431500284*^9, 3.560194324730832*^9}, {3.592592893574636*^9, 
+  3.592592897468279*^9}, {3.5940519929906397`*^9, 3.594051994629774*^9}}],
+
+Cell[TextData[StyleBox["Now let\[CloseCurlyQuote]s extract the function \
+itself from the right-hand-side of the rule and give it a name. To do this, \
+we simply apply the rule to replace m itself with the function.",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.560009572753909*^9, 3.560009602776198*^9}, 
+   3.560009857848386*^9, {3.56007606372194*^9, 3.5600760907483063`*^9}, {
+   3.560194638199843*^9, 3.5601946431356983`*^9}, {3.560194703589921*^9, 
+   3.560194742492811*^9}}],
+
+Cell[BoxData[
+ RowBox[{"rnaConc", " ", "=", " ", 
+  RowBox[{"m", "/.", " ", "finalList"}]}]], "Input",
+ CellChangeTimes->{{3.5600096109786453`*^9, 3.5600096220020533`*^9}, 
+   3.560009857848723*^9, {3.5925929271404047`*^9, 3.59259293049859*^9}, 
+   3.594052031006857*^9}],
+
+Cell["\<\
+If we just want the expression that defines the function, we can extract the \
+function from this list and apply it to t, an undefined variable:\
+\>", "Text",
+ CellChangeTimes->{{3.5940520765952473`*^9, 3.594052137578319*^9}, {
+  3.594052231655162*^9, 3.594052231769347*^9}}],
+
+Cell[BoxData[
+ RowBox[{"rnaConcExpr", "=", 
+  RowBox[{
+   RowBox[{"rnaConc", "[", 
+    RowBox[{"[", 
+     RowBox[{"1", ",", "1"}], "]"}], "]"}], "[", "t", "]"}]}]], "Input",
+ CellChangeTimes->{{3.594052107191948*^9, 3.5940521111888113`*^9}, {
+  3.594052195244836*^9, 3.594052212620803*^9}, {3.5940552721884413`*^9, 
+  3.5940552760016747`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Things to notice", "Subsection",
+ CellChangeTimes->{{3.56000839768443*^9, 3.5600084121705103`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Certain expressions above are colored royal blue, such as ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontSize->13,
+  FontWeight->"Bold"],
+ StyleBox[".",
+  FontFamily->"Courier"],
+ StyleBox[" That indicates they have not been given any value, so they will \
+just be treated as symbolic entities in evaluation.  When we are defining a \
+symbolic differential equation to be solved, that\[CloseCurlyQuote]s just \
+fine. However, most of the time royal blue should be a warning to make sure \
+you really want an unevalulated variable. For example, suppose you type ",
+  FontSize->16],
+ StyleBox["dSolve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" instead of ",
+  FontSize->16],
+ StyleBox["DSolve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[":",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.5600084239659147`*^9, 3.56000847430684*^9}, {
+   3.5600085056797543`*^9, 3.5600087470330772`*^9}, 3.592593002052025*^9, {
+   3.594055136569088*^9, 3.594055138415265*^9}}],
+
+Cell[BoxData[
+ RowBox[{"dSolve", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"m", "'"}], "[", "t", "]"}], "\[Equal]", 
+    RowBox[{"s", " ", "-", 
+     RowBox[{"mDeg", "*", " ", 
+      RowBox[{"m", "[", "t", "]"}]}]}]}], ",", "m", ",", "t"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.560008734964066*^9, 3.560008735196179*^9}, {
+  3.594055163217272*^9, 3.594055164012068*^9}}],
+
+Cell[TextData[{
+ StyleBox["In the original input, ",
+  FontSize->16],
+ StyleBox["DSolve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" was black because it has a value that is built in to ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[", but here ",
+  FontSize->16],
+ StyleBox["dSolve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" is blue. Since there is no rule for simplifying an expression \
+with ",
+  FontSize->16],
+ StyleBox["dSolve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", it just evaluates to itself.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560008752848722*^9, 3.560008786575926*^9}, {
+  3.560008818871127*^9, 3.5600088212619753`*^9}, {3.56007591854885*^9, 
+  3.5600759551126738`*^9}, {3.592593112699874*^9, 3.5925931140980997`*^9}, {
+  3.594055202872883*^9, 3.594055209927878*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exploring the solution", "Subsection",
+ CellChangeTimes->{{3.560194804212738*^9, 3.5601948074740868`*^9}, 
+   3.5940552943955173`*^9}],
+
+Cell[TextData[{
+ StyleBox["Now we can try setting values for ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", ",
+  FontSize->16],
+ StyleBox["s",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", and ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", and graphing the resulting function.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560009692256084*^9, 3.5600097552364073`*^9}, 
+   3.560009857853136*^9, {3.5600320611069183`*^9, 3.560032093509873*^9}, {
+   3.5925937097643538`*^9, 3.592593710002902*^9}, {3.594055294395957*^9, 
+   3.594055320991332*^9}}],
+
+Cell[BoxData[
+ RowBox[{"rnaConcSimple", "=", 
+  RowBox[{"rnaConcExpr", " ", "/.", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"m0", "\[Rule]", "0"}], ",", " ", 
+     RowBox[{"s", "\[Rule]", "1"}], ",", " ", 
+     RowBox[{"mDeg", "\[Rule]", "1"}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.56000975745854*^9, 3.560009857853401*^9}, {
+   3.5600322811889267`*^9, 3.560032285460245*^9}, 3.5925938442057943`*^9, {
+   3.592593932439727*^9, 3.5925939373089113`*^9}, 3.594055294396181*^9, {
+   3.594055328225731*^9, 3.5940553295040913`*^9}}],
+
+Cell[TextData[StyleBox["Now we have the expression for the special case of \
+this initial concentration, synthesis rate, and degradation rate constant. \
+Let\[CloseCurlyQuote]s plot it as a function of time for times between 0 and \
+10.",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.560032660090497*^9, 3.5600326668887787`*^9}, {
+   3.560032743335396*^9, 3.5600328187129507`*^9}, 3.594055294396428*^9}],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{"rnaConcSimple", ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", "10"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5600098738636007`*^9, 3.5600098936584997`*^9}, {
+   3.560026149561206*^9, 3.5600261511778517`*^9}, {3.560032322688032*^9, 
+   3.560032329146228*^9}, {3.592593952200572*^9, 3.592593953309804*^9}, 
+   3.594055294396614*^9, 3.594055357260445*^9}],
+
+Cell[TextData[{
+ StyleBox["This asymptotes to s/d, or 1, as it should. However, ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" has chosen to plot the function only for concentrations between \
+0.5 and 1.0. To get the full range, we have to use an option to ",
+  FontSize->16],
+ StyleBox["Plot",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[".",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560032399611071*^9, 3.5600324306417837`*^9}, {
+   3.560032482818885*^9, 3.560032496445566*^9}, {3.5600328411105137`*^9, 
+   3.560032992142529*^9}, {3.560076199428371*^9, 3.560076200449345*^9}, 
+   3.59405529439683*^9}],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{"rnaConcSimple", ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", "10"}], "}"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", "Full"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5600335200539913`*^9, 3.560033569069107*^9}, 
+   3.592595422993125*^9, 3.594055294397025*^9, 3.594055379681652*^9}],
+
+Cell[TextData[{
+ StyleBox["To explore the impact of many variables, we can use one of \
+Mathematica\[CloseCurlyQuote]s coolest features: the function ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[".",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{3.560032880883209*^9, 3.594055294397238*^9}],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"rnaConcExpr", " ", "/.", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"m0", "\[Rule]", "mInit"}], ",", 
+        RowBox[{"s", "\[Rule]", "transcriptionRate"}], ",", 
+        RowBox[{"mDeg", "\[Rule]", "degRate"}]}], "}"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "10"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "4"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"mInit", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"transcriptionRate", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"degRate", ",", "0.001", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.560033593677301*^9, 3.560033598581732*^9}, {
+   3.560033630140499*^9, 3.560033670090064*^9}, {3.560033749175767*^9, 
+   3.56003384753798*^9}, {3.560033932191565*^9, 3.5600339469666147`*^9}, 
+   3.560034412342505*^9, 3.5600344984124823`*^9, {3.560037598722846*^9, 
+   3.5600376117323923`*^9}, {3.5600376836410503`*^9, 3.560037719648397*^9}, {
+   3.560037750257387*^9, 3.560037815974627*^9}, {3.560037857639427*^9, 
+   3.5600378873411627`*^9}, {3.560037937725484*^9, 3.560037939723678*^9}, {
+   3.5600383054978113`*^9, 3.560038305671266*^9}, {3.560038337913891*^9, 
+   3.56003834488867*^9}, 3.5600385349439917`*^9, {3.560075453707816*^9, 
+   3.560075529942092*^9}, 3.5940552943975687`*^9, {3.5940553949388103`*^9, 
+   3.594055419059813*^9}, {3.59561752668968*^9, 3.5956175752708597`*^9}, {
+   3.595617605389496*^9, 3.595617605829686*^9}}],
+
+Cell[TextData[{
+ StyleBox["This ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" expression is slightly convoluted, but before we take it apart, \
+just play with the sliders a little and watch the consequences of changing ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" (slider labeled mInit), ",
+  FontSize->16],
+ StyleBox["s",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" (slider labeled transcriptionRate), and ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" (slider labeled degRate).\n\nThe arguments to ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" are any expression followed by any number of lists of the form ",
+  FontSize->16],
+ StyleBox["{",
+  FontFamily->"Courier"],
+ StyleBox["var",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", ",
+  FontFamily->"Courier"],
+ StyleBox["varMin",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", ",
+  FontFamily->"Courier"],
+ StyleBox["varMax",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox["}",
+  FontFamily->"Courier"],
+ StyleBox[". ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" evaluates the expression using values of var specifed \
+dynamically, by sliders (there are also some other input options -- see the \
+documentation on ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox["). In this case the expression is an application of ",
+  FontSize->16],
+ StyleBox["Plot",
+  FontFamily->"Courier"],
+ StyleBox[", which returns a plot. Changing the sliders changes the plot \
+returned. Because the dynamic updating is fast, it looks like a movie. In the \
+expression above, the first argument to ",
+  FontSize->16],
+ StyleBox["Plot",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" is the expression ",
+  FontSize->16],
+ StyleBox["rnaConcExpr",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", which includes the symbols ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", ",
+  FontSize->16],
+ StyleBox["s",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", and ",
+  FontSize->16],
+ StyleBox["t",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[". Let\[CloseCurlyQuote]s skip straight to ",
+  FontSize->16],
+ StyleBox["t",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[". This is the independent variable (x-axis) for the plot, in the \
+same format as ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" takes: ",
+  FontSize->16],
+ StyleBox["{var, varMin, varMax}",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[". ",
+  FontSize->16],
+ StyleBox["Plot",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" by itself doesn\[CloseCurlyQuote]t produce a slider. It just \
+tries to plot the value of its first argument as a function of ",
+  FontSize->16],
+ StyleBox["var",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[". In our case, the first argument to ",
+  FontSize->16],
+ StyleBox["Plot",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" (",
+  FontSize->16],
+ StyleBox["rnaConcExpr",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[") also contains other symbols. In order to make it produce a \
+number, we have to replace those symbols with numbers. What we\
+\[CloseCurlyQuote]ve done here is to replace them with numbers determined by \
+the values of the sliders from the surrounding ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier"],
+ StyleBox[".",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560076263256607*^9, 3.560076893498642*^9}, 
+   3.5600770119436283`*^9, 3.594055294399518*^9, {3.5940554691106586`*^9, 
+   3.5940554707747393`*^9}, {3.5940555280302553`*^9, 
+   3.5940555356468067`*^9}, {3.5956176545277157`*^9, 3.595617668274733*^9}}],
+
+Cell[TextData[{
+ StyleBox["According to our simple model, the mRNA concentration approaches \
+an equilibrium value as time goes to infinity. ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" will calculate a symbolic expression for this limit, if possible.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560077004507875*^9, 3.560077174195963*^9}, 
+   3.5935381459123697`*^9, 3.5940552943996363`*^9}],
+
+Cell[BoxData[
+ RowBox[{"Limit", "[", 
+  RowBox[{"rnaConcExpr", ",", " ", 
+   RowBox[{"t", "\[Rule]", "Infinity"}], ",", " ", 
+   RowBox[{"Assumptions", "\[Rule]", 
+    RowBox[{"mDeg", ">", "0"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.560077232746661*^9, 3.560077249789013*^9}, {
+   3.560077492200264*^9, 3.5600774994374027`*^9}, 3.5940552943998137`*^9, {
+   3.594055593432521*^9, 3.594055600241809*^9}}],
+
+Cell[TextData[{
+ StyleBox["You have to tell ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" to assume ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" is positive because if it\[CloseCurlyQuote]s negative there is no \
+limit. But since ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" is a degradation rate constant, it does have to positive. \
+Otherwise, the RNA concentration would increase without limit, killing the \
+cell.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560077507701144*^9, 3.560077637911769*^9}, {
+   3.560195045794311*^9, 3.5601950710030413`*^9}, {3.592595597571698*^9, 
+   3.592595597826976*^9}, 3.594055294399928*^9, {3.5940556158904457`*^9, 
+   3.594055634923052*^9}}],
+
+Cell[TextData[{
+ StyleBox["Now that we know the equilibrium concentration as a function of ",
+  FontSize->16],
+ StyleBox["s",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and ",
+  FontSize->16],
+ StyleBox["mDeg",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", we can ask for the time at which the concentration is half way \
+from the initial value ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier"],
+ StyleBox[" to the equilibrium value ",
+  FontSize->16],
+ StyleBox["s/",
+  FontFamily->"Courier"],
+ "mDeg",
+ StyleBox[". ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560077507701144*^9, 3.560077637911769*^9}, {
+   3.560195045794311*^9, 3.5601950710030413`*^9}, {3.592595597571698*^9, 
+   3.592595597826976*^9}, 3.594055294399928*^9, {3.5940556158904457`*^9, 
+   3.5940556526091967`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Solve", "[", 
+  RowBox[{
+   RowBox[{"rnaConcExpr", "\[Equal]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"m0", "+", " ", 
+       RowBox[{"s", "/", "mDeg"}]}], ")"}], "/", "2"}]}], ",", "t", ",", " ", 
+   "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5601052443436413`*^9, 3.560105244347891*^9}, {
+   3.560105284710021*^9, 3.560105297798072*^9}, {3.5601951238316708`*^9, 
+   3.560195136371957*^9}, {3.592594531597909*^9, 3.592594532883594*^9}, 
+   3.5940552944001207`*^9, {3.594055657707788*^9, 3.594055668650964*^9}}],
+
+Cell[TextData[{
+ StyleBox["The first argument to ",
+  FontSize->16],
+ StyleBox["Solve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" is an equation. The second is the variable you want the equation \
+solved for. (Remember that ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" will evaluate ",
+  FontSize->16],
+ StyleBox["rnaConcExpr",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" to get the expression before it applies ",
+  FontSize->16],
+ StyleBox["Solve",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[".) The third argument is the domain over which you are looking for \
+a solution -- if you don\[CloseCurlyQuote]t specify that time has to be a \
+real number, ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" will give you a more general solution that includes times with \
+imaginary components!\n\nThe solution shows that the time to get half-way \
+from the initial to the final concentration is inversely proportional to the \
+degradation rate. A very important, but initially counter-intuitive result, \
+since it doesn\[CloseCurlyQuote]t depend on the synthesis rate at all. \
+However, you can think of it like this. When a molecule is short-lived, its \
+concentration in the past has little influence on its conentration in the \
+present. Degradation erases history.\n",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{
+  3.56010521217902*^9, {3.5601053206019573`*^9, 3.560105641563017*^9}, 
+   3.560195155033883*^9, {3.592594542875918*^9, 3.5925946316924267`*^9}, {
+   3.592595632271076*^9, 3.592595721458243*^9}, {3.593538225886156*^9, 
+   3.593538227481142*^9}, 3.594055294400235*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1225, 1103},
+WindowMargins->{{164, Automatic}, {0, Automatic}},
+Magnification->1.25,
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 20, \
+2012)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
+   Cell[
+    StyleData["Text"]], 
+   Cell[
+    StyleData["Text"]]}, Visible -> False, FrontEndVersion -> 
+  "9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 20, 2012)", 
+  StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 189, 5, 183, "Title"],
+Cell[CellGroupData[{
+Cell[793, 31, 165, 2, 100, "Section"],
+Cell[961, 35, 705, 14, 125, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1703, 54, 132, 1, 100, "Section"],
+Cell[1838, 57, 962, 13, 152, "Text"],
+Cell[2803, 72, 387, 9, 52, "DisplayFormulaNumbered"],
+Cell[3193, 83, 1682, 38, 180, "Text"],
+Cell[4878, 123, 549, 14, 36, "Input"],
+Cell[5430, 139, 2791, 83, 187, "Text"],
+Cell[8224, 224, 736, 24, 69, "Text"],
+Cell[8963, 250, 480, 8, 35, "Input"],
+Cell[9446, 260, 860, 20, 97, "Text"],
+Cell[10309, 282, 396, 8, 35, "Input"],
+Cell[10708, 292, 443, 12, 41, "Text"],
+Cell[11154, 306, 263, 5, 36, "Input"],
+Cell[11420, 313, 498, 12, 69, "Text"],
+Cell[11921, 327, 309, 5, 35, "Input"],
+Cell[12233, 334, 483, 7, 69, "Text"],
+Cell[12719, 343, 271, 5, 35, "Input"],
+Cell[12993, 350, 285, 5, 37, "Text"],
+Cell[13281, 357, 343, 8, 35, "Input"],
+Cell[CellGroupData[{
+Cell[13649, 369, 105, 1, 54, "Subsection"],
+Cell[13757, 372, 1042, 28, 125, "Text"],
+Cell[14802, 402, 388, 11, 36, "Input"],
+Cell[15193, 415, 902, 28, 69, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16132, 448, 140, 2, 54, "Subsection"],
+Cell[16275, 452, 667, 22, 41, "Text"],
+Cell[16945, 476, 541, 11, 36, "Input"],
+Cell[17489, 489, 405, 6, 69, "Text"],
+Cell[17897, 497, 418, 8, 35, "Input"],
+Cell[18318, 507, 676, 18, 69, "Text"],
+Cell[18997, 527, 341, 7, 36, "Input"],
+Cell[19341, 536, 348, 10, 41, "Text"],
+Cell[19692, 548, 1590, 31, 57, "Input"],
+Cell[21285, 581, 4193, 144, 402, "Text"],
+Cell[25481, 727, 451, 11, 69, "Text"],
+Cell[25935, 740, 408, 8, 36, "Input"],
+Cell[26346, 750, 846, 25, 97, "Text"],
+Cell[27195, 777, 834, 27, 69, "Text"],
+Cell[28032, 806, 550, 12, 36, "Input"],
+Cell[28585, 820, 1732, 43, 291, "Text"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

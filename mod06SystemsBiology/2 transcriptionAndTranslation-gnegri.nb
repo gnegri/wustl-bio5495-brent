@@ -1,0 +1,954 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     35311,        945]
+NotebookOptionsPosition[     33105,        870]
+NotebookOutlinePosition[     33729,        894]
+CellTagsIndexPosition[     33686,        891]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Modeling transcription and translation of an unregulated gene\
+\>", "Section",
+ CellChangeTimes->{{3.560105719805271*^9, 3.560105729846043*^9}}],
+
+Cell[TextData[StyleBox["Let us assume that the rate of production of the \
+protein encoded by gene i is proportional to the amount of mRNA available. \
+This implies that the availability of ribosomes is not limiting. We also \
+assume that the translation rate is unregulated, and that there are no global \
+changes in translation rate (any of these assumptions may need to be \
+reconsidered for a particular modeling problem). We also make the same \
+assumptions for protein degradation that we did for RNA degradation \[Dash] \
+that each protein molecule has a fixed probability of being degraded in each \
+second. These assumptions lead to the following differential equation:",
+ FontSize->16]], "Text",
+ CellChangeTimes->{{3.560105831700849*^9, 3.56010588777008*^9}, {
+  3.5601062608549957`*^9, 3.560106284142705*^9}, {3.594056033195153*^9, 
+  3.594056087472278*^9}}],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{
+   FractionBox["dp", "dt"], "=", 
+   RowBox[{
+    RowBox[{"transRtC", "*", " ", "m"}], "-", 
+    RowBox[{"pDeg", "*", " ", "p"}]}]}],
+  FontFamily->"Times New Roman"]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.59405611192513*^9, 3.594056123929863*^9}, {
+  3.594056178026977*^9, 3.5940561990013037`*^9}, {3.5940562345623293`*^9, 
+  3.594056237008741*^9}}],
+
+Cell[TextData[{
+ StyleBox["transRtC",
+  FontFamily->"Courier"],
+ StyleBox[" is the translation rate constant and ",
+  FontSize->16],
+ StyleBox["pDeg",
+  FontFamily->"Courier"],
+ StyleBox[" is the degradation rate constant for the protein. When we \
+introduce translation of mRNA into protein, we have a set of two, coupled \
+differential equations for each gene. Since we're using ",
+  FontSize->16],
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[", which excels at symbolic math, let's try to solve those \
+analytically. Before we do that, let's make sure that the symbols we're using \
+don't have left over values from before.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560105831700849*^9, 3.56010588777008*^9}, {
+   3.5601062608549957`*^9, 3.560106284142705*^9}, {3.594056033195153*^9, 
+   3.594056087472278*^9}, {3.594056244980344*^9, 3.594056297671604*^9}, 
+   3.594056343113298*^9, {3.594056374424485*^9, 3.5940563945907717`*^9}, {
+   3.595618039919881*^9, 3.595618042514303*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "[", "m", "]"}], ";", 
+  RowBox[{"Clear", "[", "p", "]"}], ";", " ", 
+  RowBox[{"Clear", "[", "t", "]"}], ";", " ", 
+  RowBox[{"Clear", "[", "s", "]"}]}]], "Input",
+ CellChangeTimes->{{3.5601063393919353`*^9, 3.5601064109513187`*^9}, {
+   3.560106452651566*^9, 3.5601064639052277`*^9}, {3.5601070412831*^9, 
+   3.560107071544725*^9}, {3.560107197407502*^9, 3.5601071988127337`*^9}, {
+   3.594056441656155*^9, 3.5940564479842997`*^9}, 3.624792441526456*^9}],
+
+Cell[TextData[{
+ StyleBox["This time we input a list containing two differential equations, \
+one for ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and one for ",
+  FontSize->16],
+ StyleBox["p",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", and symbols ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and ",
+  FontSize->16],
+ StyleBox["p0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" to use as the values of ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and ",
+  FontSize->16],
+ StyleBox["p",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" at time zero.",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.592594711293775*^9, 3.592594763410985*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"pmSoln1", "=", 
+  RowBox[{"DSolve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"m", "'"}], "[", "t", "]"}], "\[Equal]", 
+       RowBox[{"s", " ", "-", 
+        RowBox[{"mDeg", "*", " ", 
+         RowBox[{"m", "[", "t", "]"}]}]}]}], ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"p", "'"}], "[", "t", "]"}], "==", 
+       RowBox[{
+        RowBox[{"transRtC", "*", 
+         RowBox[{"m", "[", "t", "]"}]}], "-", 
+        RowBox[{"pDeg", "*", 
+         RowBox[{"p", "[", "t", "]"}]}]}]}], ",", 
+      RowBox[{
+       RowBox[{"m", "[", "0", "]"}], "==", "m0"}], ",", 
+      RowBox[{
+       RowBox[{"p", "[", "0", "]"}], "\[Equal]", "p0"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"m", ",", "p"}], "}"}], ",", "t"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.56010599780252*^9, 3.5601060264569263`*^9}, {
+   3.560106056474069*^9, 3.560106164734345*^9}, 3.560106215577207*^9, {
+   3.560106252436556*^9, 3.560106256568776*^9}, {3.560106383192883*^9, 
+   3.560106389167552*^9}, 3.560107166913775*^9, 3.560115490166251*^9, 
+   3.5925948382358828`*^9, 3.594056436669993*^9, {3.59405649132486*^9, 
+   3.59405649178683*^9}, {3.5940568821213837`*^9, 3.594056882560858*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"m", "\[Rule]", 
+     RowBox[{"Function", "[", 
+      RowBox[{
+       RowBox[{"{", "t", "}"}], ",", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           RowBox[{"-", "mDeg"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"m0", " ", "mDeg"}], "-", "s", "+", 
+           RowBox[{
+            SuperscriptBox["\[ExponentialE]", 
+             RowBox[{"mDeg", " ", "t"}]], " ", "s"}]}], ")"}]}], "mDeg"]}], 
+      "]"}]}], ",", 
+    RowBox[{"p", "\[Rule]", 
+     RowBox[{"Function", "[", 
+      RowBox[{
+       RowBox[{"{", "t", "}"}], ",", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "mDeg"}], " ", "t"}], "-", 
+            RowBox[{"pDeg", " ", "t"}]}]], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"mDeg", " ", "t"}]], " ", 
+             SuperscriptBox["mDeg", "2"], " ", "p0", " ", "pDeg"}], "-", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"mDeg", " ", "t"}]], " ", "mDeg", " ", "p0", " ", 
+             SuperscriptBox["pDeg", "2"]}], "+", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"mDeg", " ", "t"}]], " ", "m0", " ", "mDeg", " ", 
+             "pDeg", " ", "transRtC"}], "-", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"pDeg", " ", "t"}]], " ", "m0", " ", "mDeg", " ", 
+             "pDeg", " ", "transRtC"}], "-", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"mDeg", " ", "t"}]], " ", "mDeg", " ", "s", " ", 
+             "transRtC"}], "+", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{
+               RowBox[{"mDeg", " ", "t"}], "+", 
+               RowBox[{"pDeg", " ", "t"}]}]], " ", "mDeg", " ", "s", " ", 
+             "transRtC"}], "+", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{"pDeg", " ", "t"}]], " ", "pDeg", " ", "s", " ", 
+             "transRtC"}], "-", 
+            RowBox[{
+             SuperscriptBox["\[ExponentialE]", 
+              RowBox[{
+               RowBox[{"mDeg", " ", "t"}], "+", 
+               RowBox[{"pDeg", " ", "t"}]}]], " ", "pDeg", " ", "s", " ", 
+             "transRtC"}]}], ")"}]}], ")"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"mDeg", " ", 
+          RowBox[{"(", 
+           RowBox[{"mDeg", "-", "pDeg"}], ")"}], " ", "pDeg"}], ")"}]}]}], 
+      "]"}]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.624900888502754*^9, 3.624902702538629*^9, 
+  3.624973110164417*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["Mathematica",
+  FontSize->16,
+  FontSlant->"Italic"],
+ StyleBox[" solved this system of equations for us, but the result looks \
+complicated, at least for the protein concentration. If we were really \
+interested in this solution, there is a lot of follow-up we could do to try \
+to understand its implications. For now, we won\[CloseCurlyQuote]t go very \
+deep. But we can use the solution returned to substute for ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and/or ",
+  FontSize->16],
+ StyleBox["p",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" in any expression we want. Let\[CloseCurlyQuote]s start by \
+verifying that the values at time zero are what they are supposed to be -- ",
+  FontSize->16],
+ StyleBox["m0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" and ",
+  FontSize->16],
+ StyleBox["p0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[".",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.5601155203681927`*^9, 3.5601155585083447`*^9}, {
+   3.560115596507596*^9, 3.560115683793662*^9}, {3.560115719745096*^9, 
+   3.5601157259301233`*^9}, {3.560116205628319*^9, 3.560116226080894*^9}, {
+   3.560379330389151*^9, 3.560379336647725*^9}, {3.592594852292433*^9, 
+   3.5925949043488197`*^9}, {3.594056527195201*^9, 3.594056547702684*^9}, 
+   3.595618091543477*^9, {3.6247925345385723`*^9, 3.624792568006188*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"p0m0Soln1", "=", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"m", "[", "0", "]"}], ",", 
+     RowBox[{"p", "[", "0", "]"}]}], "}"}], " ", "/.", "pmSoln1"}]}]], "Input",\
+
+ CellChangeTimes->{{3.5601164618104963`*^9, 3.560116484834691*^9}, {
+  3.59259496814037*^9, 3.592594979356606*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"m0", ",", 
+    FractionBox[
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["mDeg", "2"], " ", "p0", " ", "pDeg"}], "-", 
+      RowBox[{"mDeg", " ", "p0", " ", 
+       SuperscriptBox["pDeg", "2"]}]}], 
+     RowBox[{"mDeg", " ", 
+      RowBox[{"(", 
+       RowBox[{"mDeg", "-", "pDeg"}], ")"}], " ", "pDeg"}]]}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.624900905065735*^9, 3.624973110488871*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The expression for the initial protein level still looks a bit complicated, \
+but ",
+ StyleBox["Simplify",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " will take care of that."
+}], "Text",
+ CellChangeTimes->{{3.5956182331326313`*^9, 3.595618252514666*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", "p0m0Soln1", "]"}]], "Input",
+ CellChangeTimes->{{3.5601165006605883`*^9, 3.560116505079529*^9}, {
+  3.592594984867175*^9, 3.5925949882290983`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"m0", ",", "p0"}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.624900909997323*^9, 3.624973110497835*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["This shows that, when we evaluate the whole big expression for ",
+  FontSize->16],
+ StyleBox["p[0]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[", the result is ",
+  FontSize->16],
+ StyleBox["p0",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" as it should be.\n\nNow let\[CloseCurlyQuote]s use ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" to set up a dynamic plot of ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontSize->16],
+ StyleBox[" and ",
+  FontSize->16],
+ StyleBox["p",
+  FontFamily->"Courier"],
+ StyleBox[" as a function of time. In order for ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" to work on a parameter, the parameter must appear in the \
+expression that is the first argument of ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[". So let\[CloseCurlyQuote]s define functions that have the rate \
+parameters as arguments. ",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560116532503167*^9, 3.560116633777788*^9}, {
+   3.5601171409698963`*^9, 3.560117334461825*^9}, {3.56011738312668*^9, 
+   3.560117492972641*^9}, {3.560379420044588*^9, 3.560379432468933*^9}, 
+   3.5940566388081923`*^9, 3.594056761968231*^9, {3.6247925812369547`*^9, 
+   3.6247926526189423`*^9}}],
+
+Cell[TextData[{
+ StyleBox["What we want is a function of all the parameters and of time. We \
+can get that by first replacing ",
+  FontSize->16],
+ StyleBox["m",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" in ",
+  FontSize->16],
+ StyleBox["m[time]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" with the solution to the differential equations, then replacing \
+the rate constants with the parameters of our new function:",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560117546444838*^9, 3.560117595473197*^9}, {
+  3.5925950513958893`*^9, 3.592595052346607*^9}, {3.5925951100474377`*^9, 
+  3.5925951927070017`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mParams", "[", 
+   RowBox[{"mDegRateC_", ",", "synthRate_", ",", "mInit_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"m", "[", "time", "]"}], "/.", "pmSoln1"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"mDeg", "\[Rule]", "mDegRateC"}], ",", 
+     RowBox[{"s", "\[Rule]", "synthRate"}], ",", 
+     RowBox[{"m0", "\[Rule]", "mInit"}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.594057781813958*^9, 3.594057815114221*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "mParams", "]"}]], "Input",
+ CellChangeTimes->{{3.6247928451620607`*^9, 3.6247928505359707`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pParams", "[", 
+   RowBox[{
+   "mDegRateC_", ",", "pDegRateC_", ",", "transRateC_", ",", "synthRate_", 
+    ",", "mInit_", ",", "pInit_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"p", "[", "time", "]"}], "/.", "pmSoln1"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"mDeg", "\[Rule]", "mDegRateC"}], ",", 
+     RowBox[{"pDeg", "\[Rule]", "pDegRateC"}], ",", 
+     RowBox[{"transRtC", "\[Rule]", "transRateC"}], ",", 
+     RowBox[{"s", "\[Rule]", "synthRate"}], ",", 
+     RowBox[{"m0", "\[Rule]", "mInit"}], ",", 
+     RowBox[{"p0", "\[Rule]", "pInit"}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.624900999601095*^9, 3.624901031732685*^9}, {
+  3.624901235759285*^9, 3.624901247842698*^9}, {3.62490180030644*^9, 
+  3.624901859257423*^9}, {3.624901922763098*^9, 3.624901957214867*^9}, {
+  3.624902581935647*^9, 3.624902586734208*^9}, {3.624903111343406*^9, 
+  3.624903141587625*^9}, {3.624904264554632*^9, 3.624904265115662*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "pParams", "]"}]], "Input",
+ CellChangeTimes->{{3.624904266547658*^9, 3.624904268848795*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"mParams", "[", 
+   RowBox[{"mDeg_", ",", "s_", ",", "m0_"}], "]"}], "=", 
+  RowBox[{
+   RowBox[{"m", "[", "time", "]"}], "/.", "pmSoln1"}]}]], "Input",
+ CellChangeTimes->{{3.594057781813958*^9, 3.594057815114221*^9}, {
+  3.624792888521964*^9, 3.6247929275344973`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  FractionBox[
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{
+      RowBox[{"-", "mDeg"}], " ", "time"}]], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"m0", " ", "mDeg"}], "-", "s", "+", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"mDeg", " ", "time"}]], " ", "s"}]}], ")"}]}], "mDeg"], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.624900951139657*^9, 3.624902949665727*^9, 
+  3.624904274931957*^9, 3.624973110652192*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pParams", "[", 
+   RowBox[{
+   "mDeg_", ",", "pDeg_", ",", "transRtC_", ",", "s_", ",", "m0_", ",", 
+    "p0_"}], "]"}], "=", 
+  RowBox[{
+   RowBox[{"p", "[", "time", "]"}], "/.", "pmSoln1"}]}]], "Input",
+ CellChangeTimes->{{3.624901256449454*^9, 3.624901271796993*^9}, {
+  3.62490196650771*^9, 3.624901982002729*^9}, {3.624903008552986*^9, 
+  3.624903041442875*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   FractionBox["1", 
+    RowBox[{"mDeg", " ", 
+     RowBox[{"(", 
+      RowBox[{"mDeg", "-", "pDeg"}], ")"}], " ", "pDeg"}]], 
+   RowBox[{
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "mDeg"}], " ", "time"}], "-", 
+      RowBox[{"pDeg", " ", "time"}]}]], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"mDeg", " ", "time"}]], " ", 
+       SuperscriptBox["mDeg", "2"], " ", "p0", " ", "pDeg"}], "-", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"mDeg", " ", "time"}]], " ", "mDeg", " ", "p0", " ", 
+       SuperscriptBox["pDeg", "2"]}], "+", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"mDeg", " ", "time"}]], " ", "m0", " ", "mDeg", " ", "pDeg", 
+       " ", "transRtC"}], "-", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"pDeg", " ", "time"}]], " ", "m0", " ", "mDeg", " ", "pDeg", 
+       " ", "transRtC"}], "-", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"mDeg", " ", "time"}]], " ", "mDeg", " ", "s", " ", 
+       "transRtC"}], "+", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{
+         RowBox[{"mDeg", " ", "time"}], "+", 
+         RowBox[{"pDeg", " ", "time"}]}]], " ", "mDeg", " ", "s", " ", 
+       "transRtC"}], "+", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{"pDeg", " ", "time"}]], " ", "pDeg", " ", "s", " ", 
+       "transRtC"}], "-", 
+      RowBox[{
+       SuperscriptBox["\[ExponentialE]", 
+        RowBox[{
+         RowBox[{"mDeg", " ", "time"}], "+", 
+         RowBox[{"pDeg", " ", "time"}]}]], " ", "pDeg", " ", "s", " ", 
+       "transRtC"}]}], ")"}]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.62490127299951*^9, 3.624901989414636*^9, 
+  3.624902045580092*^9, 3.624902714121382*^9, 3.624903012038565*^9, 
+  3.624903068348359*^9, 3.6249032072226*^9, 3.624904277321066*^9, 
+  3.62497311066429*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"mParams", "[", 
+      RowBox[{"mDegRateC", ",", "synthRate", ",", "mInit"}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"time", ",", "0", ",", "20"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "2"}], "}"}]}]}], "]"}], ",", "\[IndentingNewLine]", 
+   
+   RowBox[{"{", 
+    RowBox[{"mDegRateC", ",", "0.001", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"synthRate", ",", "0.01", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"mInit", ",", "0.01", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.624901436834977*^9, 3.624901437323791*^9}, {
+  3.624902000659758*^9, 3.624902001355512*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`mDegRateC$$ = 0.001, $CellContext`mInit$$ = 
+    0.01, $CellContext`synthRate$$ = 0.01, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`mDegRateC$$], 0.001, 1}, {
+      Hold[$CellContext`synthRate$$], 0.01, 1}, {
+      Hold[$CellContext`mInit$$], 0.01, 1}}, Typeset`size$$ = {
+    450., {144., 153.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`mDegRateC$2077$$ = 
+    0, $CellContext`synthRate$2078$$ = 0, $CellContext`mInit$2079$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`mDegRateC$$ = 0.001, $CellContext`mInit$$ = 
+        0.01, $CellContext`synthRate$$ = 0.01}, "ControllerVariables" :> {
+        Hold[$CellContext`mDegRateC$$, $CellContext`mDegRateC$2077$$, 0], 
+        Hold[$CellContext`synthRate$$, $CellContext`synthRate$2078$$, 0], 
+        Hold[$CellContext`mInit$$, $CellContext`mInit$2079$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot[
+        $CellContext`mParams[$CellContext`mDegRateC$$, \
+$CellContext`synthRate$$, $CellContext`mInit$$], {$CellContext`time, 0, 20}, 
+        PlotRange -> {0, 2}], 
+      "Specifications" :> {{$CellContext`mDegRateC$$, 0.001, 
+         1}, {$CellContext`synthRate$$, 0.01, 1}, {$CellContext`mInit$$, 0.01,
+          1}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{507., {230., 237.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.624901437872052*^9, 3.624902955671946*^9, {3.624973099550782*^9, 
+   3.624973110748213*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"mParams", "[", 
+        RowBox[{"mDegRateC", ",", "synthRate", ",", "mInit"}], "]"}], ",", 
+       RowBox[{"pParams", "[", 
+        RowBox[{
+        "mDegRateC", ",", "pDegRateC", ",", "transRateC", ",", "synthRate", 
+         ",", "mInit", ",", "pInit"}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"time", ",", ".01", ",", "1000"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}]}], ",", 
+     RowBox[{"PlotLegends", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<[mRNA]\>\"", ",", "\"\<[Protein]\>\""}], "}"}]}]}], "]"}],
+    ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"mDegRateC", ",", "0.1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"pDegRateC", ",", ".001", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"transRateC", ",", "0.01", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"synthRate", ",", "0.01", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"mInit", ",", "0.01", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"pInit", ",", "0.01", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5940578657737703`*^9, 3.594057875913714*^9}, {
+   3.5940579107791986`*^9, 3.594057911338578*^9}, {3.59405794448158*^9, 
+   3.594057945226575*^9}, 3.595684920871708*^9, {3.62490136244792*^9, 
+   3.624901411444867*^9}, {3.624901489367489*^9, 3.624901521732709*^9}, {
+   3.624901634033633*^9, 3.624901661252984*^9}, {3.624902009138671*^9, 
+   3.624902027776194*^9}, {3.624902094950032*^9, 3.624902157905839*^9}, {
+   3.624902198396045*^9, 3.624902216538396*^9}, {3.624902603416297*^9, 
+   3.624902621175052*^9}, {3.62490272897929*^9, 3.624902731474819*^9}, {
+   3.624903016033489*^9, 3.624903088745912*^9}, {3.624903169423974*^9, 
+   3.624903169586913*^9}, {3.624903342166053*^9, 3.62490334397989*^9}, {
+   3.6249034204244*^9, 3.624903452390332*^9}, 3.62490352456545*^9, {
+   3.62490357164165*^9, 3.624903646233637*^9}, {3.624903774818726*^9, 
+   3.624903794837287*^9}, {3.624903826994859*^9, 3.624903844045699*^9}, {
+   3.624903888718665*^9, 3.624903952465695*^9}, {3.624903987036494*^9, 
+   3.624904099687323*^9}, {3.624904147752944*^9, 3.624904203196783*^9}, {
+   3.624973134505822*^9, 3.624973155028621*^9}, {3.624973305100981*^9, 
+   3.624973339881336*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`mDegRateC$$ = 0.1, $CellContext`mInit$$ = 
+    0.01, $CellContext`pDegRateC$$ = 0.001, $CellContext`pInit$$ = 
+    0.01, $CellContext`synthRate$$ = 0.01, $CellContext`transRateC$$ = 0.01, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`mDegRateC$$], 0.1, 1}, {
+      Hold[$CellContext`pDegRateC$$], 0.001, 1}, {
+      Hold[$CellContext`transRateC$$], 0.01, 1}, {
+      Hold[$CellContext`synthRate$$], 0.01, 1}, {
+      Hold[$CellContext`mInit$$], 0.01, 1}, {
+      Hold[$CellContext`pInit$$], 0.01, 1}}, Typeset`size$$ = {
+    577., {141., 150.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`mDegRateC$6249$$ = 
+    0, $CellContext`pDegRateC$6250$$ = 0, $CellContext`transRateC$6251$$ = 
+    0, $CellContext`synthRate$6252$$ = 0, $CellContext`mInit$6253$$ = 
+    0, $CellContext`pInit$6254$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`mDegRateC$$ = 0.1, $CellContext`mInit$$ = 
+        0.01, $CellContext`pDegRateC$$ = 0.001, $CellContext`pInit$$ = 
+        0.01, $CellContext`synthRate$$ = 0.01, $CellContext`transRateC$$ = 
+        0.01}, "ControllerVariables" :> {
+        Hold[$CellContext`mDegRateC$$, $CellContext`mDegRateC$6249$$, 0], 
+        Hold[$CellContext`pDegRateC$$, $CellContext`pDegRateC$6250$$, 0], 
+        Hold[$CellContext`transRateC$$, $CellContext`transRateC$6251$$, 0], 
+        Hold[$CellContext`synthRate$$, $CellContext`synthRate$6252$$, 0], 
+        Hold[$CellContext`mInit$$, $CellContext`mInit$6253$$, 0], 
+        Hold[$CellContext`pInit$$, $CellContext`pInit$6254$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot[{
+         $CellContext`mParams[$CellContext`mDegRateC$$, \
+$CellContext`synthRate$$, $CellContext`mInit$$], 
+         $CellContext`pParams[$CellContext`mDegRateC$$, \
+$CellContext`pDegRateC$$, $CellContext`transRateC$$, \
+$CellContext`synthRate$$, $CellContext`mInit$$, $CellContext`pInit$$]}, \
+{$CellContext`time, 0.01, 1000}, PlotRange -> {0, 1}, 
+        PlotLegends -> {"[mRNA]", "[Protein]"}], 
+      "Specifications" :> {{$CellContext`mDegRateC$$, 0.1, 
+         1}, {$CellContext`pDegRateC$$, 0.001, 1}, {$CellContext`transRateC$$,
+          0.01, 1}, {$CellContext`synthRate$$, 0.01, 
+         1}, {$CellContext`mInit$$, 0.01, 1}, {$CellContext`pInit$$, 0.01, 
+         1}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{634., {274., 281.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.624903421002826*^9, 3.624903453218797*^9, 3.624903525254805*^9, {
+   3.624903576920337*^9, 3.624903647862382*^9}, {3.624903776315273*^9, 
+   3.624903795292854*^9}, {3.62490383988556*^9, 3.624903844592758*^9}, {
+   3.624903889433755*^9, 3.624903954031794*^9}, {3.624903989207331*^9, 
+   3.624904099993087*^9}, {3.624904153339211*^9, 3.624904203965285*^9}, 
+   3.62490427992727*^9, {3.624973111072631*^9, 3.624973155450157*^9}, {
+   3.624973309450601*^9, 3.624973340503281*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exercise: Determinants of time to reach equilibrium ", \
+"Subsubsubsection",
+ CellChangeTimes->{{3.583175578135281*^9, 3.583175585252611*^9}, {
+  3.583237215724431*^9, 3.583237230152749*^9}, {3.583237385305098*^9, 
+  3.583237408360573*^9}, {3.583350266707965*^9, 3.5833502680112123`*^9}, {
+  3.58342604161637*^9, 3.58342604629023*^9}, {3.583498856500457*^9, 
+  3.5834988629059267`*^9}, {3.583505142291054*^9, 3.5835051472415533`*^9}, {
+  3.593965875610454*^9, 3.5939659098091803`*^9}, {3.594058087905567*^9, 
+  3.594058097062481*^9}}],
+
+Cell[TextData[{
+ StyleBox["Make a new version of the Manipulate window above that has, in \
+addition to what\[CloseCurlyQuote]s shown above, a line for the protein \
+concentration and sliders for the additional parameters. You can do this in \
+two steps basically by copy-pasting the code above and making some additions. \
+First, you need to define a function ",
+  FontSize->16],
+ StyleBox["pParams",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" that takes all the parameters as arguments and returns the \
+protein concentration as a function of time. This is analogous to ",
+  FontSize->16],
+ StyleBox["mParams",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" above. Second, use ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" to create a plot showing both the mRNA concentration line (via a \
+call to ",
+  FontSize->16],
+ StyleBox["mParams",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[") and the protein concentration (via a call to ",
+  FontSize->16],
+ StyleBox["pParams",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox["). Both lines should appear on a single plot (see the \
+documentation on ",
+  FontSize->16],
+ StyleBox["Plot",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" if you don\[CloseCurlyQuote]t know how to plot multiple functions \
+together).",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.560118513786927*^9, 3.5601185334247093`*^9}, {
+  3.560118605917305*^9, 3.5601186451724033`*^9}, {3.594059870358848*^9, 
+  3.5940600610466213`*^9}, {3.594060098704309*^9, 3.5940601643425922`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Once you have your ",
+  FontSize->16],
+ StyleBox["Manipulate",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ StyleBox[" pane set up, play with the degradation rate constants of the mRNA \
+and the protein until your plot clearly shows the protein taking much longer \
+to reach equilibrium than the RNA. What did you have to do and why do you \
+think it worked?",
+  FontSize->16]
+}], "Text",
+ CellChangeTimes->{{3.594059829640769*^9, 3.594059851828147*^9}, {
+  3.594060219638666*^9, 3.5940602307268763`*^9}}],
+
+Cell["\<\
+With all other constants equal, mDegRateC has to be greater (100x in this \
+case) than pDegRateC; if mRNA degrades faster than protein, then mRNA \
+degredation will equal transcription sooner than protein degredation equals \
+translation.\
+\>", "Text",
+ CellChangeTimes->{{3.624904410470893*^9, 3.624904436920158*^9}, {
+   3.624904545906629*^9, 3.624904583455138*^9}, {3.624904691866832*^9, 
+   3.624904713691432*^9}, {3.624973166534017*^9, 3.624973181417238*^9}, {
+   3.624973431545868*^9, 3.624973434932794*^9}, 3.624973579129489*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Extra credit ", "Subsubsubsection",
+ CellChangeTimes->{{3.583175578135281*^9, 3.583175585252611*^9}, {
+  3.583237215724431*^9, 3.583237230152749*^9}, {3.583237385305098*^9, 
+  3.583237408360573*^9}, {3.583350266707965*^9, 3.5833502680112123`*^9}, {
+  3.58342604161637*^9, 3.58342604629023*^9}, {3.583498856500457*^9, 
+  3.5834988629059267`*^9}, {3.583505142291054*^9, 3.5835051472415533`*^9}, {
+  3.593965875610454*^9, 3.5939659098091803`*^9}, {3.594058087905567*^9, 
+  3.594058097062481*^9}, {3.624793031797985*^9, 3.6247930331412687`*^9}, {
+  3.624793138561266*^9, 3.6247931398737373`*^9}, {3.624793415753121*^9, 
+  3.6247934176017*^9}}],
+
+Cell[TextData[{
+ "Instead of defining the function ",
+ StyleBox["mParams",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " as I did above, you can define it using immediate evaluation (",
+ StyleBox["=",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " instead of ",
+ StyleBox[":=",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ "), which simplifies the definition a lot. Try to use immediate evaluation \
+to simply the definition of ",
+ StyleBox["mParams",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". First, you\[CloseCurlyQuote]ll want to clear the current defintion using ",
+ StyleBox["Clear",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". To test it, use the same Manipulate expression as above and show that the \
+new definition works. Now explain why you needed the more complex definition \
+using delayed evaluation and why you don\[CloseCurlyQuote]t need it using \
+immeidate evaluation. "
+}], "Text",
+ CellChangeTimes->{{3.624793042848501*^9, 3.624793121027667*^9}, {
+  3.6247931855616913`*^9, 3.624793424276292*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1139, 744},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+Magnification->1.25,
+FrontEndVersion->"10.0 for Linux x86 (32-bit) (June 27, 2014)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
+   Cell[
+    StyleData["Text"]], 
+   Cell[
+    StyleData["Text"]]}, Visible -> False, FrontEndVersion -> 
+  "10.0 for Linux x86 (32-bit) (June 27, 2014)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 154, 3, 83, "Section"],
+Cell[736, 27, 870, 12, 229, "Text"],
+Cell[1609, 41, 397, 10, 64, "DisplayFormulaNumbered"],
+Cell[2009, 53, 1024, 23, 167, "Text"],
+Cell[3036, 78, 499, 9, 38, "Input"],
+Cell[3538, 89, 840, 35, 75, "Text"],
+Cell[CellGroupData[{
+Cell[4403, 128, 1250, 31, 89, "Input"],
+Cell[5656, 161, 2895, 76, 164, "Output"]
+}, Open  ]],
+Cell[8566, 240, 1442, 37, 167, "Text"],
+Cell[CellGroupData[{
+Cell[10033, 281, 321, 9, 38, "Input"],
+Cell[10357, 292, 463, 14, 63, "Output"]
+}, Open  ]],
+Cell[10835, 309, 280, 8, 40, "Text"],
+Cell[CellGroupData[{
+Cell[11140, 321, 188, 3, 38, "Input"],
+Cell[11331, 326, 163, 4, 38, "Output"]
+}, Open  ]],
+Cell[11509, 333, 1429, 44, 167, "Text"],
+Cell[12941, 379, 650, 18, 106, "Text"],
+Cell[13594, 399, 474, 12, 64, "Input"],
+Cell[14071, 413, 134, 2, 38, "Input"],
+Cell[14208, 417, 982, 21, 89, "Input"],
+Cell[15193, 440, 130, 2, 38, "Input"],
+Cell[CellGroupData[{
+Cell[15348, 446, 303, 7, 38, "Input"],
+Cell[15654, 455, 503, 15, 68, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16194, 475, 402, 10, 38, "Input"],
+Cell[16599, 487, 2043, 54, 158, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18679, 546, 807, 21, 89, "Input"],
+Cell[19489, 569, 2303, 44, 487, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21829, 618, 2474, 51, 164, "Input"],
+Cell[24306, 671, 3739, 66, 575, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28082, 742, 540, 8, 39, "Subsubsubsection"],
+Cell[28625, 752, 1632, 44, 260, "Text"],
+Cell[30260, 798, 536, 13, 106, "Text"],
+Cell[30799, 813, 546, 9, 94, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31382, 827, 645, 9, 39, "Subsubsubsection"],
+Cell[32030, 838, 1047, 28, 147, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
