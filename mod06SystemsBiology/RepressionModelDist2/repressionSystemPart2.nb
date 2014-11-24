@@ -1,0 +1,137 @@
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[         0,          0]
+NotebookDataLength[      5018,        136]
+NotebookOptionsPosition[      4376,        108]
+NotebookOutlinePosition[      4734,        124]
+CellTagsIndexPosition[      4691,        121]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Solving for the \[OpenCurlyDoubleQuote]c\[CloseCurlyDoubleQuote] parameter \
+matrix\
+\>", "Subsubsubsubsection",
+ CellChangeTimes->{{3.595175483007051*^9, 3.59517550277838*^9}, {
+  3.6258487021116943`*^9, 3.625848718310519*^9}}],
+
+Cell["Write a function", "Text",
+ CellChangeTimes->{{3.625848824308606*^9, 3.625848826861432*^9}}],
+
+Cell[BoxData[
+ RowBox[{"inferCMatrix", "[", 
+  RowBox[{
+  "bVector_", ",", "regulatorsMask_", ",", "geneExpressionProfiles_", ",", 
+   "genePresenceMasks_"}], "]"}]], "Input",
+ CellChangeTimes->{{3.625848828777483*^9, 3.625848828778227*^9}}],
+
+Cell["\<\
+that takes as its first argument a vector of \[OpenCurlyDoubleQuote]b\
+\[CloseCurlyDoubleQuote] parameters (related to the maximum steady-state \
+concentrations of the mRNAs). The second argument is a binary vector \
+indicating, for each gene, whether it can be a regulator and a target, or \
+just a target gene. The third argument is a list of expression profiles, \
+where each profile expresses the steady-state concentration of each in a \
+given experiment. The fourth and last argument is a list of binary vectors, \
+one for each experiment, indicating the \[OpenCurlyDoubleQuote]genotype\
+\[CloseCurlyDoubleQuote] of the strain used in that experiment: 1 indicates \
+that the gene is present, 0 that it is deleted or disabled. The gene \
+expression profiles should be consistent with parameters in the b vector and \
+some unknown matrix of c parameters (related to repression efficiencies).\
+\>", "Text",
+ CellChangeTimes->{{3.6258488380797167`*^9, 3.6258488508675003`*^9}, {
+  3.625849028906205*^9, 3.625849037883669*^9}, {3.625849142959527*^9, 
+  3.6258494022645187`*^9}}],
+
+Cell["\<\
+Test code is provided in the .mt file. Note that your code for the first part \
+of the assignment must be loaded and it must be slightly modified from the \
+original 2014 assignment as described in the .mt file.\
+\>", "Text",
+ CellChangeTimes->{{3.6258494464094048`*^9, 3.625849486669401*^9}}],
+
+Cell[TextData[{
+ "To implement ",
+ StyleBox["inferCMatrix",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ", you should use the built in function ",
+ StyleBox["NMinimize",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ". ",
+ StyleBox["NMinimize",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " takes an expression containing some variables, optionally a set of \
+equations or inequalities describing constraints on the solution, and a list \
+of the variables to be varied in trying to minimize the value of the first \
+expression. In our case, the expression will represent the degree of \
+deviation from the steady-state equations. In particular, each steady state \
+equation, as described in Section 6.1 of course notes, can be converted to an \
+equation of zero with a polynomial in the mRNA concentrations and parameters. \
+In other words, at steady state, the concentrations and parameters should be \
+such that all the polynomials evalute to zero. By taking the dot product of a \
+vector of these polynomial equations and itself (using ",
+ StyleBox["Dot",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ ") you can get a sum of squared deviations from the expected zeros for all \
+the parameters. You will ask ",
+ StyleBox["NMinimize",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " to find the values of the c parameters that minimize this sum of squared \
+errors. Before doing this, you need to replace the ",
+ StyleBox["b[i]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " parameters and the ",
+ StyleBox["m[i]",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ " expression levels with the values that are passed into ",
+ StyleBox["inferCMatrix",
+  FontFamily->"Courier",
+  FontWeight->"Bold"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.6258494946092653`*^9, 3.625849504771571*^9}, {
+  3.625849539026124*^9, 3.625849856740159*^9}, {3.625849985811213*^9, 
+  3.625850094183825*^9}, {3.6258501375890713`*^9, 3.62585017229609*^9}}]
+}, Open  ]]
+},
+WindowSize->{919, 1108},
+WindowMargins->{{487, Automatic}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 20, \
+2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[422, 15, 238, 5, 28, "Subsubsubsubsection"],
+Cell[663, 22, 98, 1, 30, "Text"],
+Cell[764, 25, 241, 5, 28, "Input"],
+Cell[1008, 32, 1089, 16, 125, "Text"],
+Cell[2100, 50, 303, 5, 49, "Text"],
+Cell[2406, 57, 1954, 48, 206, "Text"]
+}, Open  ]]
+}
+]
+*)
+
