@@ -40,7 +40,8 @@ mutantEqns[genePresenceMask_]:=
 (* mutantExpVars returns a list of variables representing the expression levels of
    genes that remain in the genotype described by genePresenceMask. You will want 
    these later when you call FindRoot.*)
-mutantExpVars[genePresenceMask_]:= m[#]&/@Flatten[Position[genePresenceMask,1],1]
+mutantExpVars[genePresenceMask_]:= m[#] &/@ Flatten[Position[genePresenceMask,1],1]
+allExpVars[genePresenceMask_]:= m[#] &/@ Range[Length[genePresenceMask]]
 
 (* expressionEqns replaces the symbolic parameters of the generic equations with actual values
    from a parameter matrix, returning a final set of equations with fixed parameters but variables
@@ -61,7 +62,9 @@ expressionEqns[eqns_, {bVector_, cMatrix_}]:=
 expressionMatrix[params_, genePresenceMasks_]:=
 	(*Make sure b, c, m are undefined here and in all functions called from here.*)
 	Block[{b, c, m},
-		Module[{mE, mEV, eqs, solveFor, replacementRules},
+		Module[{aEV, mE, mEV, eqs, solveFor, replacementRules, replacementRules2, withM},
+		aEV = allExpVars[#] &/@ genePresenceMasks;	
+		
 		mE  = mutantEqns[#] &/@ genePresenceMasks;
 		eqs = expressionEqns[#, params] &/@ mE;
 		
@@ -69,5 +72,7 @@ expressionMatrix[params_, genePresenceMasks_]:=
 		solveFor = Transpose[{#, Table[0, {Length[#]}]}] &/@ mEV;
 		
 		replacementRules = MapThread[FindRoot, {eqs, solveFor}];
-		mEV[[#]] /. replacementRules[[#]] &/@ Range[Length[mEV]]
+		replacementRules2 = m[#] -> 0 &/@Range[Length[aEV]];
+		withM = aEV[[#]] /. replacementRules[[#]] &/@ Range[Length[aEV]];
+		withM /. replacementRules2
 	]]
