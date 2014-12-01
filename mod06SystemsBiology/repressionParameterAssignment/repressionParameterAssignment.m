@@ -3,18 +3,18 @@
 (*NOTE: the functions list here are just the skeleton. You will probably want to 
  write other functions and call them to implement the functions listed here. *)
 
-(* does what the function name implies. n genes, binary regulator list, random seed (optional) *)
+(* does what the function name implies. n genes, binary regulator list, random seed (optional) 
 generateRandomParams[n_, regulatorsMask_, seed_:"Grant Negri wrote this"]:= 
 	Module[{bMatrix, cMatrix},
-		SeedRandom[seed, Method->"MersenneTwister"];
-		bMatrix = Table[RandomReal[0.01, 1],{n}];
+		SeedRandom[seed];
+		bMatrix = Table[RandomReal[{0.01, 1}],{n}];
 		cMatrix = Table[RandomReal[#]&/@regulatorsMask,{n}];
 		(* post-process *)
 		Do[cMatrix[[i,i]]=0, {i,n}];
 		
 		{bMatrix, cMatrix}
 	]
-
+*)
 
 (* mutantEqns takes a genePresenceMask indicating which genes were deleted in the cells 
    in which these mRNA measurements were taken. It generates a set of generic equations 
@@ -32,9 +32,9 @@ mutantEqns[genePresenceMask_]:=
 		interactions = Partition[Permutations[activeGenes, {2}], n-1];
 		activeParted = Complement[activeGenes, #] &/@ Partition[activeGenes,1];
 		(* fill out the product portion *)
-		latterHalf = Times @@@ Flatten[1 + {c @@@ # & /@ interactions}*{m /@ # & /@ activeParted}, 1];
+		latterHalf = Times @@@ Flatten[1 + {c @@@ # &/@ interactions}*{m /@ # &/@ activeParted}, 1];
 
-		Flatten[-1.0 + {b[#] m[#] & /@ activeGenes*latterHalf}, 1][[#]] == 0 & /@ Range[n]
+		Flatten[-1.0 + {b[#] m[#] &/@ activeGenes*latterHalf}, 1][[#]] == 0 & /@ Range[n]
 	]
 
 (* mutantExpVars returns a list of variables representing the expression levels of
@@ -72,6 +72,7 @@ expressionMatrix[params_, genePresenceMasks_]:=
 		solveFor = Transpose[{#, Table[0, {Length[#]}]}] &/@ mEV;
 		
 		replacementRules = MapThread[FindRoot, {eqs, solveFor}];
+		Print[replacementRules];
 		replacementRules2 = m[#] -> 0 &/@Range[Length[aEV]];
 		withM = aEV[[#]] /. replacementRules[[#]] &/@ Range[Length[aEV]];
 		withM /. replacementRules2
